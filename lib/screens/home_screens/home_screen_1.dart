@@ -8,10 +8,7 @@ import 'package:skills_pe/screens/home_screens/quiz_card.dart';
 import '../../bloc/challenges_bloc.dart';
 import '../../bloc/quiz_bloc.dart';
 import '../../models/quiz_model.dart';
-
-
-import 'challenges_card.dart';
-
+import '../create_challenge/ui/create_challenge_screen.dart';
 
 class HomeScreen1 extends StatefulWidget {
   const HomeScreen1({Key? key}) : super(key: key);
@@ -35,7 +32,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
     Timer.periodic(const Duration(seconds: 5), (timer) {
       if (mounted) {
         setState(() {
-          _currentPage = (_currentPage  + 1) % _totalItems;
+          _currentPage = (_currentPage + 1) % _totalItems;
         });
         _pageController.animateToPage(
           _currentPage,
@@ -59,7 +56,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-
     return Scaffold(
       appBar: AppBar(
         title: const Align(
@@ -72,11 +68,11 @@ class _HomeScreen1State extends State<HomeScreen1> {
             children: [
               Container(
                 margin: EdgeInsets.fromLTRB(0, 0, width * 0.03, 0),
-                padding: EdgeInsets.symmetric(horizontal: height * 0.01,vertical: width * 0.01),
+                padding: EdgeInsets.symmetric(
+                    horizontal: height * 0.01, vertical: width * 0.01),
                 decoration: BoxDecoration(
                     color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(10)
-                ),
+                    borderRadius: BorderRadius.circular(10)),
                 child: const Row(
                   children: [
                     Icon(Icons.account_balance_wallet_outlined),
@@ -85,7 +81,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ),
               ),
               Padding(
-                padding:  EdgeInsets.fromLTRB(0, 0, width * 0.05, 0),
+                padding: EdgeInsets.fromLTRB(0, 0, width * 0.05, 0),
                 child: const Icon(Icons.notifications),
               )
             ],
@@ -95,15 +91,14 @@ class _HomeScreen1State extends State<HomeScreen1> {
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffe4d8fa), Colors.white,
-
-              ], begin: Alignment.bottomCenter,
-            )
-          ),
+              gradient: LinearGradient(
+            colors: [
+              Color(0xffe4d8fa),
+              Colors.white,
+            ],
+            begin: Alignment.bottomCenter,
+          )),
           child: Column(
-
             children: [
               BannerContainer(
                 pageController: _pageController,
@@ -124,7 +119,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ),
               ),
               BlocProvider(
-                create: (context) => ChallengeBloc()..fetchChallenges(), // Create BLoC and fetch data
+                create: (context) => ChallengeBloc()
+                  ..fetchChallenges(), // Create BLoC and fetch data
                 child: const Challenges(),
               ),
               const Quizz()
@@ -140,14 +136,16 @@ class BannerContainer extends StatelessWidget {
   final PageController pageController;
   late final int currentPage;
 
-   BannerContainer({super.key, required this.pageController, required this.currentPage});
+  BannerContainer(
+      {super.key, required this.pageController, required this.currentPage});
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      margin: const EdgeInsets.all(16), // Use constants here for consistent spacing
+      margin:
+          const EdgeInsets.all(16), // Use constants here for consistent spacing
       height: height * 0.21,
       width: width,
       decoration: BoxDecoration(
@@ -193,7 +191,12 @@ class BannerContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateChallengeScreen()));
+              },
               child: const Text('Create Now'),
             ),
           ),
@@ -233,6 +236,7 @@ class BannerItem extends StatelessWidget {
     );
   }
 }
+
 class Challenges extends StatefulWidget {
   const Challenges({super.key});
 
@@ -251,6 +255,7 @@ class _ChallengesState extends State<Challenges> {
     _challengesBloc = ChallengeBloc();
     _challengesBloc.fetchChallenges();
   }
+
   @override
   Widget build(BuildContext context) {
     return /*BlocProvider(
@@ -272,8 +277,7 @@ class _ChallengesState extends State<Challenges> {
       ),
     );*/
 
-
-  /*  Column(
+        /*  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -324,7 +328,7 @@ class _ChallengesState extends State<Challenges> {
                 },
               ),
             ),
-             *//*Container(
+             */ /*Container(
               height: 180,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -334,31 +338,23 @@ class _ChallengesState extends State<Challenges> {
                   return ChallengeItemWidget(challengeItem: challenge);
                 },
               ),
-            ),*//*
+            ),*/ /*
           ],
         ),
       ],
     );*/
-    Container();
+        Container();
   }
 }
-
-
 
 class ChallengeItem {
   final String title;
   final String date;
   final String description;
 
-
-  ChallengeItem({
-    required this.title,
-    required this.date,
-    required this.description
-
-  });
+  ChallengeItem(
+      {required this.title, required this.date, required this.description});
 }
-
 
 class Quizz extends StatefulWidget {
   const Quizz({super.key});
@@ -383,7 +379,6 @@ class _QuizzState extends State<Quizz> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                 children: [
                   const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -395,55 +390,51 @@ class _QuizzState extends State<Quizz> {
                   ),
                 ],
               ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-
-                        height: 220,
-
-                        child: Row(
-                          children: [
-                            Flexible(
-                              flex:1,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-
-                                    for (var i = 0; i < quizList.length && i < 4; i++)
-                                    SizedBox(
-                                      width:400,
-                                        child: QuizCard(quiz: quizList[i])),
-                                ],
-                              ),
-                            ),
-                          ],
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 220,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              for (var i = 0; i < quizList.length && i < 4; i++)
+                                SizedBox(
+                                    width: 400,
+                                    child: QuizCard(quiz: quizList[i])),
+                            ],
+                          ),
                         ),
-                      ),
-              SizedBox(
-                height: 250,
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex:1,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          //for (final quiz in quizList)
-                            for (var i = 4; i < quizList.length && i < 8; i++)
-                            SizedBox(
-                                width:400,
-
-                                child: QuizCard(quiz: quizList[i])),
-                        ],
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-                    ],
                   ),
+                  SizedBox(
+                    height: 250,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              //for (final quiz in quizList)
+                              for (var i = 4; i < quizList.length && i < 8; i++)
+                                SizedBox(
+                                    width: 400,
+                                    child: QuizCard(quiz: quizList[i])),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
 
               /*Column(
                   children: [
@@ -451,7 +442,6 @@ class _QuizzState extends State<Quizz> {
                     QuizCard(quiz: quiz),
                   ],
                 )*/
-
             ],
           );
         } else if (snapshot.hasError) {

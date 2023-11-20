@@ -9,7 +9,7 @@ class QuizCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Stack(
+    return Stack(
       children: [
         Container(
           margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -17,13 +17,9 @@ class QuizCard extends StatelessWidget {
           width: double.infinity,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-                colors: [
-                  Color(0xffE6E1FF),
-                  Color(0xffD5CCFF)
-                ],begin: Alignment.bottomRight
-            ),
+                colors: [Color(0xffE6E1FF), Color(0xffD5CCFF)],
+                begin: Alignment.bottomRight),
             borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -31,7 +27,6 @@ class QuizCard extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: Image.asset('assets/quiz1.png')),
           ),
-
         ),
         Container(
           margin: const EdgeInsets.fromLTRB(20, 90, 20, 0),
@@ -39,24 +34,27 @@ class QuizCard extends StatelessWidget {
           width: double.infinity,
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))
-          ),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(quiz.description,style: const TextStyle(
-                  fontSize: 15,
-
+                child: Text(
+                  quiz.description,
+                  style: const TextStyle(
+                    fontSize: 15,
+                  ),
+                  maxLines: 2,
                 ),
-                  maxLines: 2,),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(quiz.startDate,style: const TextStyle(color: Colors.black87),),
+                child: Text(
+                  quiz.startDate,
+                  style: const TextStyle(color: Colors.black87),
+                ),
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -65,8 +63,7 @@ class QuizCard extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                         color: Colors.grey,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     child: Text("${quiz.participants}+Participants"),
                   ),
                   Container(
@@ -74,12 +71,10 @@ class QuizCard extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                         color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     child: Text('${quiz.price}\$'),
                   ),
-                  ElevatedButton(onPressed: (){},
-                      child: const Text('Bid'))
+                  ElevatedButton(onPressed: () {}, child: const Text('Bid'))
                 ],
               )
             ],

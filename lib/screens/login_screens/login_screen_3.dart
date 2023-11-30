@@ -113,7 +113,6 @@ class _LoginScreen3State extends State<LoginScreen3> {
 
   Widget _buildTitle(String title) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.fromLTRB(0, height * 0.03, 0, height * 0.02),
       child: AutoSizeText(

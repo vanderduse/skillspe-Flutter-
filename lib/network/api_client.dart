@@ -7,6 +7,10 @@ class ApiClient {
   static Dio createDio() {
     var dio = Dio(BaseOptions(
       baseUrl: BASE_URL,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       receiveDataWhenStatusError: true,
       receiveTimeout: const Duration(seconds: 60 * 1000),
       connectTimeout: const Duration(seconds: 60 * 1000),

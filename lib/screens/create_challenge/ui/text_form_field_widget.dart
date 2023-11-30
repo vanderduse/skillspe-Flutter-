@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 
 class TextFormFieldWidget extends StatefulWidget {
   final String formLabel;
@@ -12,7 +13,7 @@ class TextFormFieldWidget extends StatefulWidget {
   final String? Function(String?)? validator;
   final Function(String)? onChange;
 
-  TextFormFieldWidget({
+  const TextFormFieldWidget({
     super.key,
     required this.formLabel,
     required this.isRequiredField,
@@ -56,7 +57,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               widget.isRequiredField
                   ? const Align(
                       alignment: Alignment.topLeft,
-                      child: Text(star),
+                      child: Text(STAR),
                     )
                   : const SizedBox.shrink(),
             ],
@@ -95,7 +96,8 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                         if (pickedDate != null) {
                           //pickedDate output format => 2021-03-10 00:00:00.000
                           String formattedDate =
-                              DateFormat('dd/MM/yyyy').format(pickedDate);
+                              DateFormat(DDMMYYYY_SLASH_FORMAT)
+                                  .format(pickedDate);
                           setState(() {
                             _textEditingController.text =
                                 formattedDate; //set output date to TextField value.
@@ -104,7 +106,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                       },
                       icon: const Icon(Icons.calendar_month_outlined))
                   : null,
-              prefix: widget.isAmountTypeField ? const Text(rupee) : null,
+              prefix: widget.isAmountTypeField ? const Text(RUPEE) : null,
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(7))),
             ))

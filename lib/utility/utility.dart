@@ -10,3 +10,11 @@ buildShowDialog(BuildContext context) {
         );
       });
 }
+
+showSnackBar(BuildContext context, String message) {
+  var snackBar = SnackBar(
+      content: Text(
+    message,
+  ));
+  return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}

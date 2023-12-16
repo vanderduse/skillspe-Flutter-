@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_spec.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class QuizSpecs extends StatelessWidget {
   final int totalQuestions;
@@ -22,17 +23,17 @@ class QuizSpecs extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           QuizSpec(
-              label: "Questions",
+              label: QUESTIONS,
               icon: "assets/illustrations/message-question.svg",
               value: "20"),
           Spacer(),
           QuizSpec(
-              label: "Duration",
+              label: DURATION,
               icon: "assets/illustrations/time.svg",
               value: "10 mins"),
           Spacer(),
           QuizSpec(
-              label: "Prize Pool",
+              label: PRIZE_POOL,
               icon: "assets/illustrations/medal-star.svg",
               value: "\$ 2000"),
         ],

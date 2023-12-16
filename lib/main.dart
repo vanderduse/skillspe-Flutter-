@@ -24,22 +24,35 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a blue toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
+          primaryColor: Color(0xff7E56DA),
+          primaryColorDark: Color(0xff2E1452),
+          primaryColorLight: Color.fromRGBO(201, 179, 239, 0.20),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Inter",
+                  color: Color(0xff0A121A)),
+              bodyLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter",
+                  color: Color(0xff0A121A)),
+              bodyMedium: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter"),
+              labelSmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter",
+                  color: Color(0xff5C6068)),
+              labelMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Inter",
+              )),
           fontFamily: 'Inter',
           useMaterial3: true,
         ),

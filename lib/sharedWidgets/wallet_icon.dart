@@ -28,11 +28,8 @@ class WalletIcon extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(left: 4),
-              child: Text(
-                walletAmount.toStringAsFixed(1),
-                style: const TextStyle(
-                    color: Color(0xff181201), fontWeight: FontWeight.w500),
-              ),
+              child: Text(walletAmount.toStringAsFixed(1),
+                  style: Theme.of(context).textTheme.bodyMedium),
             )
           ],
         ));

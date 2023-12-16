@@ -8,6 +8,7 @@ import 'package:skills_pe/sharedWidgets/custom_checkbox.dart';
 import 'package:skills_pe/sharedWidgets/hyperlink_text.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_details_cards.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class QuizHome extends StatefulWidget {
   const QuizHome({super.key});
@@ -57,17 +58,17 @@ class _QuizHomeState extends State<QuizHome> {
                     children: [
                       CustomCheckbox(checked: true, onChanged: () => {}),
                       HyperlinkText(
-                          normalText: "Accept",
-                          linkedText: "terms & conditions",
+                          normalText: ACCEPT_QUIZ,
+                          linkedText: QUIZ_TNC,
                           onPressed: () => {})
                     ],
                   ),
                   FilledBtn(
-                      label: "Start Quiz for \$3",
+                      label: "$START_QUIZ \$3",
                       onPressed: () {
                         print('Button tapped!');
                       },
-                      backgroundColor: const Color(0xFF7E56DA),
+                      backgroundColor: Theme.of(context).primaryColor,
                       textColor: Colors.white),
                 ],
               ))

@@ -49,25 +49,13 @@ class QuizSpec extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF5C6068),
-                  fontSize: 12,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
+                style: Theme.of(context).textTheme.labelSmall,
               ),
               const SizedBox(height: 4),
               Text(
                 value,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF0A121A),
-                  fontSize: 16,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),

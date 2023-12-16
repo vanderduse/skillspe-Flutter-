@@ -5,6 +5,8 @@ import 'package:skills_pe/sharedWidgets/cross_timer_appbar.dart';
 import 'package:skills_pe/screens/quiz/widgets/timer_progress_bar.dart';
 import 'package:skills_pe/screens/quiz/widgets/options_container.dart';
 import 'package:skills_pe/models/question_model.dart';
+import 'package:skills_pe/screens/quiz/widgets/question_status.dart';
+import 'package:skills_pe/screens/quiz/widgets/question_detail.dart';
 
 class QuizQuestion extends StatefulWidget {
   const QuizQuestion({super.key});
@@ -62,54 +64,6 @@ class _QuizQuestionState extends State<QuizQuestion> {
               ))
         ],
       ),
-    );
-  }
-}
-
-class QuestionStatus extends StatefulWidget {
-  final int totalQuestions;
-  final int currentQuestionIndex;
-
-  const QuestionStatus({
-    Key? key,
-    required this.totalQuestions,
-    required this.currentQuestionIndex,
-  }) : super(key: key);
-
-  @override
-  _QuestionStatusState createState() => _QuestionStatusState();
-}
-
-class _QuestionStatusState extends State<QuestionStatus> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          child: Text(
-            '${widget.currentQuestionIndex}/${widget.totalQuestions}',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class QuestionDetails extends StatelessWidget {
-  final String question;
-  const QuestionDetails({Key? key, required this.question}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          question,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-      ],
     );
   }
 }

@@ -51,7 +51,37 @@ class _HomeMain extends State<HomeMain> {
                 // Add more data items as needed
               ],
             ),
-            // Other widgets...
+            QuizWidget(
+              title: 'Quiz',
+              data: [
+                {
+                  'title':
+                      'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
+                  'icon':
+                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+                  'type': 'Motivator',
+                  'date': 'Jun 30 - Jul 30, 2023',
+                  // Add more properties as needed
+                },
+                {
+                  'title': 'Lorem ipsum dolor sit amet.',
+                  'icon':
+                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+                  'type': 'Inspiration',
+                  'date': 'Jun 30 - Jul 30, 2023',
+                  // Add more properties as needed
+                },
+                {
+                  'title': 'Lorem ipsum dolor sit amet consectetur.',
+                  'icon':
+                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+                  'type': 'Inspiration',
+                  'date': 'Jun 30 - Jul 30, 2023',
+                  // Add more properties as needed
+                },
+                // Add more data items as needed
+              ],
+            ),
           ],
         ),
       ),

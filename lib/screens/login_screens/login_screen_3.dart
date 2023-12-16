@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:skills_pe/screens/home_screens/home_screen_1.dart';
+// import 'package:skills_pe/screens/home_screens/home_screen_1.dart';
 
 class LoginScreen3 extends StatefulWidget {
   const LoginScreen3({Key? key}) : super(key: key);
@@ -150,7 +150,8 @@ class _LoginScreen3State extends State<LoginScreen3> {
       padding: EdgeInsets.fromLTRB(0, height * 0.01, 0, 0),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeScreen1()));
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const HomeScreen1()));
         },
         child: const AutoSizeText(
           'Create Account',

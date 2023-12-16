@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const QuizQuestion());
+        home: const SplashManager());
   }
 }
 

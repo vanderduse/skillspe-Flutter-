@@ -163,24 +163,29 @@ class ChallengeCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                              height:
-                                  8), // Adding some space between title and tag
+                            height:
+                                8, // Adding some space between title and tag
+                          ),
 
-                          // Container for the tag with fixed width
+// Container for the tag with fixed width
                           Container(
                             margin: EdgeInsets.only(top: 8),
                             child: SizedBox(
                               child: Container(
-                                margin: EdgeInsets.only(right: 140.0),
+                                margin: const EdgeInsets.only(
+                                    right:
+                                        140.0), // Use const for unchanged EdgeInsets
                                 decoration: BoxDecoration(
-                                  color: Color(
-                                      0xFFF5F5F5), // Replace with your desired color code
+                                  color: const Color(
+                                      0xFFF5F5F5), // Use const for unchanged color
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 2),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5,
+                                        vertical:
+                                            2), // Use const for unchanged EdgeInsets
                                     child: Text(
                                       item['type'],
                                       style: TextStyle(
@@ -223,7 +228,7 @@ class ChallengeCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                  width: 1.4,
+                                  width: 1.1,
                                   color: Color(0xFF8C50F6)), // Border color
                             ),
                             padding: EdgeInsets.symmetric(

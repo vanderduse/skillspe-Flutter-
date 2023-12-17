@@ -58,25 +58,28 @@ class _HomeMain extends State<HomeMain> {
                   'title':
                       'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
                   'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Motivator',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Lorem ipsum dolor sit amet.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
+                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
+                  'participants': '100+ participants',
+                  'date': 'Starts on 01 Oct 23',
+                  'price': '₹50'
                   // Add more properties as needed
                 },
                 {
                   'title': 'Lorem ipsum dolor sit amet consectetur.',
                   'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
+                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
+                  'participants': '100+ participants',
+                  'date': 'Starts on 01 Oct 23',
+                  'price': '₹20'
+                  // Add more properties as needed
+                },
+                {
+                  'title': 'Lorem ipsum dolor.',
+                  'icon':
+                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
+                  'participants': '100+ participants',
+                  'date': 'Starts on 01 Oct 23',
+                  'price': '₹50'
                   // Add more properties as needed
                 },
                 // Add more data items as needed
@@ -107,7 +110,7 @@ class MySwiper extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 213, 213, 213),
+                  color: Color.fromARGB(255, 223, 214, 252),
                   borderRadius:
                       BorderRadius.circular(20.0), // Adjust the radius
                   boxShadow: const [

@@ -15,7 +15,7 @@ class ChallengesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(left: 16.0, right: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -39,16 +39,25 @@ class ChallengesWidget extends StatelessWidget {
         ),
         SizedBox(
           height: 200, // Set a fixed height for the horizontal ListView
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: data.map((item) {
-              return Container(
-                width: MediaQuery.of(context).size.width *
-                    0.8, // 80% of screen width
-                margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-                child: ChallengeCard(item: item), // Using the CustomCard widget
-              );
-            }).toList(),
+          child: Container(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // 80% of screen width
+                  margin: EdgeInsets.symmetric(
+                    horizontal: index == 0
+                        ? 16.0
+                        : (index == data.length - 1 ? 16.0 : 10.0),
+                  ),
+                  child: ChallengeCard(
+                    item: data[index],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -71,19 +80,18 @@ class ChallengeCard extends StatelessWidget {
     final middleWidth = cardWidth * 0.15;
 
     return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 4),
+      margin: EdgeInsets.only(top: 10, bottom: 14),
       padding: EdgeInsets.only(top: 15, bottom: 10, right: 15),
-      height: 100,
       width: cardWidth,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // Shadow color
-            spreadRadius: 2, // Spread radius
-            blurRadius: 5, // Blur radius
-            offset: Offset(0, 3), // Shadow position
+            color: Colors.grey.withOpacity(0.3), // Shadow color
+            spreadRadius: 1, // Spread radius
+            blurRadius: 8, // Blur radius
+            offset: Offset(0, 5), // Shadow position
           ),
         ],
       ),

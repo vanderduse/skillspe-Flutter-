@@ -80,7 +80,7 @@ class _TournamentFixtureState extends State<TournamentFixture> {
                 ),
               ),
               const SizedBox(height: 16),
-              ButtonGroup(buttonNames: [
+              ButtonGroup(buttonNames: const [
                 "All",
                 "Round 1",
                 "Round 2",
@@ -135,7 +135,7 @@ class _TournamentFixtureState extends State<TournamentFixture> {
         const SizedBox(height: 16),
         Text(
           "Round $round Teams",
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF0A121A),
             fontSize: 16,
             fontFamily: 'Inter',

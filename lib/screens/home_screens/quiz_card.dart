@@ -84,9 +84,9 @@ class QuizCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3), // Shadow color
+            color: Colors.grey.withOpacity(0.2), // Shadow color
             spreadRadius: 1, // Spread radius
-            blurRadius: 8, // Blur radius
+            blurRadius: 10, // Blur radius
             offset: Offset(0, 5), // Shadow position
           ),
         ],
@@ -158,7 +158,7 @@ class QuizCard extends StatelessWidget {
                         Container(
                           child: Container(
                             width: 120,
-                            padding: EdgeInsets.all(0.0), // Adding padding
+                            padding: EdgeInsets.all(3.0), // Adding padding
                             decoration: BoxDecoration(
                               color: Color(0xFFF5F5F5),
                               borderRadius: BorderRadius.circular(20.0),

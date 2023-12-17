@@ -88,9 +88,9 @@ class ChallengeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3), // Shadow color
+            color: Colors.grey.withOpacity(0.2), // Shadow color
             spreadRadius: 1, // Spread radius
-            blurRadius: 8, // Blur radius
+            blurRadius: 10, // Blur radius
             offset: Offset(0, 5), // Shadow position
           ),
         ],

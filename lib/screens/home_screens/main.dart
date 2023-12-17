@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:skills_pe/screens/home_screens/quiz_card.dart';
 import 'package:skills_pe/screens/home_screens/challenges_card.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -12,6 +13,12 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
+  final List<String> imageUrls = [
+    'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
+    'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
+    // Add more image URLs as needed
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +26,7 @@ class _HomeMain extends State<HomeMain> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MySwiper(),
+            MySwiper(imageUrls: imageUrls),
             ChallengesWidget(
               title: 'Challenges',
               data: [
@@ -92,46 +99,75 @@ class _HomeMain extends State<HomeMain> {
   }
 }
 
-class MySwiper extends StatelessWidget {
-  const MySwiper(); // Add 'const' to the constructor
+class MySwiper extends StatefulWidget {
+  final List<String> imageUrls;
+
+  const MySwiper({required this.imageUrls});
+
+  @override
+  _MySwiperState createState() => _MySwiperState();
+}
+
+class _MySwiperState extends State<MySwiper> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-          top: 20.0, bottom: 20.0), // Add top and bottom margins
-      height: 200, // Set a fixed height for Swiper container
-      child: CarouselSlider(
-        options: CarouselOptions(height: 400.0),
-        items: [1, 2, 3, 4, 5].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 223, 214, 252),
-                  borderRadius:
-                      BorderRadius.circular(20.0), // Adjust the radius
-                  boxShadow: const [
-                    // BoxShadow(
-                    //   color: Color.fromARGB(255, 233, 211, 249),
-                    //   spreadRadius: 3,
-                    //   blurRadius: 7,
-                    //   offset: Offset(0, 3), // changes position of shadow
-                    // ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    'Image from backend $i',
-                    style: const TextStyle(fontSize: 16.0),
+      margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+      height: 200,
+      child: Stack(
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 200.0,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              viewportFraction: 0.9,
+              onPageChanged: (index, reason) =>
+                  setState(() => _currentIndex = index), // Track current index
+            ),
+            items: widget.imageUrls // Access imageUrls via widget property
+                .map((imageUrl) => Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  NetworkImage(imageUrl), // Load image from URL
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        );
+                      },
+                    ))
+                .toList(),
+          ),
+          Positioned(
+            bottom: 10.0,
+            left: 0.0,
+            right: 0.0,
+            child: Center(
+              child: DotsIndicator(
+                dotsCount:
+                    widget.imageUrls.length, // Adjust based on image list
+                position: _currentIndex, // Use current index for active dot
+                decorator: DotsDecorator(
+                  color: Color.fromARGB(
+                      117, 92, 40, 164), // Use hex code with opacity (255)
+                  activeColor: const Color(0xFF5C28A4),
+                  size: const Size(8.0, 8.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
                 ),
-              );
-            },
-          );
-        }).toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

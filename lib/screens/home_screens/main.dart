@@ -41,7 +41,7 @@ class _HomeMain extends State<HomeMain> {
                   // Add more properties as needed
                 },
                 {
-                  'title': 'Lorem ipsum dolor sit amet consectetur.',
+                  'title': 'Lorem ipsum ',
                   'icon':
                       'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
                   'type': 'Inspiration',

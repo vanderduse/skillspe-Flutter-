@@ -426,6 +426,7 @@ class _QuizzState extends State<Quizz> {
                               for (var i = 4; i < quizList.length && i < 8; i++)
                                 SizedBox(
                                     width: 400,
+                                )
                                     // child: QuizCard(quiz: quizList[i])),
                             ],
                           ),

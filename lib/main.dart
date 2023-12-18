@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const TournamentHome());
+        home: const SplashManager());
   }
 }
 

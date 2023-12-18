@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/screens/tournaments/widgets/match_card.dart';
-import 'package:skills_pe/screens/tournaments/widgets/no_teams_card.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/models/match_model.dart';

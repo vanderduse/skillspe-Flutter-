@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
+import 'package:skills_pe/screens/tournaments/widgets/match_card.dart';
 import 'package:skills_pe/screens/tournaments/widgets/no_teams_card.dart';
-import 'package:skills_pe/screens/tournaments/widgets/team_card.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
+import 'package:skills_pe/models/match_model.dart';
 
 class TournamentFixture extends StatefulWidget {
   const TournamentFixture({Key? key}) : super(key: key);
@@ -14,42 +15,30 @@ class TournamentFixture extends StatefulWidget {
 
 class _TournamentFixtureState extends State<TournamentFixture> {
   late double appBarHeight;
-  List<Team> teams = [
-    Team(
-      teamName: "Team A",
-      accentColor: "FF5733",
-      captainName: "John Doe",
-      captainProfile: "https://via.placeholder.com/24x24",
-      round: 1,
+  List<Match> matches = [
+    Match(
+      teamSet: [
+        Team(
+          teamName: "Team A",
+          accentColor: "FF5733",
+          captainName: "John Doe",
+          captainProfile: "https://via.placeholder.com/24x24",
+          round: 1,
+        ),
+        Team(
+          teamName: "Team B",
+          accentColor: "00FF00",
+          captainName: "Jane Doe",
+          captainProfile: "https://via.placeholder.com/24x24",
+          round: 1,
+        ),
+      ],
+      winningTeamId: null,
+      startDate: "startDate",
+      endDate: "endDate",
+      groupName: "Group 1",
     ),
-    Team(
-      teamName: "Team B",
-      accentColor: "00FF00",
-      captainName: "Jane Doe",
-      captainProfile: "https://via.placeholder.com/24x24",
-      round: 1,
-    ),
-    Team(
-      teamName: "Team C",
-      accentColor: "0000FF",
-      captainName: "Alice",
-      captainProfile: "https://via.placeholder.com/24x24",
-      round: 2,
-    ),
-    Team(
-      teamName: "Team D",
-      accentColor: "9747FF",
-      captainName: "Ruben Philips",
-      captainProfile: "https://via.placeholder.com/24x24",
-      round: 2,
-    ),
-    Team(
-      teamName: "Team E",
-      accentColor: "FF00FF",
-      captainName: "Bob",
-      captainProfile: "https://via.placeholder.com/24x24",
-      round: 3,
-    ),
+    // Add more matches as needed
   ];
 
   @override
@@ -80,14 +69,19 @@ class _TournamentFixtureState extends State<TournamentFixture> {
                 ),
               ),
               const SizedBox(height: 16),
-              ButtonGroup(buttonNames: const [
-                "All",
-                "Round 1",
-                "Round 2",
-                "Round 3",
-              ], onItemSelected: (int index) => {}),
+              ButtonGroup(
+                buttonNames: const [
+                  "Group 1",
+                  "Group 2",
+                  "Knockout",
+                  "Semi",
+                  "Finals"
+                ],
+                onItemSelected: (int index) => {},
+              ),
+              const SizedBox(height: 28),
               Expanded(
-                child: _buildSectionedListView(),
+                child: _buildMatchesListView(),
               ),
               const SizedBox(height: 16),
               Align(
@@ -106,57 +100,17 @@ class _TournamentFixtureState extends State<TournamentFixture> {
     );
   }
 
-  Widget _buildSectionedListView() {
-    // Group teams by round
-    Map<int, List<Team>> groupedTeams = {};
-    teams.forEach((team) {
-      if (!groupedTeams.containsKey(team.round)) {
-        groupedTeams[team.round] = [];
-      }
-      groupedTeams[team.round]?.add(team);
-    });
-
-    // Build sections
-    List<Widget> sections = [];
-    groupedTeams.forEach((round, teams) {
-      sections.add(_buildSection(round, teams));
-    });
-
-    return ListView(
-      shrinkWrap: true,
-      children: sections,
-    );
-  }
-
-  Widget _buildSection(int round, List<Team> teams) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 16),
-        Text(
-          "Round $round Teams",
-          style: const TextStyle(
-            color: Color(0xFF0A121A),
-            fontSize: 16,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          ),
-        ),
-        const SizedBox(height: 8),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: teams.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                TeamCard(teamDetails: teams[index]),
-                const SizedBox(height: 16),
-              ],
-            );
-          },
-        ),
-      ],
+  Widget _buildMatchesListView() {
+    return ListView.builder(
+      itemCount: matches.length,
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            MatchCard(matchDetails: matches[index]),
+            const SizedBox(height: 16),
+          ],
+        );
+      },
     );
   }
 }

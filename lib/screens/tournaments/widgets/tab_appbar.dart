@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/sharedWidgets/wallet_icon.dart';
 
-AppBar tabAppbar(String screenName, double walletAmount) {
+AppBar tabAppbar(BuildContext context, String screenName, double walletAmount) {
   return AppBar(
     centerTitle: false,
     automaticallyImplyLeading: false,
@@ -23,14 +23,19 @@ AppBar tabAppbar(String screenName, double walletAmount) {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(right: 16),
-          alignment: Alignment.center,
-          child: SvgPicture.asset(
-            "assets/icons/arrow-left.svg",
-            height: 20,
-            width: 20,
+        InkWell(
+          child: Container(
+            margin: const EdgeInsets.only(right: 16),
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              "assets/icons/arrow-left.svg",
+              height: 20,
+              width: 20,
+            ),
           ),
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
         Align(
           alignment: Alignment.centerLeft, // Adjust the alignment as needed

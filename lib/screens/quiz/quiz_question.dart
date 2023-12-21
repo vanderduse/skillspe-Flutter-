@@ -19,7 +19,7 @@ class _QuizQuestionState extends State<QuizQuestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: navigationWithTimer("Quiz", 2000.00),
+      appBar: navigationWithTimer(context, "Quiz", 2000.00),
       backgroundColor: Color(0xffF4F4F4),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

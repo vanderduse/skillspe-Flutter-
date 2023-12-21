@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/tournaments/edit_matches.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/screens/tournaments/widgets/match_card.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
@@ -86,8 +87,13 @@ class _TournamentFixtureState extends State<TournamentFixture> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: FilledBtn(
-                  label: "Share",
-                  onPressed: () => {},
+                  label: "Edit Matches",
+                  onPressed: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditMatches()))
+                  },
                   backgroundColor: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                 ),

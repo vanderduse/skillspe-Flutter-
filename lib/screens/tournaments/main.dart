@@ -24,7 +24,7 @@ class _TournamentHomeState extends State<TournamentHome> {
         length: 5,
         child: Scaffold(
           backgroundColor: Color(0xffF4F4F4),
-          appBar: tabAppbar("Tournament", 2000.00),
+          appBar: tabAppbar(context, "Tournament", 2000.00),
           body: const TabBarView(
             children: [
               TournamentOverview(),

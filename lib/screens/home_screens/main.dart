@@ -156,9 +156,8 @@ class _MySwiperState extends State<MySwiper> {
                     widget.imageUrls.length, // Adjust based on image list
                 position: _currentIndex, // Use current index for active dot
                 decorator: DotsDecorator(
-                  color: Color.fromARGB(
-                      117, 92, 40, 164), // Use hex code with opacity (255)
-                  activeColor: const Color(0xFF5C28A4),
+                  color: Color.fromARGB(156, 234, 234, 234), // Use hex code with opacity (255)
+                  activeColor: Color.fromARGB(255, 255, 255, 255),
                   size: const Size(8.0, 8.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),

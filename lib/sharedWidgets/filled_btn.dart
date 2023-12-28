@@ -25,7 +25,7 @@ class FilledBtn extends StatelessWidget {
           foregroundColor: textColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           textStyle: Theme.of(context).textTheme.labelMedium,
         ),
         child: Text(label),

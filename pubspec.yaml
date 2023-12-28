@@ -35,15 +35,17 @@ dependencies:
   dio: ^5.3.3
   dots_indicator: ^3.0.0
   equatable: ^2.0.5
+  expandable: ^5.0.1
+  file_picker: ^6.1.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
+  flutter_svg: ^2.0.9
   intl: ^0.17.0
   json_annotation: ^4.8.1
   meta: ^1.9.1
   pin_code_fields: ^8.0.1
   simple_gradient_text: ^1.3.0
-  flutter_svg: ^2.0.9
   carousel_slider: ^4.2.1
   flutter_speed_dial: ^7.0.0
 
@@ -76,6 +78,8 @@ flutter:
     - assets/quiz1.png
     - assets/icons/
     - assets/illustrations/
+    - assets/icons/tabicons/active/
+    - assets/icons/tabicons/inactive/
     - assets/cup.svg
     - assets/flag.svg
     - assets/home.svg
@@ -98,6 +102,5 @@ flutter:
         - asset: fonts/Epilogue.ttf
         - asset: fonts/Epilogue-Italic.ttf
           style: italic
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

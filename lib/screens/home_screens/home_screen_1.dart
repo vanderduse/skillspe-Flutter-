@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/home_screens/quiz_card.dart';
+import 'package:skills_pe/screens/tournaments/main.dart';
 import 'package:skills_pe/utility/constants.dart';
 import '../../bloc/challenges_bloc.dart';
 import '../../bloc/quiz_bloc.dart';
@@ -289,7 +290,7 @@ class BannerContainer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreateChallengeScreen()));
+                        builder: (context) => const TournamentHome()));
               },
               child: const Text('Create Now'),
             ),

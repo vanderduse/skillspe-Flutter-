@@ -27,7 +27,7 @@ class _HomeMain extends State<HomeMain> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MySwiper(imageUrls: imageUrls),
+            HomeSwipper(imageUrls: imageUrls),
             ChallengesWidget(
               title: 'Challenges',
               data: [
@@ -102,16 +102,16 @@ class _HomeMain extends State<HomeMain> {
   }
 }
 
-class MySwiper extends StatefulWidget {
+class HomeSwipper extends StatefulWidget {
   final List<String> imageUrls;
 
-  const MySwiper({required this.imageUrls});
+  const HomeSwipper({required this.imageUrls});
 
   @override
-  _MySwiperState createState() => _MySwiperState();
+  _HomeSwipperState createState() => _HomeSwipperState();
 }
 
-class _MySwiperState extends State<MySwiper> {
+class _HomeSwipperState extends State<HomeSwipper> {
   int _currentIndex = 0;
 
   @override

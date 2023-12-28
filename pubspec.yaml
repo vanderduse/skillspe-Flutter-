@@ -35,9 +35,12 @@ dependencies:
   dio: ^5.3.3
   dots_indicator: ^3.0.0
   equatable: ^2.0.5
+  expandable: ^5.0.1
+  file_picker: ^6.1.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
+  flutter_svg: ^2.0.9
   intl: ^0.17.0
   json_annotation: ^4.8.1
   meta: ^1.9.1
@@ -71,6 +74,10 @@ flutter:
     - assets/athlete_banner.png
     - assets/challenges1.png
     - assets/quiz1.png
+    - assets/icons/
+    - assets/illustrations/
+    - assets/icons/tabicons/active/
+    - assets/icons/tabicons/inactive/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
@@ -80,17 +87,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter.ttf
+    - family: Epilogue
+      fonts:
+        - asset: fonts/Epilogue.ttf
+        - asset: fonts/Epilogue-Italic.ttf
+          style: italic
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

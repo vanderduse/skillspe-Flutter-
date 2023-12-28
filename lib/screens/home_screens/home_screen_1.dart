@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/home_screens/quiz_card.dart';
+import 'package:skills_pe/screens/tournaments/main.dart';
 
 import '../../bloc/challenges_bloc.dart';
 import '../../bloc/quiz_bloc.dart';
@@ -195,7 +196,7 @@ class BannerContainer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreateChallengeScreen()));
+                        builder: (context) => const TournamentHome()));
               },
               child: const Text('Create Now'),
             ),

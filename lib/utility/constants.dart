@@ -25,3 +25,15 @@ const CHALLENGE_FEES_MAX_VALIDATION =
 const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
+
+// Quiz Home screen
+const START_QUIZ = "Start Quiz for";
+const QUESTIONS = "Questions";
+const DURATION = "Duration";
+const PRIZE_POOL = "Prize Pool";
+const ACCEPT_QUIZ = "Accept";
+const QUIZ_TNC = "terms & conditions";
+
+// Quiz Question Screen
+const SUBMIT_AND_NEXT = "Submit & Next";
+const SUBMIT = "Submit";

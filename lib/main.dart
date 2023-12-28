@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
+import 'package:skills_pe/screens/quiz/main.dart';
+import 'package:skills_pe/screens/quiz/quiz_question.dart';
+import 'package:skills_pe/screens/tournaments/create_tournament.dart';
+import 'package:skills_pe/screens/tournaments/main.dart';
 
 import 'bloc/challenges_bloc.dart';
 
@@ -20,29 +24,43 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SplashManager()
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: Color(0xff7E56DA),
+          primaryColorDark: Color(0xff2E1452),
+          primaryColorLight: Color.fromRGBO(201, 179, 239, 0.20),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Inter",
+                  color: Color(0xff0A121A)),
+              bodyLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter",
+                  color: Color(0xff0A121A)),
+              bodyMedium: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter"),
+              labelSmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Inter",
+                  color: Color(0xff5C6068)),
+              labelMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Inter",
+                color: Color(0xff5C6068),
+              )),
+          fontFamily: 'Inter',
+          useMaterial3: true,
+        ),
+        home: const SplashManager());
   }
 }
 

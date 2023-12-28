@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:skills_pe/screens/login_screens/login_screen_2.dart';
+import 'package:flutter_firebase_recaptcha/flutter_firebase_recaptcha.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,9 +16,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final String defaultCountryCode = "+1";
   CountryCode? selectedCountry = CountryCode.fromCode('US');
+  static const firebaseConfig = {
+    "apiKey": String.fromEnvironment('FIREBASE_API_KEY'),
+    "authDomain": String.fromEnvironment('FIREBASE_AUTH_DOMAIN'),
+    "projectId": String.fromEnvironment('FIREBASE_PRODUCT_ID'),
+    "storageBucket": String.fromEnvironment('FIREBASE_STORAGE_BUCKET'),
+    "messagingSenderId": String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID'),
+    "appId": String.fromEnvironment('FIREBASE_APP_ID'),
+    "measurementId": String.fromEnvironment('FIREBASE_MEASUREMENT_ID'),
+  };
 
   @override
   Widget build(BuildContext context) {
+    print(const String.fromEnvironment('FIREBASE_API_KEY'));
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -33,6 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Stack(
           children: [
+            FirebaseRecaptchaVerifierModal(
+              firebaseConfig: firebaseConfig,
+              onVerify: (token) => print('token: ' + token),
+              onLoad: () => print('onLoad'),
+              onError: () => print('onError'),
+              onFullChallenge: () => print('onFullChallenge'),
+              attemptInvisibleVerification: true,
+            ),
             // Logo and text widgets
             const LogoAndTextWidget(),
 

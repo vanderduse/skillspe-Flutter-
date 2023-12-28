@@ -4,6 +4,7 @@ import 'package:skills_pe/screens/home_screens/quiz_card.dart';
 import 'package:skills_pe/screens/home_screens/challenges_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:skills_pe/screens/home_screens/bottom_navbar.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -95,6 +96,8 @@ class _HomeMain extends State<HomeMain> {
           ],
         ),
       ),
+      floatingActionButton: BottomNavigationBarWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
@@ -156,7 +159,8 @@ class _MySwiperState extends State<MySwiper> {
                     widget.imageUrls.length, // Adjust based on image list
                 position: _currentIndex, // Use current index for active dot
                 decorator: DotsDecorator(
-                  color: Color.fromARGB(156, 234, 234, 234), // Use hex code with opacity (255)
+                  color: Color.fromARGB(
+                      156, 234, 234, 234), // Use hex code with opacity (255)
                   activeColor: Color.fromARGB(255, 255, 255, 255),
                   size: const Size(8.0, 8.0),
                   shape: RoundedRectangleBorder(

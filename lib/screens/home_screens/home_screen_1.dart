@@ -1,10 +1,11 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/home_screens/quiz_card.dart';
-
+import 'package:skills_pe/utility/constants.dart';
 import '../../bloc/challenges_bloc.dart';
 import '../../bloc/quiz_bloc.dart';
 import '../../models/quiz_model.dart';
@@ -88,45 +89,138 @@ class _HomeScreen1State extends State<HomeScreen1> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Color(0xffe4d8fa),
-              Colors.white,
-            ],
-            begin: Alignment.bottomCenter,
-          )),
-          child: Column(
-            children: [
-              BannerContainer(
-                pageController: _pageController,
-                currentPage: _currentPage,
-              ),
-              DotsIndicator(
-                dotsCount: _totalItems,
-                position: _currentPage.toDouble().toInt(),
-                decorator: DotsDecorator(
-                  color: Colors.grey,
-                  activeColor: Colors.purple,
-                  size: const Size(5, 5),
-                  activeSize: const Size(8, 8),
-                  shape: const Border(),
-                  activeShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                colors: [
+                  Color(0xffe4d8fa),
+                  Colors.white,
+                ],
+                begin: Alignment.bottomCenter,
+              )),
+              child: Column(
+                children: [
+                  BannerContainer(
+                    pageController: _pageController,
+                    currentPage: _currentPage,
                   ),
-                ),
+                  DotsIndicator(
+                    dotsCount: _totalItems,
+                    position: _currentPage.toDouble().toInt(),
+                    decorator: DotsDecorator(
+                      color: Colors.grey,
+                      activeColor: Colors.purple,
+                      size: const Size(5, 5),
+                      activeSize: const Size(8, 8),
+                      shape: const Border(),
+                      activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => ChallengeBloc()
+                      ..fetchChallenges(), // Create BLoC and fetch data
+                    child: const Challenges(),
+                  ),
+                  const Quizz(),
+                ],
               ),
-              BlocProvider(
-                create: (context) => ChallengeBloc()
-                  ..fetchChallenges(), // Create BLoC and fetch data
-                child: const Challenges(),
-              ),
-              const Quizz()
-            ],
+            ),
           ),
-        ),
+          Positioned(
+              bottom: 100,
+              left: 80,
+              right: 80,
+              height: 50,
+              child: Container(
+                height: 50,
+                width: 70,
+                decoration: const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(100))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SvgPicture.asset('assets/images/home.svg'),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8, top: 4, right: 0, bottom: 4),
+                        child: SpeedDial(
+                          direction: SpeedDialDirection.up,
+                          icon: Icons.add,
+                          backgroundColor: Colors.deepPurple,
+                          foregroundColor: Colors.white,
+                          activeIcon: Icons.close,
+                          visible: true,
+                          curve: Curves.bounceInOut,
+                          elevation: 8.0,
+                          overlayOpacity: 0.4,
+                          childrenButtonSize: const Size(180, 55),
+                          spacing: 3,
+                          children: [
+                            SpeedDialChild(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SvgPicture.asset('assets/images/flag.svg'),
+                                    const Text(CREATETOURNAMENT,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: "Inter",
+                                            color:
+                                                Color.fromRGBO(70, 43, 156, 1)))
+                                  ],
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              onTap: () => {},
+                            ),
+                            SpeedDialChild(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(25))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SvgPicture.asset('assets/images/cup.svg'),
+                                    const Text(CREATECHALLENGE,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: "Inter",
+                                            color:
+                                                Color.fromRGBO(70, 43, 156, 1)))
+                                  ],
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              onTap: () => {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CreateChallengeScreen()))
+                              },
+                            ),
+                          ],
+                        )),
+                    SvgPicture.asset('assets/images/profile_circle.svg')
+                  ],
+                ),
+              ))
+        ],
       ),
     );
   }
@@ -160,7 +254,7 @@ class BannerContainer extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(15),
         image: const DecorationImage(
-          image: AssetImage('assets/banner_background.png'),
+          image: AssetImage('assets/images/banner_background.png'),
           fit: BoxFit.fill,
         ),
       ),
@@ -174,15 +268,15 @@ class BannerContainer extends StatelessWidget {
               },
               children: const [
                 BannerItem(
-                  imagePath: 'assets/athlete_banner.png',
+                  imagePath: 'assets/images/athlete_banner.png',
                   text: ' Create your \n own challenge \n with SkillsPe',
                 ),
                 BannerItem(
-                  imagePath: 'assets/athlete_banner.png',
+                  imagePath: 'assets/images/athlete_banner.png',
                   text: 'Banner 2 Text',
                 ),
                 BannerItem(
-                  imagePath: 'assets/athlete_banner.png',
+                  imagePath: 'assets/images/athlete_banner.png',
                   text: 'Banner 3 Text',
                 ),
               ],
@@ -406,7 +500,7 @@ class _QuizzState extends State<Quizz> {
                               for (var i = 0; i < quizList.length && i < 4; i++)
                                 SizedBox(
                                     width: 400,
-                                    // child: QuizCard(quiz: quizList[i])),
+                                    child: QuizCard(quiz: quizList[i])),
                             ],
                           ),
                         ),
@@ -426,8 +520,7 @@ class _QuizzState extends State<Quizz> {
                               for (var i = 4; i < quizList.length && i < 8; i++)
                                 SizedBox(
                                     width: 400,
-                                )
-                                    // child: QuizCard(quiz: quizList[i])),
+                                    child: QuizCard(quiz: quizList[i])),
                             ],
                           ),
                         ),

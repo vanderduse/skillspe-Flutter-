@@ -107,12 +107,11 @@ class PhoneNumberInputWidget extends StatelessWidget {
   late final CountryCode? selectedCountry;
   final String defaultCountryCode;
 
-   PhoneNumberInputWidget({
+  PhoneNumberInputWidget({
     Key? key,
     required this.selectedCountry,
     required this.defaultCountryCode,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {

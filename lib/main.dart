@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/screens/quiz/main.dart';
 import 'package:skills_pe/screens/quiz/quiz_question.dart';
+import 'package:skills_pe/screens/tournaments/create_tournament.dart';
+import 'package:skills_pe/screens/tournaments/main.dart';
 
 import 'bloc/challenges_bloc.dart';
 

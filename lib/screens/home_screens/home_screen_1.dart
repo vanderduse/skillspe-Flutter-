@@ -173,7 +173,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    SvgPicture.asset('assets/images/flag.svg'),
+                                    SvgPicture.asset(
+                                        'assets/icons/bottomNavIcons/flag.svg'),
                                     const Text(CREATETOURNAMENT,
                                         style: TextStyle(
                                             fontSize: 14,

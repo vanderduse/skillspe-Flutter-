@@ -13,8 +13,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
         // right: 80,
         height: 50,
         child: Container(
-          height: 50,
-          width: 240,
+          height: double.infinity,
+          width: 220,
           decoration: const BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.all(Radius.circular(100))),
@@ -22,12 +22,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SvgPicture.asset(
-                'assets/images/home.svg',
+                'assets/icons/bottomNavIcons/home.svg',
               ),
               Padding(
                   padding: const EdgeInsets.only(
                       left: 8, top: 4, right: 0, bottom: 4),
                   child: SpeedDial(
+                    overlayColor: Colors.black,
                     direction: SpeedDialDirection.up,
                     icon: Icons.add,
                     backgroundColor: Colors.deepPurple,
@@ -36,7 +37,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                     visible: true,
                     curve: Curves.bounceInOut,
                     elevation: 8.0,
-                    overlayOpacity: 0.4,
+                    overlayOpacity: 0.8,
                     childrenButtonSize: const Size(180, 55),
                     spacing: 3,
                     children: [
@@ -45,12 +46,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25))),
                         child: Padding(
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SvgPicture.asset('assets/images/flag.svg'),
-                              const Text("Create Tournamenet",
+                              SvgPicture.asset(
+                                  'assets/icons/bottomNavIcons/flag.svg'),
+                              const Text("Create Tournament",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Inter",
@@ -70,7 +72,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SvgPicture.asset('assets/images/cup.svg'),
+                              SvgPicture.asset(
+                                  'assets/icons/bottomNavIcons/cup.svg'),
                               const Text("Create Challenge",
                                   style: TextStyle(
                                       fontSize: 14,
@@ -90,7 +93,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                       ),
                     ],
                   )),
-              SvgPicture.asset('assets/images/profile_circle.svg')
+              SvgPicture.asset('assets/icons/bottomNavIcons/profile_circle.svg')
             ],
           ),
         ));

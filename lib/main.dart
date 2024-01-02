@@ -5,6 +5,7 @@ import 'package:skills_pe/screens/quiz/main.dart';
 import 'package:skills_pe/screens/quiz/quiz_question.dart';
 import 'package:skills_pe/screens/tournaments/create_tournament.dart';
 import 'package:skills_pe/screens/tournaments/main.dart';
+import 'package:skills_pe/screens/login_screens/main.dart';
 
 import 'bloc/challenges_bloc.dart';
 
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const SplashManager());
+        home: const Login());
   }
 }
 

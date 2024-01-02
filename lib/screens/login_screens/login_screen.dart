@@ -45,14 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Stack(
           children: [
-            FirebaseRecaptchaVerifierModal(
-              firebaseConfig: firebaseConfig,
-              onVerify: (token) => print('token: ' + token),
-              onLoad: () => print('onLoad'),
-              onError: () => print('onError'),
-              onFullChallenge: () => print('onFullChallenge'),
-              attemptInvisibleVerification: true,
-            ),
             // Logo and text widgets
             const LogoAndTextWidget(),
 
@@ -60,6 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
             PhoneNumberInputWidget(
               selectedCountry: selectedCountry,
               defaultCountryCode: defaultCountryCode,
+            ),
+            FirebaseRecaptchaVerifierModal(
+              firebaseConfig: firebaseConfig,
+              onVerify: (token) => print('token: ' + token),
+              onLoad: () => print('onLoad'),
+              onError: () => print('onError'),
+              onFullChallenge: () => print('onFullChallenge'),
+              attemptInvisibleVerification: false,
             ),
           ],
         ),

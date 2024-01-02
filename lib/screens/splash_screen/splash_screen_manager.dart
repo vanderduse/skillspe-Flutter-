@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/login_screens/login_screen.dart';
+import 'package:skills_pe/screens/login_screens/main.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_1.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_2.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_3.dart';
@@ -35,7 +35,7 @@ class _SplashManagerState extends State<SplashManager> {
         // Navigate to the main content of your app when all splash screens are shown
         timer.cancel(); // Stop the timer
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => const Login(),
         ));
       }
     });

@@ -37,3 +37,18 @@ const QUIZ_TNC = "terms & conditions";
 // Quiz Question Screen
 const SUBMIT_AND_NEXT = "Submit & Next";
 const SUBMIT = "Submit";
+
+// Login Screen
+const TERMS_AND_PRIVACY_TEXT =
+    "By entering your number, you are agreeing to our ";
+const SEND_OTP_LABEL = "Send Otp";
+const CONVERT_YOUR_SKILLS_TITLE = "Convert Your Skills into Wealth.";
+const TERMS_OF_SERVICE = "terms of service";
+const PRIVACY_POLICY = "privacy policy";
+
+// OTP verification Screen
+const VERIFY_PHONE_NUMBER = 'Verify your \nphone number';
+const DIDNT_RECEIVE_OTP = 'If you didn\'t receive otp yet. ';
+const CONTINUE = 'Continue';
+const EDIT_PHONE_NUMBER = 'Edit mobile number';
+const RESEND_OTP = "Resend Otp";

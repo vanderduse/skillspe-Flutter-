@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
-import 'package:skills_pe/screens/quiz/quiz_question.dart';
-import 'package:skills_pe/screens/tournaments/create_tournament.dart';
-import 'package:skills_pe/screens/tournaments/main.dart';
-import 'package:skills_pe/screens/login_screens/main.dart';
 import 'bloc/challenges_bloc.dart';
 
 void main() {
@@ -60,8 +55,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-
-        home: const HomeMain());
+        home: const SplashManager());
   }
 }
 

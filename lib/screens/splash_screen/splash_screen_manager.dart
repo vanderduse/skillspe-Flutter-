@@ -35,7 +35,7 @@ class _SplashManagerState extends State<SplashManager> {
         // Navigate to the main content of your app when all splash screens are shown
         timer.cancel(); // Stop the timer
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const Login(),
+          builder: (context) => const LoginScreen(),
         ));
       }
     });

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/screens/tournaments/widgets/no_teams_card.dart';
 import 'package:skills_pe/screens/tournaments/widgets/team_card.dart';
-import 'package:skills_pe/screens/tournaments/widgets/tournament_details_cards.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 
 class TournamentTeams extends StatefulWidget {

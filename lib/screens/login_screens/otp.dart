@@ -4,7 +4,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:skills_pe/screens/login_screens/widgets/gradient_title.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/transparent_text_btn.dart';
-import 'package:skills_pe/sharedWidgets/vertical_divider.dart';
+import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class OtpVerification extends StatefulWidget {

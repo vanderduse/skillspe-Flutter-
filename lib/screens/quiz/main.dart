@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_specs.dart';
 import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';

@@ -1,11 +1,16 @@
+import 'dart:ffi';
+
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
 class BaseResponseModel<T> {
   String message;
+  String? error;
+  Bool? success;
   T? data;
 
-  BaseResponseModel({required this.message, this.data});
+  BaseResponseModel(
+      {required this.message, this.data, this.success, this.error});
 
   factory BaseResponseModel.fromJson(
           Map<String, dynamic> json, T? Function(Object? json)? fromJsonT) =>
@@ -21,6 +26,8 @@ BaseResponseModel<T> _$BaseResponseModelFromJson<T>(
 ) =>
     BaseResponseModel<T>(
       message: json['message'] as String,
+      error: json['error'] as String,
+      success: json['success'] as Bool,
       data: fromJsonT!(json['data']),
     );
 
@@ -30,5 +37,7 @@ Map<String, dynamic> _$BaseResponseModelToJson<T>(
 ) =>
     <String, dynamic>{
       'message': instance.message,
+      'success': instance.success,
+      'error': instance.error,
       'data': toJsonT(instance.data as T),
     };

@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-const BASE_URL = "https://aristoteles-stg.skillspe.com";
+const BASE_URL = "https://api-stage.skillspe.com";
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
@@ -41,17 +41,19 @@ const SUBMIT = "Submit";
 // Login Screen
 const TERMS_AND_PRIVACY_TEXT =
     "By entering your number, you are agreeing to our ";
-const SEND_OTP_LABEL = "Send Otp";
+const SEND_OTP_LABEL = "Send OTP";
 const CONVERT_YOUR_SKILLS_TITLE = "Convert Your Skills into Wealth.";
 const TERMS_OF_SERVICE = "terms of service";
 const PRIVACY_POLICY = "privacy policy";
+const VALID_MOBILE_NUMBER_VALIDATION_MESSAGE =
+    "Please enter a valid mobile number";
 
 // OTP verification Screen
 const VERIFY_PHONE_NUMBER = 'Verify your \nphone number';
 const DIDNT_RECEIVE_OTP = 'If you didn\'t receive otp yet. ';
 const CONTINUE = 'Continue';
 const EDIT_PHONE_NUMBER = 'Edit mobile number';
-const RESEND_OTP = "Resend Otp";
+const RESEND_OTP = "Resend OTP";
 
 // Create team drawer
 const List<String> NEON_HEX_COLORS = [

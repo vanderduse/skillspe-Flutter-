@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class ApiClient {
-  final dio = createDio();
-  final tokenDio = Dio(BaseOptions(baseUrl: BASE_URL));
-  static Dio createDio() {
-    var dio = Dio(BaseOptions(
+  static Dio? _dio;
+
+  static Dio? createDio() {
+    _dio ??= Dio(BaseOptions(
       baseUrl: BASE_URL,
       headers: {
         'Accept': 'application/json',
@@ -17,11 +17,11 @@ class ApiClient {
       sendTimeout: const Duration(seconds: 60 * 1000),
     ));
 
-    dio.interceptors.addAll({
-      AppInterceptors(dio),
+    _dio?.interceptors.addAll({
+      AppInterceptors(_dio!),
     });
 
-    return dio;
+    return _dio;
   }
 }
 

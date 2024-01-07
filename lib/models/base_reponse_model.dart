@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
 class BaseResponseModel<T> {
-  String message;
+  String? message;
   String? error;
   Bool? success;
   T? data;
@@ -25,9 +25,9 @@ BaseResponseModel<T> _$BaseResponseModelFromJson<T>(
   T? Function(Object? json)? fromJsonT,
 ) =>
     BaseResponseModel<T>(
-      message: json['message'] as String,
-      error: json['error'] as String,
-      success: json['success'] as Bool,
+      message: json['message'] as String?,
+      error: json['error'] as String?,
+      success: json['success'] as Bool?,
       data: fromJsonT!(json['data']),
     );
 

@@ -1,6 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
 const BASE_URL = "https://api-stage.skillspe.com";
+// LOCAL STORAGE KEY
+const ACCESS_TOKEN = 'access_token';
+const REFRESH_TOKEN = 'refresh_token';
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
@@ -54,3 +57,4 @@ const DIDNT_RECEIVE_OTP = 'If you didn\'t receive otp yet. ';
 const CONTINUE = 'Continue';
 const EDIT_PHONE_NUMBER = 'Edit mobile number';
 const RESEND_OTP = "Resend OTP";
+const OTP_VALIDATION_MESSAGE = "Please enter a valid OTP";

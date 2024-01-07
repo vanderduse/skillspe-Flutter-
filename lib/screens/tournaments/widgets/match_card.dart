@@ -6,8 +6,15 @@ import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 
 class MatchCard extends StatelessWidget {
   final Match matchDetails;
+  final bool biddingDone;
+  final bool resultsDeclared;
 
-  const MatchCard({Key? key, required this.matchDetails}) : super(key: key);
+  const MatchCard(
+      {Key? key,
+      required this.matchDetails,
+      required this.biddingDone,
+      required this.resultsDeclared})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -170,53 +177,85 @@ class MatchCard extends StatelessWidget {
                         ),
                       ],
                     )),
-                const Divider(
-                  color: Color(0xffD0D1DA),
-                ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
+                if (resultsDeclared && biddingDone)
+                  Column(
                     children: [
-                      Text(
-                        "${matchDetails.teamSet[0].teamName} to win against ${matchDetails.teamSet[1].teamName}?",
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textAlign: TextAlign.start,
+                      const Divider(
+                        color: Color(0xffD0D1DA),
                       ),
-                      const VerticalSeparator(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: ColoredOutlineButton(
-                              text: 'Yes',
-                              textColor: Color(0xFF12B669),
-                              buttonColor: Color(0x0C12B669),
-                              onTap: () {
-                                // Handle button tap
-                              },
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${matchDetails.teamSet[0].teamName} to win against ${matchDetails.teamSet[1].teamName}?",
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.start,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Expanded(
-                            child: ColoredOutlineButton(
-                              text: 'No',
-                              textColor:
-                                  Colors.red, // Change the color as needed
-                              buttonColor: Colors.red.withOpacity(
-                                  0.1), // Change the color as needed
-                              onTap: () {
-                                // Handle button tap
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      )
                     ],
-                  ),
-                )
+                  )
+                else if (!resultsDeclared && !biddingDone)
+                  Column(
+                    children: [
+                      const Divider(
+                        color: Color(0xffD0D1DA),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${matchDetails.teamSet[0].teamName} to win against ${matchDetails.teamSet[1].teamName}?",
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.start,
+                            ),
+                            const VerticalSeparator(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  child: ColoredOutlineButton(
+                                    text: 'Yes',
+                                    textColor: Color(0xFF12B669),
+                                    buttonColor: Color(0x0C12B669),
+                                    onTap: () {
+                                      // Handle button tap
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: ColoredOutlineButton(
+                                    text: 'No',
+                                    textColor: Colors
+                                        .red, // Change the color as needed
+                                    buttonColor: Colors.red.withOpacity(
+                                        0.1), // Change the color as needed
+                                    onTap: () {
+                                      // Handle button tap
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )
+                else
+                  VerticalSeparator(
+                    heightFactor: 0.01,
+                  )
               ],
             )),
       ],

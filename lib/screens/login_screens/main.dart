@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_recaptcha/flutter_firebase_recaptcha.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/screens/login_screens/bloc/login_bloc.dart';
-import 'package:skills_pe/screens/login_screens/otp.dart';
+import 'package:skills_pe/screens/login_screens/verify_otp.dart';
 import 'package:skills_pe/screens/login_screens/repository/send_otp_respository.dart';
 import 'package:skills_pe/screens/login_screens/widgets/gradient_title.dart';
 import 'package:skills_pe/screens/login_screens/widgets/tnc_text.dart';
@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
     "appId": String.fromEnvironment('FIREBASE_APP_ID'),
     "measurementId": String.fromEnvironment('FIREBASE_MEASUREMENT_ID'),
   };
-  bool showRecaptchaModal = false;
   String mobileNumber = '';
   String selectedCountryCode = '+91';
 
@@ -39,36 +38,29 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: BlocConsumer(
         bloc: loginBloc,
+        listenWhen: (previous, current) => current != previous,
         listener: (BuildContext context, Object? state) {
-          print(state);
-          switch (state) {
-            case LoginLoadingState:
-              {
-                buildShowDialog(context);
-                break;
-              }
-            case LoginOTPSendSuccessState:
-              {
-                Navigator.of(context).pop();
-                if ((state as LoginOTPSendSuccessState).message != null &&
-                    state.message?.isNotEmpty == true) {
-                  showSnackBar(context, state.message!);
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const OtpVerification(),
-                  ),
-                );
-              }
-            case LoginOTPSendFailureState:
-              {
-                Navigator.of(context).pop();
-              }
-          }
           if (state is LoginLoadingState) {
             buildShowDialog(context);
-          } else if (state is LoginOTPSendSuccessState) {}
+          } else if (state is LoginOTPSendSuccessState) {
+            Navigator.of(context).pop();
+            if (state.message.isNotEmpty == true) {
+              showSnackBar(context, state.message);
+            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OtpVerification(
+                  mobileNumber: selectedCountryCode + mobileNumber,
+                ),
+              ),
+            );
+          } else if (state is LoginOTPSendFailureState) {
+            if (state.error.isNotEmpty == true) {
+              showSnackBar(context, state.error);
+            }
+            Navigator.of(context).pop();
+          }
         },
         builder: (context, state) {
           return Container(
@@ -118,10 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             FilledBtn(
                               label: SEND_OTP_LABEL,
                               onPressed: () {
+                                FocusScope.of(context).unfocus();
                                 if (mobileNumber.length == 10) {
-                                  setState(() {
-                                    showRecaptchaModal = true;
-                                  });
+                                  loginBloc.add(LoadFirebaseCaptchaEvent());
                                 } else {
                                   showSnackBar(context,
                                       VALID_MOBILE_NUMBER_VALIDATION_MESSAGE);
@@ -134,25 +125,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: MediaQuery.of(context).size.height * 0.02,
                             ),
                             const TermsAndPrivacyText(),
-                            showRecaptchaModal
-                                ? SizedBox(
-                                    width: double.infinity,
-                                    height: 450,
-                                    child: FirebaseRecaptchaVerifierModal(
-                                      firebaseConfig: firebaseConfig,
-                                      onVerify: (token) => {
-                                        setState(() {
-                                          showRecaptchaModal = false;
-                                        }),
-                                        loginBloc.add(SendOTPEvent(
-                                            mobileNumber: selectedCountryCode +
-                                                mobileNumber,
-                                            token: token))
-                                      },
-                                      attemptInvisibleVerification: false,
-                                    ),
-                                  )
-                                : const SizedBox.shrink()
+                            if (state is LoginLoadFirebaseCaptchaState)
+                              SizedBox(
+                                width: double.infinity,
+                                height: 450,
+                                child: FirebaseRecaptchaVerifierModal(
+                                  firebaseConfig: firebaseConfig,
+                                  onVerify: (token) => {
+                                    loginBloc.add(SendOTPEvent(
+                                        mobileNumber:
+                                            selectedCountryCode + mobileNumber,
+                                        token: token))
+                                  },
+                                  attemptInvisibleVerification: false,
+                                ),
+                              )
                           ],
                         ),
                       ),

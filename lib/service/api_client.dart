@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class ApiClient {
@@ -7,10 +8,6 @@ class ApiClient {
   static Dio? createDio() {
     _dio ??= Dio(BaseOptions(
       baseUrl: BASE_URL,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
       receiveDataWhenStatusError: true,
       receiveTimeout: const Duration(seconds: 60 * 1000),
       connectTimeout: const Duration(seconds: 60 * 1000),
@@ -27,17 +24,23 @@ class ApiClient {
 
 class AppInterceptors extends Interceptor {
   final Dio dio;
-
   AppInterceptors(this.dio);
 
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    options.headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}'
+    };
     return handler.next(options);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    print('status code ${err.response?.statusCode}');
+    print('error data ${err.response?.data}');
     return handler.next(err);
   }
 

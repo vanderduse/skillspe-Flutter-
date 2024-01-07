@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/services.dart';
 
 class MobileNumberInput extends StatefulWidget {
   final Function(String, String) onMobileNumberChanged;
@@ -52,6 +53,9 @@ class _MobileNumberInputState extends State<MobileNumberInput> {
           Expanded(
             child: TextField(
               keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               controller: mobileNumberController,
               onChanged: (value) {
                 if (value.length <= 10) {

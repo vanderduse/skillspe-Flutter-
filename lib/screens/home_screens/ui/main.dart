@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:skills_pe/screens/home_screens/quiz_card.dart';
-import 'package:skills_pe/screens/home_screens/challenges_card.dart';
+import 'package:skills_pe/screens/home_screens/ui/quiz_card.dart';
+import 'package:skills_pe/screens/home_screens/ui/challenges_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:skills_pe/screens/home_screens/bottom_navbar.dart';
+import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
+import 'package:skills_pe/screens/home_screens/ui/tournament_card.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -93,6 +94,31 @@ class _HomeMain extends State<HomeMain> {
                 // Add more data items as needed
               ],
             ),
+            TournamentWidget(
+              title: 'Tournaments',
+              data: [
+                {
+                  'title':
+                      'Tournament Name',
+                  'image':
+                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
+                  'type': 'Motivator',
+                  'date': 'Jun 30 - Jul 30, 2023',
+                  // Add more properties as needed
+                },
+                {
+                  'title': 'Tournament Name',
+                  'image':
+                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
+                  'type': 'Inspiration',
+                  'date': 'Jun 30 - Jul 30, 2023',
+                  // Add more properties as needed
+                },
+               
+                // Add more data items as needed
+              ],
+            ),
+             SizedBox(height: 70),
           ],
         ),
       ),

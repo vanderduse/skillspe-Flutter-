@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
-import '../create_challenge/ui/create_challenge_screen.dart';
+import '../../create_challenge/ui/create_challenge_screen.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   @override

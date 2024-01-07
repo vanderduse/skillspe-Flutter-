@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
+import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/screens/tournaments/widgets/no_teams_card.dart';
 import 'package:skills_pe/screens/tournaments/widgets/team_card.dart';
-import 'package:skills_pe/screens/tournaments/widgets/tournament_details_cards.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/icon_checkbox_grid.dart';
+import 'package:skills_pe/sharedWidgets/skillspe_text_form_field.dart';
+import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
+import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/utility/list_utility.dart';
 
 class TournamentTeams extends StatefulWidget {
   const TournamentTeams({super.key});
@@ -16,6 +21,8 @@ class _TournamentTeamsState extends State<TournamentTeams> {
   late double appBarHeight;
   late double tabBarHeight;
   late bool teamsAvailable;
+  final _formKey = GlobalKey<FormState>();
+
   List<Team> teams = [
     Team(
         teamName: "Team A",
@@ -63,17 +70,11 @@ class _TournamentTeamsState extends State<TournamentTeams> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Center(
+              Center(
                 child: Text(
-                  "Teams",
+                  TEAMS,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF0A121A),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               const SizedBox(height: 16),
@@ -98,7 +99,76 @@ class _TournamentTeamsState extends State<TournamentTeams> {
                 alignment: Alignment.bottomRight,
                 child: FilledBtn(
                   label: "Share",
-                  onPressed: () => {},
+                  onPressed: () => {
+                    BottomSheetManager.showGenericBottomSheet(
+                        context,
+                        Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 24, horizontal: 20),
+                                    child: Column(
+                                      children: [
+                                        SkillspeTextFormField(
+                                            required: true,
+                                            controller: TextEditingController(),
+                                            label: TEAM_NAME),
+                                        const VerticalSeparator(),
+                                        const VerticalSeparator(),
+                                        IconCheckboxGrid(
+                                            label: TEAM_ACCENT_COLOR,
+                                            multiSelect: false,
+                                            options: ListUtils.getRandomValues(
+                                                    NEON_HEX_COLORS, 9)
+                                                .map((color) => OptionDetails(
+                                                      iconPath:
+                                                          JERSEY_ICON_PATH,
+                                                      accentColor: Color(
+                                                          int.parse(
+                                                              '0xFF$color')),
+                                                      value: color,
+                                                    ))
+                                                .toList()),
+                                      ],
+                                    )),
+                                Container(
+                                  decoration:
+                                      const BoxDecoration(color: Colors.white),
+                                  child: Column(
+                                    children: [
+                                      const Divider(
+                                        color:
+                                            Color.fromARGB(168, 158, 158, 158),
+                                        thickness:
+                                            1, // You can adjust the thickness as needed
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 24, 20, 4),
+                                        child: FilledBtn(
+                                            label: SAVE,
+                                            onPressed: () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                BottomSheetManager
+                                                    .closeModalSheet(context);
+                                              }
+                                            },
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                            textColor: Colors.white),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
+                        CREATE_YOUR_TEAM)
+                  },
                   backgroundColor: Theme.of(context).primaryColor,
                   textColor: Colors.white,
                 ),

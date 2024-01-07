@@ -111,8 +111,20 @@ class _TournamentFixtureState extends State<TournamentFixture> {
       itemBuilder: (context, index) {
         return Column(
           children: [
-            MatchCard(matchDetails: matches[index]),
+            MatchCard(
+                matchDetails: matches[index],
+                biddingDone: false,
+                resultsDeclared: true),
             const SizedBox(height: 16),
+            MatchCard(
+                matchDetails: matches[index],
+                biddingDone: true,
+                resultsDeclared: true),
+            const SizedBox(height: 16),
+            MatchCard(
+                matchDetails: matches[index],
+                biddingDone: false,
+                resultsDeclared: false),
           ],
         );
       },

@@ -100,3 +100,7 @@ const JERSEY_ICON_PATH = "assets/icons/t-shirt-white.svg";
 const SAVE = "Save";
 const CREATE_YOUR_TEAM = "Create your team";
 const TEAMS = "Teams";
+
+// Notifications
+const NOTIFICATIONS = "Notifications";
+const CLEAR_ALL = "Clear All";

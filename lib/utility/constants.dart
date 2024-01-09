@@ -110,3 +110,13 @@ const TEAMS = "Teams";
 // Notifications
 const NOTIFICATIONS = "Notifications";
 const CLEAR_ALL = "Clear All";
+
+// Wallet
+const NEED_HELP = "Need Help?";
+const SHARE = "Share";
+const RECENT_TRANSACTIONS = "Recent Transactions";
+const ALL_TRANSACTIONS = "All Transactions";
+const TRANSACTION_ID = 'Txn ID:';
+const ADD_MONEY = "Add Money";
+const TOPUP_WALLET = "Topup Wallet";
+const TOPUP_AMOUNTS = [1000, 500, 200, 50];

@@ -22,9 +22,9 @@ class CreateChallengeBloc
     var res = await _challengeRepository.createChallenge(
         createChallengeRequest: event.createChallengeRequest);
     if (res!.data == null) {
-      emit(CreateChallengeFailureState(errorMessage: res.message));
+      emit(CreateChallengeFailureState(errorMessage: res.message!));
     } else {
-      emit(CreateChallengeSuccessState(successMessage: res.message));
+      emit(CreateChallengeSuccessState(successMessage: res.message!));
     }
   }
 }

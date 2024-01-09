@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 class BaseResponseModel<T> {
   String? message;
   String? error;
-  Bool? success;
+  bool? success;
   T? data;
 
   BaseResponseModel(
@@ -27,7 +27,7 @@ BaseResponseModel<T> _$BaseResponseModelFromJson<T>(
     BaseResponseModel<T>(
       message: json['message'] as String?,
       error: json['error'] as String?,
-      success: json['success'] as Bool?,
+      success: json['success'] as bool?,
       data: fromJsonT!(json['data']),
     );
 

@@ -43,16 +43,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
     var response = await _sendOTPRepository.verifyOTP(VerifyOtpRequestModel(
         otp: event.otp, mobileNumber: event.mobileNumber));
-    if (response.data != null) {
+    if (response.success == true) {
       StorageService()
           .writeSecureData(ACCESS_TOKEN, response.data?.tokenDetails?.access);
       StorageService()
           .writeSecureData(REFRESH_TOKEN, response.data?.tokenDetails?.refresh);
       emit(VerifyOtpSuccessState(
           message: response.message!, verifyOtpResponseModel: response.data!));
-    }
-    if (response.error != null) {
-      emit(VerifyOtpFailureState(error: response.error!));
+    } else {
+      if (response.error != null) {
+        emit(VerifyOtpFailureState(error: response.error!));
+      } else if (response.message != null) {
+        emit(VerifyOtpFailureState(error: response.message!));
+      }
     }
   }
 }

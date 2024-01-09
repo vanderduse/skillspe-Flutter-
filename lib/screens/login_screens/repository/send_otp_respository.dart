@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/service/api_client.dart';
@@ -25,20 +27,23 @@ class SendOTPRepository {
 
   Future<BaseResponseModel<VerifyOtpResponseModel>> verifyOTP(
       VerifyOtpRequestModel verifyOtp) async {
+    late BaseResponseModel<VerifyOtpResponseModel> responseModel;
     try {
       Response? response = await _dio?.post(
         '/api/zeus/v1/login',
         data: verifyOtp,
       );
-      print('response ${response?.data}');
-      return BaseResponseModel<VerifyOtpResponseModel>.fromJson(
+      responseModel = BaseResponseModel<VerifyOtpResponseModel>.fromJson(
           response?.data,
           (data) =>
               VerifyOtpResponseModel.fromJson(data as Map<String, dynamic>));
+      responseModel.success = true;
     } on DioException catch (error) {
-      print('error ${error.response}');
-      return BaseResponseModel<VerifyOtpResponseModel>.fromJson(
+      print(error.response?.data);
+      responseModel = BaseResponseModel<VerifyOtpResponseModel>.fromJson(
           error.response?.data as Map<String, dynamic>, (data) => null);
+      responseModel.success = false;
     }
+    return responseModel;
   }
 }

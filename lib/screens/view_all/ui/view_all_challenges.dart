@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
+import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
 
 class ViewAllChallenges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Dummy wallet amount for demonstration
     double dummyWalletAmount = 100.0;
-
     // Filter button names
     List<String> filterButtonNames = [
       'All',
@@ -15,6 +15,12 @@ class ViewAllChallenges extends StatelessWidget {
       'Request',
       'Upcoming',
       'Completed'
+    ];
+    // Dummy data for the quiz cards - Replace this with your actual data
+    List<Map<String, dynamic>> quizData = [
+      {'title': 'Quiz 1', 'date': '12-01-2023', 'participants': '1000', 'price': '\$10'},
+      {'title': 'Quiz 2', 'date': '15-02-2023', 'participants': '1500', 'price': '\$15'},
+      // Add more data as needed
     ];
 
     return Scaffold(
@@ -26,8 +32,8 @@ class ViewAllChallenges extends StatelessWidget {
           // navigationWithWallet('Challenges', dummyWalletAmount),
 
           // Filter buttons
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
               buttonNames: filterButtonNames,
               onItemSelected: (index) {
@@ -37,13 +43,19 @@ class ViewAllChallenges extends StatelessWidget {
             ),
           ),
 
-          // Other content can go here
+          // Quiz cards - Vertical ListView
           Expanded(
-            child: Center(
-              child: Text(
-                'Your Challenges Content Goes Here',
-                style: TextStyle(fontSize: 20.0),
-              ),
+            child: ListView.builder(
+              itemCount: quizData.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 0.0), // Adjust top padding
+                  child: QuizWidget(
+                    title: 'Quiz ${index + 1}', // Change title as needed
+                    data: quizData,
+                  ),
+                );
+              },
             ),
           ),
         ],

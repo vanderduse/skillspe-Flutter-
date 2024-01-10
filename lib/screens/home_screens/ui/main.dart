@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:skills_pe/screens/home_screens/ui/quiz_card.dart';
-import 'package:skills_pe/screens/home_screens/ui/challenges_card.dart';
+import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
-import 'package:skills_pe/screens/home_screens/ui/tournament_card.dart';
+import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);

@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: ViewAllChallenges());
+        home: const HomeMain());
   }
 }
 

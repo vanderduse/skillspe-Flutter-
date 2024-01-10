@@ -30,7 +30,12 @@ class _ButtonGroupState extends State<ButtonGroup> {
           final isSelected =
               _selectedIndex == buttonIndex; // Check if button is active
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            padding: EdgeInsets.fromLTRB(
+              buttonIndex == 0 ? 20.0 : 4.0, // Left padding for the first button
+              0.0,
+              buttonIndex == widget.buttonNames.length - 1 ? 20.0 : 4.0, // Right padding for the last button
+              0.0,
+            ),
             child: GestureDetector(
               onTap: () => _handleButtonTap(buttonIndex),
               child: Container(
@@ -43,7 +48,7 @@ class _ButtonGroupState extends State<ButtonGroup> {
                   ),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                 margin: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Text(
                   widget.buttonNames[buttonIndex],

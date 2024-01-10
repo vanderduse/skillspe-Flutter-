@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
-import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
+import 'package:skills_pe/sharedWidgets/challenge_card.dart';
 
 class ViewAllChallenges extends StatelessWidget {
   @override
@@ -16,50 +16,63 @@ class ViewAllChallenges extends StatelessWidget {
       'Upcoming',
       'Completed'
     ];
-    // Dummy data for the quiz cards - Replace this with your actual data
-    List<Map<String, dynamic>> quizData = [
-      {'title': 'Quiz 1', 'date': '12-01-2023', 'participants': '1000', 'price': '\$10'},
-      {'title': 'Quiz 2', 'date': '15-02-2023', 'participants': '1500', 'price': '\$15'},
-      // Add more data as needed
+
+    // Dummy list of challenge data for demonstration
+    List<Map<String, dynamic>> challenges = [
+      {
+        'title':
+            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
+        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+        'type': 'Motivator',
+        'date': 'Jun 30 - Jul 30, 2023',
+      },
+      {
+        'title':
+            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
+        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+        'type': 'Motivator',
+        'date': 'Jun 30 - Jul 30, 2023',
+      },
+     
     ];
 
-    return Scaffold(
-      appBar: navigationWithWallet('Challenges', dummyWalletAmount),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Your app bar
-          // navigationWithWallet('Challenges', dummyWalletAmount),
-
-          // Filter buttons
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: ButtonGroup(
-              buttonNames: filterButtonNames,
-              onItemSelected: (index) {
-                // Handle filter button selection here
-                print('Selected filter index: $index');
-              },
-            ),
+   return Scaffold(
+  appBar: navigationWithWallet('Challenges', dummyWalletAmount),
+  body: SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Filter buttons
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: ButtonGroup(
+            buttonNames: filterButtonNames,
+            onItemSelected: (index) {
+              // Handle filter button selection here
+              print('Selected filter index: $index');
+            },
           ),
+        ),
 
-          // Quiz cards - Vertical ListView
-          Expanded(
-            child: ListView.builder(
-              itemCount: quizData.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 0.0), // Adjust top padding
-                  child: QuizWidget(
-                    title: 'Quiz ${index + 1}', // Change title as needed
-                    data: quizData,
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+        // Challenge cards - Vertical ListView
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: challenges.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.0),
+              height: 200, // Set a fixed height or adjust as needed
+              child: ChallengeCard(
+                item: challenges[index],
+                // Add your custom leftBorderColor if needed
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+  ),
+);
   }
 }

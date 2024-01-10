@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
-
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
 

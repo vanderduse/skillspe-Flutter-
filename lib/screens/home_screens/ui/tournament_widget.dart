@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/tournament_card.dart';
+import 'package:skills_pe/screens/view_all/ui/view_all_tournament.dart';
 
 class TournamentWidget extends StatelessWidget {
   final String title;
@@ -27,6 +28,11 @@ class TournamentWidget extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   // Handle the 'View All' button tap
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewAllTournament()),
+                  );
                 },
                 child: Text(
                   'View All',

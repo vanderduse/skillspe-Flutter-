@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
+import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
 
 class ChallengesWidget extends StatelessWidget {
   final String title;
@@ -26,7 +27,12 @@ class ChallengesWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // Handle the 'View All' button tap
+                  // Navigate to ViewAllChallenges screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewAllChallenges()),
+                  );
                 },
                 child: Text(
                   'View All',

@@ -48,14 +48,7 @@ class _HomeMain extends State<HomeMain> {
                   'date': 'Jun 30 - Jul 30, 2023',
                   // Add more properties as needed
                 },
-                {
-                  'title': 'Lorem ipsum ',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
+              
                 // Add more data items as needed
               ],
             ),
@@ -70,7 +63,6 @@ class _HomeMain extends State<HomeMain> {
                   'participants': '100+ participants',
                   'date': 'Starts on 01 Oct 23',
                   'price': '₹50'
-                  // Add more properties as needed
                 },
                 {
                   'title': 'Lorem ipsum dolor sit amet consectetur.',
@@ -79,16 +71,6 @@ class _HomeMain extends State<HomeMain> {
                   'participants': '100+ participants',
                   'date': 'Starts on 01 Oct 23',
                   'price': '₹20'
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Lorem ipsum dolor.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-                  'participants': '100+ participants',
-                  'date': 'Starts on 01 Oct 23',
-                  'price': '₹50'
-                  // Add more properties as needed
                 },
                 // Add more data items as needed
               ],

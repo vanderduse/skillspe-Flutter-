@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/quiz_card.dart';
+import 'package:skills_pe/screens/view_all/ui/view_all_quiz.dart';
 
 class QuizWidget extends StatelessWidget {
   final String title;
@@ -27,6 +28,11 @@ class QuizWidget extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   // Handle the 'View All' button tap
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewAllQuiz()),
+                  );
                 },
                 child: Text(
                   'View All',

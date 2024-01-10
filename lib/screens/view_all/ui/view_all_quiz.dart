@@ -29,18 +29,13 @@ class ViewAllQuiz extends StatelessWidget {
         'date': 'Starts on 01 Oct 23',
         'price': '₹50'
       },
-      {
-        'title':
-            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-        'icon': 'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-        'participants': '100+ participants',
-        'date': 'Starts on 01 Oct 23',
-        'price': '₹50'
-      },
     ];
 
     return Scaffold(
-      appBar: navigationWithWallet('Quiz', dummyWalletAmount),
+      appBar: AppbarWithBack(
+        screenName: 'Challenges',
+        walletAmount: dummyWalletAmount,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

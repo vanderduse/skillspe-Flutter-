@@ -40,7 +40,10 @@ class ViewAllTournament extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: navigationWithWallet('Tournaments', dummyWalletAmount),
+      appBar: AppbarWithBack(
+        screenName: 'Challenges',
+        walletAmount: dummyWalletAmount,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

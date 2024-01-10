@@ -7,7 +7,7 @@ import 'package:skills_pe/screens/tournaments/create_tournament.dart';
 import 'package:skills_pe/screens/tournaments/main.dart';
 import 'package:skills_pe/screens/login_screens/main.dart';
 import 'bloc/challenges_bloc.dart';
-import 'package:skills_pe/screens/view_all/ui/view_all_tournament.dart';
+import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
 
 void main() {
   runApp(
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: ViewAllTournament());
+        home: HomeMain());
   }
 }
 

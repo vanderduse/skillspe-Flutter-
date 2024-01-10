@@ -33,6 +33,20 @@ class ViewAllChallenges extends StatelessWidget {
         'type': 'Motivator',
         'date': 'Jun 30 - Jul 30, 2023',
       },
+      {
+        'title':
+            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
+        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+        'type': 'Motivator',
+        'date': 'Jun 30 - Jul 30, 2023',
+      },
+      {
+        'title':
+            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
+        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
+        'type': 'Motivator',
+        'date': 'Jun 30 - Jul 30, 2023',
+      },
      
     ];
 

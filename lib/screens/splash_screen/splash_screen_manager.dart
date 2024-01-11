@@ -22,24 +22,7 @@ class _SplashManagerState extends State<SplashManager> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      // Navigate to the home screen after 3 seconds
-      var access = StorageService().readSecureData(ACCESS_TOKEN);
-      print('access $access');
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) {
-          return Builder(
-            builder: (BuildContext context) {
-              return FutureBuilder<Widget>(
-                future: getRoute(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-                  return snapshot.data!;
-                },
-              );
-            },
-          );
-        }),
-      );
+      checkAccessToken(context);
     });
   }
 
@@ -48,12 +31,21 @@ class _SplashManagerState extends State<SplashManager> {
     return const Scaffold(body: SplashScreen1());
   }
 
-  Future<Widget> getRoute() async {
+  Future<void> checkAccessToken(BuildContext context) async {
     String? accessToken = await StorageService().readSecureData(ACCESS_TOKEN);
-    if (accessToken == null || accessToken.isEmpty) {
-      return const LoginScreen();
+
+    if (accessToken != null && accessToken.isNotEmpty) {
+      // AccessToken found, navigate to home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeMain()),
+      );
     } else {
-      return const HomeMain();
+      // AccessToken not found, navigate to login screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
     }
   }
 }

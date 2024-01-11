@@ -22,7 +22,7 @@ class SplashScreen1 extends StatelessWidget {
           ),
           const Center(
             child: AutoSizeText(
-              'Skillspe',
+              'SkillsPe',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

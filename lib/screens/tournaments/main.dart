@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/overview.dart';
 import 'package:skills_pe/screens/tournaments/teams.dart';

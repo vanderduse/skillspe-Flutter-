@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_specs.dart';
 import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
@@ -23,7 +21,10 @@ class _QuizHomeState extends State<QuizHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: navigationWithWallet("Quiz", 2000.00),
+      appBar: AppbarWithBack(
+        screenName: 'Challenges',
+        walletAmount: 100.00,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

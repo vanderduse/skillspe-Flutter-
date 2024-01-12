@@ -4,6 +4,7 @@ const BASE_URL = "https://api-stage.skillspe.com";
 // LOCAL STORAGE KEY
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
+const FCM_TOKEN = 'firebase_token';
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";

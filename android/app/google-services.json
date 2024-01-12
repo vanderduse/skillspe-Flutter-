@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "897448131657",
+    "project_id": "skillspe-d376e",
+    "storage_bucket": "skillspe-d376e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897448131657:android:3f7442da6b9f0822c7d398",
+        "android_client_info": {
+          "package_name": "com.example.skills_pe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlzXbgTuKJOYgmFv2xEIo0hwRM0QvNYWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

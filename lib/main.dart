@@ -12,11 +12,17 @@ import 'package:skills_pe/screens/tournaments/edit_matches.dart';
 import 'package:skills_pe/screens/tournaments/main.dart';
 import 'package:skills_pe/screens/login_screens/main.dart';
 import 'package:skills_pe/screens/wallet/main.dart';
+import 'package:skills_pe/service/storage_service.dart';
+import 'package:skills_pe/utility/constants.dart';
 import 'bloc/challenges_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseMessaging.instance
+      .getToken()
+      .then((value) => StorageService().writeSecureData(FCM_TOKEN, value))
+      .onError((error, stackTrace) => print(error));
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
       alert: true, announcement: true, badge: true, sound: true);

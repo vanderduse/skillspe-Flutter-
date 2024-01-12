@@ -1,5 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skills_pe/firebase_options.dart';
+import 'package:skills_pe/screens/leaderboards/main.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/screens/home_screens/main.dart';
 import 'package:skills_pe/screens/quiz/quiz_question.dart';
@@ -10,7 +14,12 @@ import 'package:skills_pe/screens/login_screens/main.dart';
 import 'package:skills_pe/screens/wallet/main.dart';
 import 'bloc/challenges_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission(
+      alert: true, announcement: true, badge: true, sound: true);
   runApp(
     BlocProvider(
       create: (context) => ChallengeBloc(),
@@ -62,6 +71,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const SplashManager());
+        home: const Leaderboard());
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)

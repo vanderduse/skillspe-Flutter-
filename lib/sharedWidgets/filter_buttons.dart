@@ -22,52 +22,46 @@ class _ButtonGroupState extends State<ButtonGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      // Wrap buttons for row-wise alignment
-      spacing: 2.0, // Spacing between buttons
-      children: List.generate(widget.buttonNames.length, (buttonIndex) {
-        final isSelected =
-            _selectedIndex == buttonIndex; // Check if button is active
-        return Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 4.0), // Button padding
-          child: GestureDetector(
-            // Wrap with GestureDetector for tap handling
-            onTap: () => _handleButtonTap(buttonIndex), // Handle button tap
-            child: Container(
-              decoration: BoxDecoration(
-                // Button decoration
-                color: isSelected
-                    ? Color(0xFFEBE5F5)
-                    : Colors
-                        .white, // Set background color based on active state
-                borderRadius:
-                    BorderRadius.circular(20.0), // Button border radius
-                border: Border.all(
-                  // Button border
-                  color: isSelected
-                      ? Color(0xFF8C50F6)
-                      : Color(
-                          0xFFD0D1DA), // Set border color based on active state
-                  width: 1.0, // Border width
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: List.generate(widget.buttonNames.length, (buttonIndex) {
+          final isSelected =
+              _selectedIndex == buttonIndex; // Check if button is active
+          return Padding(
+            padding: EdgeInsets.fromLTRB(
+              buttonIndex == 0 ? 20.0 : 4.0, // Left padding for the first button
+              0.0,
+              buttonIndex == widget.buttonNames.length - 1 ? 20.0 : 4.0, // Right padding for the last button
+              0.0,
+            ),
+            child: GestureDetector(
+              onTap: () => _handleButtonTap(buttonIndex),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isSelected ? Color(0xFFEBE5F5) : Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(
+                    color: isSelected ? Color(0xFF8C50F6) : Color(0xFFD0D1DA),
+                    width: 1.0,
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0, vertical: 5.0), // Button content padding
-              margin: const EdgeInsets.symmetric(vertical: 5.0),
-              child: Text(
-                // Button text
-                widget.buttonNames[buttonIndex],
-                style: const TextStyle(
-                  // Text style
-                  color: Colors.black, // Text color always black
-                  fontSize: 14.0, // Text size
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                margin: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Text(
+                  widget.buttonNames[buttonIndex],
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

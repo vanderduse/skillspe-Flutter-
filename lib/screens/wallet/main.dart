@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/screens/wallet/widgets/add_money_input_card.dart';
 import 'package:skills_pe/screens/wallet/widgets/kyc_pending_card.dart';

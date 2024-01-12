@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/login_screens/bloc/login_bloc.dart';
 import 'package:skills_pe/screens/login_screens/repository/send_otp_respository.dart';
 import 'package:skills_pe/screens/login_screens/widgets/gradient_title.dart';

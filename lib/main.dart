@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/firebase_options.dart';
 import 'package:skills_pe/screens/leaderboards/main.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/quiz/quiz_question.dart';
 import 'package:skills_pe/screens/tournaments/create_tournament.dart';
 import 'package:skills_pe/screens/tournaments/edit_matches.dart';
@@ -15,6 +15,7 @@ import 'package:skills_pe/screens/wallet/main.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'bloc/challenges_bloc.dart';
+import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

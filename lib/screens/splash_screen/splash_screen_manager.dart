@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/login_screens/main.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_1.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_2.dart';

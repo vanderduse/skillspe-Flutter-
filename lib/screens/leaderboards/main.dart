@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skills_pe/screens/home_screens/main.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/leaderboards/widgets/current_user_badge.dart';
 import 'package:skills_pe/screens/leaderboards/widgets/podium.dart';
 import 'package:skills_pe/screens/leaderboards/widgets/user_badge.dart';

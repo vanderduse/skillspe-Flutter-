@@ -9,7 +9,6 @@ import 'package:skills_pe/screens/tournaments/main.dart';
 import 'package:skills_pe/screens/login_screens/main.dart';
 import 'package:skills_pe/screens/wallet/main.dart';
 import 'bloc/challenges_bloc.dart';
-import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
 
 void main() {
   runApp(
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'SkillPe',
         theme: ThemeData(
           primaryColor: Color(0xff7E56DA),
           primaryColorDark: Color(0xff2E1452),
@@ -63,6 +62,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const SplashManager());
+        home: const HomeMain());
   }
 }

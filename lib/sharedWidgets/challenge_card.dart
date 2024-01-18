@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 
 class ChallengeCard extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -42,8 +43,13 @@ class ChallengeCard extends StatelessWidget {
                     child: Center(
                       child: Container(
                         height: 60,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFED5E91),
+                        decoration: BoxDecoration(
+                          color: leftBorderColor != null
+                              ? Color(int.parse(leftBorderColor.substring(1, 7),
+                                      radix: 16) +
+                                  0xFF000000)
+                              : Colors
+                                  .transparent, // Provide a default color or handle null
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(8.0),
                             bottomRight: Radius.circular(8.0),
@@ -61,12 +67,21 @@ class ChallengeCard extends StatelessWidget {
             child: Center(
               child: ClipRect(
                 child: SizedBox(
-                  width: 28.0,
-                  height: 28.0,
-                  child: Image.network(
-                    "https://cdn-icons-png.flaticon.com/512/3176/3176382.png",
-                    fit: BoxFit.cover,
+                  width: 48.0,
+                  height: 58.0,
+                  child: Container(
+                    child: Text(
+                      item["challenge_emoji"],
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
                   ),
+                  // child: Image.network(
+                  //   "https://cdn-icons-png.flaticon.com/512/3176/3176382.png",
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
               ),
             ),
@@ -107,9 +122,7 @@ class ChallengeCard extends StatelessWidget {
                             margin: EdgeInsets.only(top: 8),
                             child: SizedBox(
                               child: Container(
-                                margin: const EdgeInsets.only(
-                                    right:
-                                        140.0), // Use const for unchanged EdgeInsets
+                                margin: const EdgeInsets.only(right: 120.0),
                                 decoration: BoxDecoration(
                                   color: const Color(
                                       0xFFF5F5F5), // Use const for unchanged color
@@ -122,7 +135,7 @@ class ChallengeCard extends StatelessWidget {
                                         vertical:
                                             2), // Use const for unchanged EdgeInsets
                                     child: Text(
-                                      item['type'],
+                                      item['category'],
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -151,7 +164,8 @@ class ChallengeCard extends StatelessWidget {
                             width: 140,
                             padding: EdgeInsets.all(8),
                             child: Text(
-                              item['date'],
+                              formatChallengeDate(
+                                  item['start_time'], item['end_time']),
                               style: TextStyle(
                                 fontSize: 12,
                               ),

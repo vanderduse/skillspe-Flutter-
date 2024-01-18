@@ -6,6 +6,16 @@ class ChallengesWidget extends StatelessWidget {
   final String title;
   final List<Map<String, dynamic>> data;
 
+  final List<String> leftBorderColors = [
+    '#ED5E91',
+    '#5241AC',
+    '#DA5EED',
+    '#ffc800',
+    '#00b6bd',
+    '#0dbd00',
+    '#9d00bd',
+  ];
+
   ChallengesWidget({
     required this.title,
     required this.data,
@@ -13,6 +23,7 @@ class ChallengesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Item Data: $data');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,7 +42,8 @@ class ChallengesWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ViewAllChallenges()),
+                      builder: (context) => ViewAllChallenges(),
+                    ),
                   );
                 },
                 child: Text(
@@ -51,6 +63,9 @@ class ChallengesWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
+                // Use modulo to loop through the colors
+                String leftBorderColor =
+                    leftBorderColors[index % leftBorderColors.length];
                 return Container(
                   width: MediaQuery.of(context).size.width *
                       0.8, // 80% of screen width
@@ -61,6 +76,7 @@ class ChallengesWidget extends StatelessWidget {
                   ),
                   child: ChallengeCard(
                     item: data[index],
+                    leftBorderColor: leftBorderColor,
                   ),
                 );
               },

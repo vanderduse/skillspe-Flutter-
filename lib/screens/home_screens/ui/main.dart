@@ -6,6 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
+import 'package:dio/dio.dart';
+
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
 
@@ -14,6 +16,83 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
+  final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
+  final String challengesApiEndpoint = '/challenges';
+  final String quizApiEndpoint = '/quiz';
+  final String tournamentApiEndpoint = '/tournaments';
+
+  late Dio dio;
+  List<Map<String, dynamic>> challengesData = [];
+  List<Map<String, dynamic>> quizData = [];
+  List<Map<String, dynamic>> tournamentData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    dio = Dio(BaseOptions(baseUrl: baseUrl));
+    fetchChallenges();
+    fetchQuiz();
+    fetchTournaments();
+  }
+
+  Future<List<Map<String, dynamic>>> fetchChallenges() async {
+    try {
+      final response = await dio.get(challengesApiEndpoint);
+      if (response.statusCode == 200) {
+        final responseData = response.data;
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('data') &&
+            responseData['data'] is List<dynamic>) {
+          return List<Map<String, dynamic>>.from(responseData['data']);
+        } else {
+          print('Invalid data format received: $responseData');
+          throw Exception('Invalid data format received');
+        }
+      } else {
+        print('Failed to load challenges data: ${response.statusCode}');
+        throw Exception(
+            'Failed to load challenges data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching challenges data: $error');
+      throw Exception('Error fetching challenges data: $error');
+    }
+  }
+
+  Future<void> fetchQuiz() async {
+    try {
+      final response = await dio.get(quizApiEndpoint);
+      if (response.statusCode == 200) {
+        final List<Map<String, dynamic>> data =
+            List<Map<String, dynamic>>.from(response.data);
+        setState(() {
+          quizData = data;
+        });
+      } else {
+        print('Failed to load quiz data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching quiz data: $error');
+    }
+  }
+
+  Future<void> fetchTournaments() async {
+    try {
+      final response = await dio.get(tournamentApiEndpoint);
+      if (response.statusCode == 200) {
+        final List<Map<String, dynamic>> data =
+            List<Map<String, dynamic>>.from(response.data);
+        setState(() {
+          tournamentData = data;
+        });
+      } else {
+        print('Failed to load tournament data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching tournament data: $error');
+    }
+  }
+
   final List<String> imageUrls = [
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
@@ -28,29 +107,22 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             HomeSwipper(imageUrls: imageUrls),
-            ChallengesWidget(
-              title: 'Challenges',
-              data: [
-                {
-                  'title':
-                      'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Motivator',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Lorem ipsum dolor sit amet.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-              
-                // Add more data items as needed
-              ],
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchChallenges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
+                } else if (snapshot.hasError) {
+                  print('${snapshot.error}');
+                  return Text('Error fetching data: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No data available');
+                } else {
+                  // Render your ChallengesWidget with the fetched data
+                  return ChallengesWidget(
+                      title: 'Challenges', data: snapshot.data!);
+                }
+              },
             ),
             QuizWidget(
               title: 'Quiz',
@@ -79,8 +151,7 @@ class _HomeMain extends State<HomeMain> {
               title: 'Tournaments',
               data: [
                 {
-                  'title':
-                      'Tournament Name',
+                  'title': 'Tournament Name',
                   'image':
                       'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
                   'type': 'Motivator',
@@ -95,11 +166,11 @@ class _HomeMain extends State<HomeMain> {
                   'date': 'Jun 30 - Jul 30, 2023',
                   // Add more properties as needed
                 },
-               
+
                 // Add more data items as needed
               ],
             ),
-             SizedBox(height: 70),
+            SizedBox(height: 70),
           ],
         ),
       ),

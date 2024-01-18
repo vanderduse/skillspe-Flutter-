@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/screens/wallet/widgets/add_money_input_card.dart';
@@ -8,7 +7,6 @@ import 'package:skills_pe/screens/wallet/widgets/transaction_details_card.dart';
 import 'package:skills_pe/screens/wallet/widgets/transaction_history_card.dart';
 import 'package:skills_pe/screens/wallet/widgets/transaction_history_header.dart';
 import 'package:skills_pe/screens/wallet/widgets/wallet_balance_card.dart';
-import 'package:skills_pe/sharedWidgets/card.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 
 class Wallet extends StatefulWidget {

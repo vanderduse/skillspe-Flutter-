@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/quiz/widgets/quiz_status.dart';
 import 'package:skills_pe/screens/tournaments/widgets/label_value_textbox.dart';
 
 class TournamentDetailContainer extends StatelessWidget {

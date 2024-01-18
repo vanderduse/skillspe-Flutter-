@@ -17,3 +17,13 @@ String convertStringDateFormat(
   String formattedDate = DateFormat("yyyy-MM-dd").format(inputDate);
   return formattedDate;
 }
+
+String convertServerDate(String serverDate) {
+  // Parse the server date string
+  DateTime dateTime = DateTime.parse(serverDate);
+
+  // Format the date in "MMM dd, yyyy" format
+  String formattedDate = DateFormat('MMM dd, yyyy').format(dateTime);
+
+  return formattedDate;
+}

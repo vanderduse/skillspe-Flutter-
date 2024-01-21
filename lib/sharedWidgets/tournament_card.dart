@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; 
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
 
 class TournamentCard extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -93,19 +94,7 @@ class TournamentCard extends StatelessWidget {
                   _buildTeamOption('Team H', Color(0xFF425EA6)),
                 ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF7E56DA)), // Button border color
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Text(
-                    'Predict & win',
-                    style: TextStyle(color: Color(0xFF7E56DA)),
-                  ),
-                ),
-              ),
+              UnFilledBtn(label: "Predict & Win", onPressed: () {}),
             ],
           ),
           Container(
@@ -151,11 +140,13 @@ class TournamentCard extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF7E56DA)), // Button border color
+                  border: Border.all(
+                      color: Color(0xFF7E56DA)), // Button border color
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Predict & win',
                     style: TextStyle(color: Color(0xFF7E56DA)),
@@ -179,13 +170,13 @@ class TournamentCard extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-            child: Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: SvgPicture.asset(
-            'assets/icons/t-shirt-white.svg', // Replace 'assets/tshirt.svg' with your SVG file path
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: SvgPicture.asset(
+              'assets/icons/t-shirt-white.svg', // Replace 'assets/tshirt.svg' with your SVG file path
+            ),
           ),
         ),
-      ),
         SizedBox(width: 8),
         Text(
           text,

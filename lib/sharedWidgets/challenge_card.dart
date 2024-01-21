@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
+import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
+import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class ChallengeCard extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -123,7 +127,7 @@ class ChallengeCard extends StatelessWidget {
                                             2), // Use const for unchanged EdgeInsets
                                     child: Text(
                                       item['type'],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
                                       ),
@@ -149,34 +153,23 @@ class ChallengeCard extends StatelessWidget {
                           // First container displaying text
                           Container(
                             width: 140,
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             child: Text(
                               item['date'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
                               ),
                             ),
                           ),
 
                           // Second container for the button
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  width: 1.1,
-                                  color: Color(0xFF8C50F6)), // Border color
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 22, vertical: 10),
-                            child: Text(
-                              'Bid',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: Color(0xFF8C50F6), // Text color
-                              ),
-                            ),
-                          ),
+                          UnFilledBtn(
+                              label: BID,
+                              onPressed: () {
+                                print("bidding");
+                                BottomSheetManager.showGenericBottomSheet(
+                                    context, BiddingStepOneScreen(), "Bidding");
+                              }),
                         ],
                       ),
                     ),

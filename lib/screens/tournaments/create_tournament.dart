@@ -5,6 +5,7 @@ import 'package:skills_pe/sharedWidgets/selectable_checkbox.dart';
 import 'package:skills_pe/sharedWidgets/title_cancel_appbar.dart';
 import 'package:skills_pe/sharedWidgets/image_uploader.dart';
 import 'dart:io';
+import 'package:skills_pe/utility/constants.dart';
 
 class CreateTournament extends StatefulWidget {
   const CreateTournament({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _CreateTournamentState extends State<CreateTournament> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffF4F4F4),
-        appBar: appWithTitleAndCancel("Create Tournament", () {}),
+        appBar: appWithTitleAndCancel(CREATE_TOURNAMENT, () {}),
         body: SingleChildScrollView(
           child: Column(
             children: [

@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
+
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
 
@@ -30,7 +31,7 @@ class _HomeMain extends State<HomeMain> {
             HomeSwipper(imageUrls: imageUrls),
             ChallengesWidget(
               title: 'Challenges',
-              data: [
+              data: const [
                 {
                   'title':
                       'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
@@ -48,13 +49,13 @@ class _HomeMain extends State<HomeMain> {
                   'date': 'Jun 30 - Jul 30, 2023',
                   // Add more properties as needed
                 },
-              
+
                 // Add more data items as needed
               ],
             ),
             QuizWidget(
               title: 'Quiz',
-              data: [
+              data: const [
                 {
                   'title':
                       'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
@@ -77,10 +78,9 @@ class _HomeMain extends State<HomeMain> {
             ),
             TournamentWidget(
               title: 'Tournaments',
-              data: [
+              data: const [
                 {
-                  'title':
-                      'Tournament Name',
+                  'title': 'Tournament Name',
                   'image':
                       'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
                   'type': 'Motivator',
@@ -95,11 +95,11 @@ class _HomeMain extends State<HomeMain> {
                   'date': 'Jun 30 - Jul 30, 2023',
                   // Add more properties as needed
                 },
-               
+
                 // Add more data items as needed
               ],
             ),
-             SizedBox(height: 70),
+            SizedBox(height: 70),
           ],
         ),
       ),
@@ -142,7 +142,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
                       builder: (BuildContext context) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
@@ -166,9 +166,9 @@ class _HomeSwipperState extends State<HomeSwipper> {
                     widget.imageUrls.length, // Adjust based on image list
                 position: _currentIndex, // Use current index for active dot
                 decorator: DotsDecorator(
-                  color: Color.fromARGB(
+                  color: const Color.fromARGB(
                       156, 234, 234, 234), // Use hex code with opacity (255)
-                  activeColor: Color.fromARGB(255, 255, 255, 255),
+                  activeColor: const Color.fromARGB(255, 255, 255, 255),
                   size: const Size(8.0, 8.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),

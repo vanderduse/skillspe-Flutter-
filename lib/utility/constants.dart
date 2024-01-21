@@ -132,3 +132,7 @@ const TRANSACTION_ID = 'Txn ID:';
 const ADD_MONEY = "Add Money";
 const TOPUP_WALLET = "Topup Wallet";
 const TOPUP_AMOUNTS = [1000, 500, 200, 50];
+
+//Tournament
+const CREATE_TOURNAMENT = "Create Tournament";
+const BID = "Bid";

@@ -24,13 +24,25 @@ String convertStringDateFormat(
 String formatChallengeDate(String startTime, String endTime) {
   DateTime startDateTime = DateTime.parse(startTime);
   DateTime endDateTime = DateTime.parse(endTime);
-
   String startMonth = months[startDateTime.month - 1]; // months is a list of month names
   String endMonth = months[endDateTime.month - 1];
-
   String formattedStartDate = '${startMonth} ${startDateTime.day}';
   String formattedEndDate = '${endMonth} ${endDateTime.day} ${endDateTime.year}';
 
   return '$formattedStartDate - $formattedEndDate';
 }
 
+String formatQuizCardDate(String eventTimeInSecondsString) {
+  int eventTimeInSeconds = int.tryParse(eventTimeInSecondsString) ?? 0;
+  DateTime currentTime = DateTime.now();
+  DateTime eventTime = DateTime.fromMillisecondsSinceEpoch(eventTimeInSeconds * 1000);
+  Duration difference = eventTime.difference(currentTime);
+
+  if (difference.inSeconds < 0) {
+    return 'LIVE';
+  } else if (difference.inHours >= 24) {
+    return 'Starts on ${DateFormat('dd MMM yy').format(eventTime)}';
+  } else {
+    return 'Starts in ${difference.inHours}h ${difference.inMinutes.remainder(60)}m';
+  }
+}

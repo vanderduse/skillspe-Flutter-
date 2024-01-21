@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 
 class QuizCard extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -63,7 +65,7 @@ class QuizCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    item['title'],
+                    item['name'],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14.0,
@@ -76,10 +78,20 @@ class QuizCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 2.0),
                     child: Text(
-                      item['date'],
+                      formatQuizCardDate(item['scheduled_time']),
                       style: TextStyle(
-                        color: Color(0xFF5C6068), // Text color
-                        fontSize: 12.0,
+                        color:
+                            formatQuizCardDate(item['scheduled_time']) == 'LIVE'
+                                ? Colors.red
+                                : Color(0xFF5C6068),
+                        fontSize: formatQuizCardDate(item['scheduled_time']) ==
+                                'LIVE'
+                            ? 14.0 
+                            : 12.0,
+                        fontWeight:
+                            formatQuizCardDate(item['scheduled_time']) == 'Live'
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                       ),
                     ),
                   ),
@@ -92,7 +104,7 @@ class QuizCard extends StatelessWidget {
                       children: [
                         Container(
                           child: Container(
-                            width: 120,
+                            width: 100,
                             padding: EdgeInsets.all(3.0), // Adding padding
                             decoration: BoxDecoration(
                               color: Color(0xFFF5F5F5),
@@ -100,7 +112,7 @@ class QuizCard extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                item['participants'],
+                                item['category'],
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12.0,
@@ -123,7 +135,7 @@ class QuizCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  item['price'],
+                                  '${INR_CURRENCY} ${item['participation_fee'].toString()}',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12.0,

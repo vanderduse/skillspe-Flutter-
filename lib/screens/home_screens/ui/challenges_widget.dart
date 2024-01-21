@@ -23,7 +23,6 @@ class ChallengesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Item Data: $data');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

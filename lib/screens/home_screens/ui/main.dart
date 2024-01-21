@@ -18,7 +18,7 @@ class HomeMain extends StatefulWidget {
 class _HomeMain extends State<HomeMain> {
   final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
   final String challengesApiEndpoint = '/challenges';
-  final String quizApiEndpoint = '/quiz';
+  final String quizApiEndpoint = '/quizzes';
   final String tournamentApiEndpoint = '/tournaments';
 
   late Dio dio;
@@ -59,20 +59,27 @@ class _HomeMain extends State<HomeMain> {
     }
   }
 
-  Future<void> fetchQuiz() async {
+  Future<List<Map<String, dynamic>>> fetchQuiz() async {
     try {
       final response = await dio.get(quizApiEndpoint);
       if (response.statusCode == 200) {
-        final List<Map<String, dynamic>> data =
-            List<Map<String, dynamic>>.from(response.data);
-        setState(() {
-          quizData = data;
-        });
+        final responseData = response.data;
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('data') &&
+            responseData['data'] is List<dynamic>) {
+          return List<Map<String, dynamic>>.from(responseData['data']);
+        } else {
+          print('Invalid data format received: $responseData');
+          throw Exception('Invalid data format received');
+        }
       } else {
-        print('Failed to load quiz data: ${response.statusCode}');
+        print('Failed to load QUIZ data: ${response.statusCode}');
+        throw Exception(
+            'Failed to load QUIZ data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching quiz data: $error');
+      print('Error fetching QUIZ data: $error');
+      throw Exception('Error fetching QUIZ data: $error');
     }
   }
 
@@ -116,7 +123,7 @@ class _HomeMain extends State<HomeMain> {
                   print('${snapshot.error}');
                   return Text('Error fetching data: ${snapshot.error}');
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No data available');
+                  return Text('No challenge data available');
                 } else {
                   // Render your ChallengesWidget with the fetched data
                   return ChallengesWidget(
@@ -124,28 +131,22 @@ class _HomeMain extends State<HomeMain> {
                 }
               },
             ),
-            QuizWidget(
-              title: 'Quiz',
-              data: [
-                {
-                  'title':
-                      'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-                  'participants': '100+ participants',
-                  'date': 'Starts on 01 Oct 23',
-                  'price': '₹50'
-                },
-                {
-                  'title': 'Lorem ipsum dolor sit amet consectetur.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-                  'participants': '100+ participants',
-                  'date': 'Starts on 01 Oct 23',
-                  'price': '₹20'
-                },
-                // Add more data items as needed
-              ],
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchQuiz(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
+                } else if (snapshot.hasError) {
+                  print('${snapshot.error}');
+                  return Text('Error fetching QUIZ data: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No quiz data available');
+                } else {
+                  // Render your ChallengesWidget with the fetched data
+                  return QuizWidget(
+                      title: 'Quiz', data: snapshot.data!);
+                }
+              },
             ),
             TournamentWidget(
               title: 'Tournaments',

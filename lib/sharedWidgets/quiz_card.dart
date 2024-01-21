@@ -46,7 +46,7 @@ class QuizCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
+                   item['banner'],
                     width: 54,
                     height: 54,
                     // You can adjust the width and height as needed

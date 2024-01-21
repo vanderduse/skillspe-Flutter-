@@ -5,7 +5,18 @@ import 'package:intl/intl.dart';
 const DDMMYYYY_SLASH_FORMAT = "dd/MM/yyyy";
 const YYYYMMDD_DASH_FORMAT = "yyyy-MM-dd";
 List<String> months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
 ];
 
 bool dateComparision({required date1, required date2}) {
@@ -24,10 +35,12 @@ String convertStringDateFormat(
 String formatChallengeDate(String startTime, String endTime) {
   DateTime startDateTime = DateTime.parse(startTime);
   DateTime endDateTime = DateTime.parse(endTime);
-  String startMonth = months[startDateTime.month - 1]; // months is a list of month names
+  String startMonth =
+      months[startDateTime.month - 1]; // months is a list of month names
   String endMonth = months[endDateTime.month - 1];
   String formattedStartDate = '${startMonth} ${startDateTime.day}';
-  String formattedEndDate = '${endMonth} ${endDateTime.day} ${endDateTime.year}';
+  String formattedEndDate =
+      '${endMonth} ${endDateTime.day} ${endDateTime.year}';
 
   return '$formattedStartDate - $formattedEndDate';
 }
@@ -35,7 +48,8 @@ String formatChallengeDate(String startTime, String endTime) {
 String formatQuizCardDate(String eventTimeInSecondsString) {
   int eventTimeInSeconds = int.tryParse(eventTimeInSecondsString) ?? 0;
   DateTime currentTime = DateTime.now();
-  DateTime eventTime = DateTime.fromMillisecondsSinceEpoch(eventTimeInSeconds * 1000);
+  DateTime eventTime =
+      DateTime.fromMillisecondsSinceEpoch(eventTimeInSeconds * 1000);
   Duration difference = eventTime.difference(currentTime);
 
   if (difference.inSeconds < 0) {

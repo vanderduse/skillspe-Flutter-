@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; 
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TournamentCard extends StatelessWidget {
   final Map<String, dynamic> item;
   final dynamic leftBorderColor;
 
   const TournamentCard({required this.item, this.leftBorderColor = '#ED5E91'});
-
   @override
   Widget build(BuildContext context) {
+    print("tour item $item");
+
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.9;
 
@@ -46,7 +47,7 @@ class TournamentCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
-                item['image'],
+                item['banner_image'],
                 fit: BoxFit.cover,
               ),
             ),
@@ -95,11 +96,13 @@ class TournamentCard extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF7E56DA)), // Button border color
+                  border: Border.all(
+                      color: Color(0xFF7E56DA)), // Button border color
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Predict & win',
                     style: TextStyle(color: Color(0xFF7E56DA)),
@@ -151,11 +154,13 @@ class TournamentCard extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF7E56DA)), // Button border color
+                  border: Border.all(
+                      color: Color(0xFF7E56DA)), // Button border color
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Predict & win',
                     style: TextStyle(color: Color(0xFF7E56DA)),
@@ -163,6 +168,34 @@ class TournamentCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 10),
+              child: TextButton(
+                onPressed: () {
+                  // Handle the onPressed event, e.g., navigate to more matches screen
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'View All Matches ',
+                      style: TextStyle(
+                        color:
+                            Color(0xFF8C50F6), // Change to your desired color
+                        fontSize: 14,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Color(0xFF8C50F6),
+                      size: 16, // Change to your desired color
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -179,13 +212,13 @@ class TournamentCard extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-            child: Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: SvgPicture.asset(
-            'assets/icons/t-shirt-white.svg', // Replace 'assets/tshirt.svg' with your SVG file path
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: SvgPicture.asset(
+              'assets/icons/t-shirt-white.svg', // Replace 'assets/tshirt.svg' with your SVG file path
+            ),
           ),
         ),
-      ),
         SizedBox(width: 8),
         Text(
           text,

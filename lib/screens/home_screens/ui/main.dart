@@ -74,8 +74,7 @@ class _HomeMain extends State<HomeMain> {
         }
       } else {
         print('Failed to load QUIZ data: ${response.statusCode}');
-        throw Exception(
-            'Failed to load QUIZ data: ${response.statusCode}');
+        throw Exception('Failed to load QUIZ data: ${response.statusCode}');
       }
     } catch (error) {
       print('Error fetching QUIZ data: $error');
@@ -83,20 +82,27 @@ class _HomeMain extends State<HomeMain> {
     }
   }
 
-  Future<void> fetchTournaments() async {
+  Future<List<Map<String, dynamic>>> fetchTournaments() async {
     try {
       final response = await dio.get(tournamentApiEndpoint);
       if (response.statusCode == 200) {
-        final List<Map<String, dynamic>> data =
-            List<Map<String, dynamic>>.from(response.data);
-        setState(() {
-          tournamentData = data;
-        });
+        final responseData = response.data;
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('data') &&
+            responseData['data'] is List<dynamic>) {
+          return List<Map<String, dynamic>>.from(responseData['data']);
+        } else {
+          print('Invalid data format received: $responseData');
+          throw Exception('Invalid data format received');
+        }
       } else {
-        print('Failed to load tournament data: ${response.statusCode}');
+        print('Failed to load TOURNAMENT data: ${response.statusCode}');
+        throw Exception(
+            'Failed to load TOURNAMENT data: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching tournament data: $error');
+      print('Error fetching TOURNAMENT data: $error');
+      throw Exception('Error fetching TOURNAMENT data: $error');
     }
   }
 
@@ -143,33 +149,27 @@ class _HomeMain extends State<HomeMain> {
                   return Text('No quiz data available');
                 } else {
                   // Render your ChallengesWidget with the fetched data
-                  return QuizWidget(
-                      title: 'Quiz', data: snapshot.data!);
+                  return QuizWidget(title: 'Quiz', data: snapshot.data!);
                 }
               },
             ),
-            TournamentWidget(
-              title: 'Tournaments',
-              data: [
-                {
-                  'title': 'Tournament Name',
-                  'image':
-                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
-                  'type': 'Motivator',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Tournament Name',
-                  'image':
-                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-
-                // Add more data items as needed
-              ],
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchTournaments(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
+                } else if (snapshot.hasError) {
+                  print('${snapshot.error}');
+                  return Text(
+                      'Error fetching TOURNAMNENT data: ${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Text('No TOURNAMENT data available');
+                } else {
+                  // Render your ChallengesWidget with the fetched data
+                  return TournamentWidget(
+                      title: 'Tournament', data: snapshot.data!);
+                }
+              },
             ),
             SizedBox(height: 70),
           ],

@@ -13,6 +13,7 @@ class TournamentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("tounrmanet item: $data");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,7 +46,7 @@ class TournamentWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 450, // Set a fixed height for the horizontal ListView
+          height: 500, // Set a fixed height for the horizontal ListView
           child: Container(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,

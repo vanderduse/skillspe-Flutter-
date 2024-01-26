@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/quiz_card.dart';
 import 'package:skills_pe/screens/view_all/ui/view_all_quiz.dart';
+import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 
 class QuizWidget extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> data;
+  final List<QuizzesListResponse> data;
 
   QuizWidget({
     required this.title,
@@ -13,7 +14,6 @@ class QuizWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,8 +31,7 @@ class QuizWidget extends StatelessWidget {
                   // Handle the 'View All' button tap
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewAllQuiz()),
+                    MaterialPageRoute(builder: (context) => ViewAllQuiz()),
                   );
                 },
                 child: Text(

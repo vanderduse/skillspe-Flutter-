@@ -61,10 +61,10 @@ class ViewAllQuiz extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 20.0),
                   height: 250, // Set a fixed height or adjust as needed
-                  child: QuizCard(
-                    item: quiz[index],
-                    // Add your custom leftBorderColor if needed
-                  ),
+                  // child: QuizCard(
+                  //   item: quiz[index],
+                  //   // Add your custom leftBorderColor if needed
+                  // ),
                 );
               },
             ),

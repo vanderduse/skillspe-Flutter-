@@ -1,30 +1,18 @@
 part of 'list_challenges_bloc.dart';
 
-abstract class ListChallengesState extends Equatable {
-  const ListChallengesState();
+@immutable
+sealed class ListChallengeState {}
 
-  @override
-  List<Object> get props => [];
+class ListChallengeInitialState extends ListChallengeState {}
+
+class ListChallengeLoadingState extends ListChallengeState {}
+
+class ListChallengeSuccessState extends ListChallengeState {
+  final List<ChallengesListResponse> challenges;
+  ListChallengeSuccessState(this.challenges);
 }
 
-class ListChallengesInitial extends ListChallengesState {}
-
-class ListChallengesLoading extends ListChallengesState {}
-
-class ListChallengesLoaded extends ListChallengesState {
-  final List<Map<String, dynamic>> challengesData;
-
-  ListChallengesLoaded(this.challengesData);
-
-  @override
-  List<Object> get props => [challengesData];
-}
-
-class ListChallengesError extends ListChallengesState {
+class ListChallengeFailureState extends ListChallengeState {
   final String errorMessage;
-
-  ListChallengesError(this.errorMessage);
-
-  @override
-  List<Object> get props => [errorMessage];
+  ListChallengeFailureState(this.errorMessage);
 }

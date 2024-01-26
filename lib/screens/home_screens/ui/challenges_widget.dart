@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
 import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
 
 class ChallengesWidget extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> data;
+  final List<ChallengesListResponse> data;
 
   final List<String> leftBorderColors = [
     '#ED5E91',

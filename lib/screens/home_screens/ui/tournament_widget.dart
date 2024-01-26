@@ -13,7 +13,6 @@ class TournamentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("tounrmanet item: $data");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

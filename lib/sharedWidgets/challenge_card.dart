@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/utility/date_utility.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 
 class ChallengeCard extends StatelessWidget {
-  final Map<String, dynamic> item;
+  final ChallengesListResponse item;
   final dynamic leftBorderColor;
 
   const ChallengeCard({required this.item, this.leftBorderColor = '#ED5E91'});
@@ -71,7 +72,7 @@ class ChallengeCard extends StatelessWidget {
                   height: 58.0,
                   child: Container(
                     child: Text(
-                      item["challenge_emoji"],
+                      item.challengeEmoji!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 32,
@@ -102,7 +103,7 @@ class ChallengeCard extends StatelessWidget {
                             padding: EdgeInsets.only(right: 50.0),
                             child: Container(
                               child: Text(
-                                item["title"],
+                                item.title!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -135,7 +136,7 @@ class ChallengeCard extends StatelessWidget {
                                         vertical:
                                             2), // Use const for unchanged EdgeInsets
                                     child: Text(
-                                      item['category'],
+                                      item.category!,
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -165,7 +166,7 @@ class ChallengeCard extends StatelessWidget {
                             padding: EdgeInsets.all(8),
                             child: Text(
                               formatChallengeDate(
-                                  item['start_time'], item['end_time']),
+                                  item.startTime, item.endTime),
                               style: TextStyle(
                                 fontSize: 12,
                               ),

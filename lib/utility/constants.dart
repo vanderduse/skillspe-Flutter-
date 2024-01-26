@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-const BASE_URL = "https://api-stage.skillspe.com";
+// const BASE_URL = "https://api-stage.skillspe.com";
+const BASE_URL = "https://aristoteles-stg.skillspe.com";
+
 // LOCAL STORAGE KEY
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';

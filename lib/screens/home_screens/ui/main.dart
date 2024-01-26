@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skills_pe/screens/home_screens/bloc/list_challenges_bloc.dart';
+import 'package:skills_pe/screens/home_screens/repository/list_challenges_repo.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
@@ -7,6 +10,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
 import 'package:dio/dio.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -16,95 +20,98 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
-  final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
-  final String challengesApiEndpoint = '/challenges';
-  final String quizApiEndpoint = '/quizzes';
-  final String tournamentApiEndpoint = '/tournaments';
-
-  late Dio dio;
-  List<Map<String, dynamic>> challengesData = [];
-  List<Map<String, dynamic>> quizData = [];
-  List<Map<String, dynamic>> tournamentData = [];
+  late ListChallengeBloc _listChallengeBloc;
+  // final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
+  // final String challengesApiEndpoint = '/challenges';
+  // final String quizApiEndpoint = '/quizzes';
+  // final String tournamentApiEndpoint = '/tournaments';
+  // late Dio dio;
+  // List<Map<String, dynamic>> challengesData = [];
+  // List<Map<String, dynamic>> quizData = [];
+  // List<Map<String, dynamic>> tournamentData = [];
 
   @override
   void initState() {
     super.initState();
-    dio = Dio(BaseOptions(baseUrl: baseUrl));
-    fetchChallenges();
-    fetchQuiz();
-    fetchTournaments();
+    _listChallengeBloc = ListChallengeBloc(ListChallengeRepository());
+    _listChallengeBloc.add(FetchListChallengeEvent());
+
+    // dio = Dio(BaseOptions(baseUrl: baseUrl));
+    // fetchChallenges();
+    // fetchQuiz();
+    // fetchTournaments();
   }
 
-  Future<List<Map<String, dynamic>>> fetchChallenges() async {
-    try {
-      final response = await dio.get(challengesApiEndpoint);
-      if (response.statusCode == 200) {
-        final responseData = response.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('data') &&
-            responseData['data'] is List<dynamic>) {
-          return List<Map<String, dynamic>>.from(responseData['data']);
-        } else {
-          print('Invalid data format received: $responseData');
-          throw Exception('Invalid data format received');
-        }
-      } else {
-        print('Failed to load challenges data: ${response.statusCode}');
-        throw Exception(
-            'Failed to load challenges data: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching challenges data: $error');
-      throw Exception('Error fetching challenges data: $error');
-    }
-  }
+  // Future<List<Map<String, dynamic>>> fetchChallenges() async {
+  //   try {
+  //     final response = await dio.get(challengesApiEndpoint);
+  //     if (response.statusCode == 200) {
+  //       final responseData = response.data;
+  //       if (responseData is Map<String, dynamic> &&
+  //           responseData.containsKey('data') &&
+  //           responseData['data'] is List<dynamic>) {
+  //         return List<Map<String, dynamic>>.from(responseData['data']);
+  //       } else {
+  //         print('Invalid data format received: $responseData');
+  //         throw Exception('Invalid data format received');
+  //       }
+  //     } else {
+  //       print('Failed to load challenges data: ${response.statusCode}');
+  //       throw Exception(
+  //           'Failed to load challenges data: ${response.statusCode}');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching challenges data: $error');
+  //     throw Exception('Error fetching challenges data: $error');
+  //   }
+  // }
 
-  Future<List<Map<String, dynamic>>> fetchQuiz() async {
-    try {
-      final response = await dio.get(quizApiEndpoint);
-      if (response.statusCode == 200) {
-        final responseData = response.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('data') &&
-            responseData['data'] is List<dynamic>) {
-          return List<Map<String, dynamic>>.from(responseData['data']);
-        } else {
-          print('Invalid data format received: $responseData');
-          throw Exception('Invalid data format received');
-        }
-      } else {
-        print('Failed to load QUIZ data: ${response.statusCode}');
-        throw Exception('Failed to load QUIZ data: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching QUIZ data: $error');
-      throw Exception('Error fetching QUIZ data: $error');
-    }
-  }
+  // Future<List<Map<String, dynamic>>> fetchQuiz() async {
+  //   try {
+  //     final response = await dio.get(quizApiEndpoint);
+  //     if (response.statusCode == 200) {
+  //       final responseData = response.data;
+  //       if (responseData is Map<String, dynamic> &&
+  //           responseData.containsKey('data') &&
+  //           responseData['data'] is List<dynamic>) {
+  //         return List<Map<String, dynamic>>.from(responseData['data']);
+  //       } else {
+  //         print('Invalid data format received: $responseData');
+  //         throw Exception('Invalid data format received');
+  //       }
+  //     } else {
+  //       print('Failed to load QUIZ data: ${response.statusCode}');
+  //       throw Exception('Failed to load QUIZ data: ${response.statusCode}');
+  //     }
+  //   } catch (error) {
+  //     print('Error fetching QUIZ data: $error');
+  //     throw Exception('Error fetching QUIZ data: $error');
+  //   }
+  // }
 
-  Future<List<Map<String, dynamic>>> fetchTournaments() async {
-    try {
-      final response = await dio.get(tournamentApiEndpoint);
-      if (response.statusCode == 200) {
-        final responseData = response.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('data') &&
-            responseData['data'] is List<dynamic>) {
-          return List<Map<String, dynamic>>.from(responseData['data']);
-        } else {
-          print('Invalid data format received: $responseData');
-          throw Exception('Invalid data format received');
-        }
-      } else {
-        print('Failed to load TOURNAMENT data: ${response.statusCode}');
-        throw Exception(
-            'Failed to load TOURNAMENT data: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching TOURNAMENT data: $error');
-      throw Exception('Error fetching TOURNAMENT data: $error');
-    }
-  }
+  // Future<List<Map<String, dynamic>>> fetchTournaments() async {
+  // try {
+  //   final response = await dio.get(tournamentApiEndpoint);
+  //   if (response.statusCode == 200) {
+  //     final responseData = response.data;
+  //     if (responseData is Map<String, dynamic> &&
+  //         responseData.containsKey('data') &&
+  //         responseData['data'] is List<dynamic>) {
+  //       return List<Map<String, dynamic>>.from(responseData['data']);
+  //     } else {
+  //       print('Invalid data format received: $responseData');
+  //       throw Exception('Invalid data format received');
+  //     }
+  //   } else {
+  //     print('Failed to load TOURNAMENT data: ${response.statusCode}');
+  //     throw Exception(
+  //         'Failed to load TOURNAMENT data: ${response.statusCode}');
+  //   }
+  // } catch (error) {
+  //   print('Error fetching TOURNAMENT data: $error');
+  //   throw Exception('Error fetching TOURNAMENT data: $error');
+  // }
+  // }
 
   final List<String> imageUrls = [
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
@@ -120,58 +127,78 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             HomeSwipper(imageUrls: imageUrls),
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: fetchChallenges(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
-                } else if (snapshot.hasError) {
-                  print('${snapshot.error}');
-                  return Text('Error fetching data: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No challenge data available');
+            BlocBuilder<ListChallengeBloc, ListChallengeState>(
+              bloc: _listChallengeBloc,
+              builder: (context, state) {
+                print("STtate=>$state");
+                if (state is ListChallengeLoadingState) {
+                  return CircularProgressIndicator();
+                } else if (state is ListChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: 'Challenges',
+                    data: state.challenges,
+                  ));
+                } else if (state is ListChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
                 } else {
-                  // Render your ChallengesWidget with the fetched data
-                  return ChallengesWidget(
-                      title: 'Challenges', data: snapshot.data!);
+                  return Text('Unexpected state');
                 }
               },
             ),
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: fetchQuiz(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
-                } else if (snapshot.hasError) {
-                  print('${snapshot.error}');
-                  return Text('Error fetching QUIZ data: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No quiz data available');
-                } else {
-                  // Render your ChallengesWidget with the fetched data
-                  return QuizWidget(title: 'Quiz', data: snapshot.data!);
-                }
-              },
-            ),
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: fetchTournaments(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
-                } else if (snapshot.hasError) {
-                  print('${snapshot.error}');
-                  return Text(
-                      'Error fetching TOURNAMNENT data: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No TOURNAMENT data available');
-                } else {
-                  // Render your ChallengesWidget with the fetched data
-                  return TournamentWidget(
-                      title: 'Tournament', data: snapshot.data!);
-                }
-              },
-            ),
-            SizedBox(height: 70),
+            
+            
+            // FutureBuilder<List<Map<String, dynamic>>>(
+            //   future: fetchChallenges(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return CircularProgressIndicator(); // Show a loading indicator while fetching data
+            //     } else if (snapshot.hasError) {
+            //       print('${snapshot.error}');
+            //       return Text('Error fetching Challenge data: ${snapshot.error}');
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return Text('No Challenge data available');
+            //     } else {
+            //       // Render your ChallengesWidget with the fetched data
+            //       return ChallengesWidget(title: 'Challenges', data: snapshot.data!);
+            //     }
+            //   },
+            // ),
+            // FutureBuilder<List<Map<String, dynamic>>>(
+            //   future: fetchQuiz(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return CircularProgressIndicator(); // Show a loading indicator while fetching data
+            //     } else if (snapshot.hasError) {
+            //       print('${snapshot.error}');
+            //       return Text('Error fetching QUIZ data: ${snapshot.error}');
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return Text('No quiz data available');
+            //     } else {
+            //       // Render your ChallengesWidget with the fetched data
+            //       return QuizWidget(title: 'Quiz', data: snapshot.data!);
+            //     }
+            //   },
+            // ),
+            // FutureBuilder<List<Map<String, dynamic>>>(
+            //   future: fetchTournaments(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return CircularProgressIndicator(); // Show a loading indicator while fetching data
+            //     } else if (snapshot.hasError) {
+            //       print('${snapshot.error}');
+            //       return Text(
+            //           'Error fetching TOURNAMNENT data: ${snapshot.error}');
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return Text('No TOURNAMENT data available');
+            //     } else {
+            //       // Render your ChallengesWidget with the fetched data
+            //       return TournamentWidget(
+            //           title: 'Tournament', data: snapshot.data!);
+            //     }
+            //   },
+            // ),
+            const SizedBox(height: 70),
           ],
         ),
       ),

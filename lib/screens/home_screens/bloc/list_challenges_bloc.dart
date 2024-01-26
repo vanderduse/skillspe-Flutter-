@@ -1,47 +1,31 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/repository/list_challenges_repo.dart';
 
 part 'list_challenges_event.dart';
 part 'list_challenges_state.dart';
 
-class ListChallengesBloc
-    extends Bloc<ListChallengesEvent, ListChallengesState> {
-  final Dio _dio = Dio();
+class ListChallengeBloc extends Bloc<ListChallengeEvent, ListChallengeState> {
+  final ListChallengeRepository _repository;
 
-  ListChallengesBloc() : super(ListChallengesInitial());
-
-  @override
-  Stream<ListChallengesState> mapEventToState(
-      ListChallengesEvent event) async* {
-    if (event is InitialFetchEvent) {
-      yield* _mapInitialFetchToState();
-    }
-    // Add more events if needed
+  ListChallengeBloc(this._repository) : super(ListChallengeInitialState()) {
+    on<FetchListChallengeEvent>(_fetchListChallengeEvent);
   }
 
-  Stream<ListChallengesState> _mapInitialFetchToState() async* {
-    yield ListChallengesLoading();
-
+  Future<void> _fetchListChallengeEvent(
+      FetchListChallengeEvent event, Emitter<ListChallengeState> emit) async {
+    emit(ListChallengeLoadingState());
     try {
-      // Replace the URL with your actual API endpoint
-      final response =
-          await _dio.get('https://aristoteles-stg.skillspe.com/v1/challenges');
-      print(response);
-      if (response.statusCode == 200) {
-        final List<dynamic> challengesData = response.data;
-        // Convert dynamic list to List<Map<String, dynamic>>
-        final List<Map<String, dynamic>> challengesList = challengesData
-            .map((dynamic item) => item as Map<String, dynamic>)
-            .toList();
-        yield ListChallengesLoaded(challengesList);
+      var response = await _repository.fetchChallenges();
+      if (response != null && response.success == true) {
+        emit(ListChallengeSuccessState(response.data!));
       } else {
-        yield ListChallengesError(
-            'Failed to fetch challenges. Status code: ${response.statusCode}');
+        emit(ListChallengeFailureState('Failed to fetch challenges'));
       }
     } catch (e) {
-      yield ListChallengesError('Error: $e');
+      emit(ListChallengeFailureState('Failed to fetch challenges: $e'));
     }
   }
 }

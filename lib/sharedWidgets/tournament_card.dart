@@ -8,7 +8,6 @@ class TournamentCard extends StatelessWidget {
   const TournamentCard({required this.item, this.leftBorderColor = '#ED5E91'});
   @override
   Widget build(BuildContext context) {
-    print("tour item $item");
 
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.9;

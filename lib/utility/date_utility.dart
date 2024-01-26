@@ -32,17 +32,21 @@ String convertStringDateFormat(
   return formattedDate;
 }
 
-String formatChallengeDate(String startTime, String endTime) {
-  DateTime startDateTime = DateTime.parse(startTime);
-  DateTime endDateTime = DateTime.parse(endTime);
-  String startMonth =
-      months[startDateTime.month - 1]; // months is a list of month names
-  String endMonth = months[endDateTime.month - 1];
-  String formattedStartDate = '${startMonth} ${startDateTime.day}';
-  String formattedEndDate =
-      '${endMonth} ${endDateTime.day} ${endDateTime.year}';
+String formatChallengeDate(String? startTime, String? endTime) {
+  try {
+    DateTime startDateTime = DateTime.parse(startTime!);
+    DateTime endDateTime = DateTime.parse(endTime!);
+    String startMonth =
+        months[startDateTime.month - 1]; // months is a list of month names
+    String endMonth = months[endDateTime.month - 1];
+    String formattedStartDate = '${startMonth} ${startDateTime.day}';
+    String formattedEndDate =
+        '${endMonth} ${endDateTime.day} ${endDateTime.year}';
 
-  return '$formattedStartDate - $formattedEndDate';
+    return '$formattedStartDate - $formattedEndDate';
+  } catch (e) {
+    return '';
+  }
 }
 
 String formatQuizCardDate(String eventTimeInSecondsString) {

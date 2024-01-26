@@ -1,9 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
+import 'package:dio/dio.dart';
 
-class ViewAllChallenges extends StatelessWidget {
+class ViewAllChallenges extends StatefulWidget {
+  @override
+  _ViewAllChallengesState createState() => _ViewAllChallengesState();
+}
+
+class _ViewAllChallengesState extends State<ViewAllChallenges> {
+  final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
+  final String challengesApiEndpoint = '/challenges';
+
+  late Dio dio;
+  List<ChallengesListResponse> challenges = [];
+
+  @override
+  void initState() {
+    super.initState();
+    dio = Dio(BaseOptions(baseUrl: baseUrl));
+    fetchChallenges();
+  }
+
+  Future<void> fetchChallenges() async {
+    try {
+      final response = await dio.get(challengesApiEndpoint);
+      if (response.statusCode == 200) {
+        final responseData = response.data;
+        if (responseData is Map<String, dynamic> &&
+            responseData.containsKey('data') &&
+            responseData['data'] is List<dynamic>) {
+          setState(() {
+            challenges = List<ChallengesListResponse>.from(responseData['data']);
+          });
+        } else {
+          print('Invalid data format received: $responseData');
+          throw Exception('Invalid data format received');
+        }
+      } else {
+        print('Failed to load challenges data: ${response.statusCode}');
+        throw Exception(
+            'Failed to load challenges data: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching challenges data: $error');
+      throw Exception('Error fetching challenges data: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Dummy wallet amount for demonstration
@@ -15,24 +61,6 @@ class ViewAllChallenges extends StatelessWidget {
       'Request',
       'Upcoming',
       'Completed'
-    ];
-
-    // Dummy list of challenge data for demonstration
-    List<Map<String, dynamic>> challenges = [
-      {
-        'title':
-            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-        'type': 'Motivator',
-        'date': 'Jun 30 - Jul 30, 2023',
-      },
-      {
-        'title':
-            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-        'icon': 'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-        'type': 'Motivator',
-        'date': 'Jun 30 - Jul 30, 2023',
-      },
     ];
 
     return Scaffold(

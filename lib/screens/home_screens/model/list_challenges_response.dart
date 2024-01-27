@@ -10,7 +10,7 @@ class ChallengesListResponse {
   bool? isPublic;
   String? startTime;
   String? endTime;
-  String? prizeAmount;
+  double? prizeAmount;
   String? category;
   String? status;
   double? participationFee;
@@ -46,7 +46,7 @@ class ChallengesListResponse {
       isPublic: json['public'],
       startTime: json['start_time'],
       endTime: json['end_time'],
-      prizeAmount: json['prize_amount'],
+      prizeAmount: json['prize_amount']?.toDouble(),
       category: json['category'],
       status: json['status'],
       participationFee: json['participation_fee'],

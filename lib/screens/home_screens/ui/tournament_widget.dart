@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/tournament_card.dart';
 import 'package:skills_pe/screens/view_all/ui/view_all_tournament.dart';
+import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 
 class TournamentWidget extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> data;
+  final List<TournamentsListResponse> data;
 
   TournamentWidget({
     required this.title,
@@ -45,7 +46,7 @@ class TournamentWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 500, // Set a fixed height for the horizontal ListView
+          height: 510, // Set a fixed height for the horizontal ListView
           child: Container(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,

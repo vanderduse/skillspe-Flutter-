@@ -60,22 +60,23 @@ class ViewAllTournament extends StatelessWidget {
               ),
             ),
 
-            // Challenge cards - Vertical ListView
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: quiz.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  height: 450, // Set a fixed height or adjust as needed
-                  child: TournamentCard(
-                    item: quiz[index],
-                    // Add your custom leftBorderColor if needed
-                  ),
-                );
-              },
-            ),
+            // Tounaments cards - Vertical ListView
+          
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: quiz.length,
+            //   itemBuilder: (context, index) {
+            //     return Container(
+            //       margin: EdgeInsets.symmetric(horizontal: 20.0),
+            //       height: 450, // Set a fixed height or adjust as needed
+            //       child: TournamentCard(
+            //         item: quiz[index],
+            //         // Add your custom leftBorderColor if needed
+            //       ),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

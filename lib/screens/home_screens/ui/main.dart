@@ -7,8 +7,10 @@ import 'package:dio/dio.dart';
 
 import 'package:skills_pe/screens/home_screens/bloc/list_challenges_bloc.dart';
 import 'package:skills_pe/screens/home_screens/bloc/list_quizzes_bloc.dart';
+import 'package:skills_pe/screens/home_screens/bloc/list_tournaments_bloc.dart';
 import 'package:skills_pe/screens/home_screens/repository/list_challenges_repo.dart';
 import 'package:skills_pe/screens/home_screens/repository/list_quizzes_repo.dart';
+import 'package:skills_pe/screens/home_screens/repository/list_tournaments_repo.dart';
 
 import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
@@ -27,10 +29,12 @@ class HomeMain extends StatefulWidget {
 class _HomeMain extends State<HomeMain> {
   late ListChallengeBloc _listChallengeBloc;
   late ListQuizzesBloc _listQuizzesBloc;
+  late ListTournamentsBloc _listTournamentsBloc;
+
   final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
   // final String challengesApiEndpoint = '/challenges';
   // final String quizApiEndpoint = '/quizzes';
-  final String tournamentApiEndpoint = '/tournaments';
+  final String tournamentApiEndpoint = '/cumulated/tournaments';
   late Dio dio;
   // List<Map<String, dynamic>> challengesData = [];
   // List<Map<String, dynamic>> quizData = [];
@@ -44,9 +48,12 @@ class _HomeMain extends State<HomeMain> {
 
     _listQuizzesBloc = ListQuizzesBloc(ListQuizzesRepository());
     _listQuizzesBloc.add(FetchListQuizzesEvent());
+
+    _listTournamentsBloc = ListTournamentsBloc(ListTournamentsRepository());
+    _listTournamentsBloc.add(FetchListTournamentsEvent());
+
     dio = Dio(BaseOptions(baseUrl: baseUrl));
-    // fetchChallenges();
-    // fetchQuiz();
+
     // fetchTournaments();
   }
 
@@ -88,7 +95,6 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             HomeSwipper(imageUrls: imageUrls),
-
             BlocBuilder<ListChallengeBloc, ListChallengeState>(
               bloc: _listChallengeBloc,
               builder: (context, state) {
@@ -110,7 +116,6 @@ class _HomeMain extends State<HomeMain> {
                 }
               },
             ),
-
             BlocBuilder<ListQuizzesBloc, ListQuizzesState>(
               bloc: _listQuizzesBloc,
               builder: (context, state) {
@@ -126,6 +131,28 @@ class _HomeMain extends State<HomeMain> {
                     data: state.quizzes,
                   ));
                 } else if (state is ListQuizzesFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return Text('Unexpected state');
+                }
+              },
+            ),
+
+            BlocBuilder<ListTournamentsBloc, ListTournamentsState>(
+              bloc: _listTournamentsBloc,
+              builder: (context, state) {
+                if (state is ListTournamentsLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
+                } else if (state is ListTournamentsSuccessState) {
+                  return SingleChildScrollView(
+                      child: TournamentWidget(
+                    title: 'Quizzes',
+                    data: state.tournaments,
+                  ));
+                } else if (state is ListTournamentsFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return Text('Unexpected state');

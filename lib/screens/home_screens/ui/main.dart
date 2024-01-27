@@ -15,6 +15,7 @@ import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
 
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -91,17 +92,17 @@ class _HomeMain extends State<HomeMain> {
             BlocBuilder<ListChallengeBloc, ListChallengeState>(
               bloc: _listChallengeBloc,
               builder: (context, state) {
-                print("STtate=>$state");
                 if (state is ListChallengeLoadingState) {
-                  return CircularProgressIndicator();
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
                 } else if (state is ListChallengeSuccessState) {
-                  return CircularProgressIndicator();
-
-                  // return SingleChildScrollView(
-                  //     child: ChallengesWidget(
-                  //   title: 'Challenges',
-                  //   data: state.challenges,
-                  // ));
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: 'Challenges',
+                    data: state.challenges,
+                  ));
                 } else if (state is ListChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
@@ -113,17 +114,17 @@ class _HomeMain extends State<HomeMain> {
             BlocBuilder<ListQuizzesBloc, ListQuizzesState>(
               bloc: _listQuizzesBloc,
               builder: (context, state) {
-                print("STtate=>$state");
                 if (state is ListQuizzesLoadingState) {
-                  return CircularProgressIndicator();
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
                 } else if (state is ListQuizzesSuccessState) {
-                  return CircularProgressIndicator();
-
-                  // return SingleChildScrollView(
-                  //     child: QuizWidget(
-                  //   title: 'Quizzes',
-                  //   data: state.quizzes,
-                  // ));
+                  return SingleChildScrollView(
+                      child: QuizWidget(
+                    title: 'Quizzes',
+                    data: state.quizzes,
+                  ));
                 } else if (state is ListQuizzesFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {

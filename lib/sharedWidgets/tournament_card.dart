@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
-import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 
 class TournamentCard extends StatelessWidget {
@@ -12,6 +11,7 @@ class TournamentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("item===========> ${item.bannerImage}");
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.9;
 
@@ -52,10 +52,10 @@ class TournamentCard extends StatelessWidget {
             height: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              // child: Image.network(
-              //   item['banner_image'],
-              //   fit: BoxFit.cover,
-              // ),
+              child: Image.network(
+                item.bannerImage!,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(height: 10),

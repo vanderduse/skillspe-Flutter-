@@ -2,12 +2,15 @@ class TournamentsListResponse {
   String? id;
   String? title;
   List<Matches>? matches;
+  String? bannerImage;
 
-  TournamentsListResponse({this.id, this.title, this.matches});
+  TournamentsListResponse(
+      {this.id, this.title, this.matches, this.bannerImage});
 
   TournamentsListResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
+    bannerImage = json['banner_image'];
     if (json['matches'] != null) {
       matches = <Matches>[];
       json['matches'].forEach((v) {
@@ -20,6 +23,7 @@ class TournamentsListResponse {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['title'] = title;
+    data['banner_image'] = bannerImage;
     if (matches != null) {
       data['matches'] = matches!.map((v) => v.toJson()).toList();
     }
@@ -62,11 +66,7 @@ class Teams {
   String? tournamentId;
   String? group;
 
-  Teams(
-      {this.name,
-      this.teamAccent,
-      this.tournamentId,
-      this.group});
+  Teams({this.name, this.teamAccent, this.tournamentId, this.group});
 
   Teams.fromJson(Map<String, dynamic> json) {
     name = json['name'];

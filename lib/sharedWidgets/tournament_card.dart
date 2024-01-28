@@ -72,7 +72,7 @@ class TournamentCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'View All Matches ',
+                      'View all matches ',
                       style: TextStyle(
                         color: Color(0xFF8C50F6),
                         fontSize: 14,
@@ -95,17 +95,6 @@ class TournamentCard extends StatelessWidget {
 
   Widget _buildMatchDetails(Matches match) {
     List<Teams> teams = match.teams!;
-    if (match.teams is List) {
-      for (var team in match.teams!) {
-        if (team is Team) {
-          teams.add(team);
-        } else {
-          print('Unexpected team data: $team');
-        }
-      }
-    } else {
-      print('Unexpected teams data type: ${match.teams}');
-    }
 
     if (teams.isEmpty) {
       // Handle the case where 'teams' is empty
@@ -153,13 +142,29 @@ class TournamentCard extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 10), // Add margin to the bottom
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              for (int i = 0; i < teams.length && i < 2; i++)
-                _buildTeamOption(
-                  teams[i].name!,
-                  Color(int.parse('0xFF${teams[i].teamAccent}')),
+              _buildTeamOption(
+                teams[0].name!,
+                Color(int.parse('0xFF${teams[0].teamAccent}')),
+              ),
+              // Use a Column to vertically align the versus icon with margin
+              Container(
+                margin: const EdgeInsets.only(bottom: 14),
+                child: SvgPicture.asset(
+                  'assets/icons/versus.svg',
+                  width: 30,
+                  height: 30,
                 ),
+              ),
+              _buildTeamOption(
+                teams[1].name!,
+                Color(int.parse('0xFF${teams[1].teamAccent}')),
+              ),
+
+              // Add a gap between the second team container and "Predict & Win" button
+              SizedBox(width: 50),
+
+              // "Predict & Win" Button Container
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(

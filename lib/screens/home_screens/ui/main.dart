@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:dio/dio.dart';
 
 import 'package:skills_pe/screens/home_screens/bloc/list_challenges_bloc.dart';
 import 'package:skills_pe/screens/home_screens/bloc/list_quizzes_bloc.dart';
@@ -18,6 +16,7 @@ import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
 
 import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
+import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -31,15 +30,6 @@ class _HomeMain extends State<HomeMain> {
   late ListQuizzesBloc _listQuizzesBloc;
   late ListTournamentsBloc _listTournamentsBloc;
 
-  final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
-  // final String challengesApiEndpoint = '/challenges';
-  // final String quizApiEndpoint = '/quizzes';
-  final String tournamentApiEndpoint = '/cumulated/tournaments';
-  late Dio dio;
-  // List<Map<String, dynamic>> challengesData = [];
-  // List<Map<String, dynamic>> quizData = [];
-  List<Map<String, dynamic>> tournamentData = [];
-
   @override
   void initState() {
     super.initState();
@@ -51,35 +41,7 @@ class _HomeMain extends State<HomeMain> {
 
     _listTournamentsBloc = ListTournamentsBloc(ListTournamentsRepository());
     _listTournamentsBloc.add(FetchListTournamentsEvent());
-
-    dio = Dio(BaseOptions(baseUrl: baseUrl));
-
-    // fetchTournaments();
   }
-
-  // Future<List<Map<String, dynamic>>> fetchTournaments() async {
-  //   try {
-  //     final response = await dio.get(tournamentApiEndpoint);
-  //     if (response.statusCode == 200) {
-  //       final responseData = response.data;
-  //       if (responseData is Map<String, dynamic> &&
-  //           responseData.containsKey('data') &&
-  //           responseData['data'] is List<dynamic>) {
-  //         return List<Map<String, dynamic>>.from(responseData['data']);
-  //       } else {
-  //         print('Invalid data format received: $responseData');
-  //         throw Exception('Invalid data format received');
-  //       }
-  //     } else {
-  //       print('Failed to load TOURNAMENT data: ${response.statusCode}');
-  //       throw Exception(
-  //           'Failed to load TOURNAMENT data: ${response.statusCode}');
-  //     }
-  //   } catch (error) {
-  //     print('Error fetching TOURNAMENT data: $error');
-  //     throw Exception('Error fetching TOURNAMENT data: $error');
-  //   }
-  // }
 
   final List<String> imageUrls = [
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
@@ -112,7 +74,7 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is ListChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
-                  return Text('Unexpected state');
+                  return const Text('Unexpected state');
                 }
               },
             ),
@@ -133,11 +95,10 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is ListQuizzesFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
-                  return Text('Unexpected state');
+                  return const Text('Unexpected state');
                 }
               },
             ),
-
             BlocBuilder<ListTournamentsBloc, ListTournamentsState>(
               bloc: _listTournamentsBloc,
               builder: (context, state) {
@@ -149,35 +110,16 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is ListTournamentsSuccessState) {
                   return SingleChildScrollView(
                       child: TournamentWidget(
-                    title: 'Quizzes',
+                    title: 'Tournaments',
                     data: state.tournaments,
                   ));
                 } else if (state is ListTournamentsFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
-                  return Text('Unexpected state');
+                  return const Text('Unexpected state');
                 }
               },
             ),
-
-            // FutureBuilder<List<Map<String, dynamic>>>(
-            //   future: fetchTournaments(),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
-            //       return CircularProgressIndicator(); // Show a loading indicator while fetching data
-            //     } else if (snapshot.hasError) {
-            //       print('${snapshot.error}');
-            //       return Text(
-            //           'Error fetching TOURNAMNENT data: ${snapshot.error}');
-            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            //       return Text('No TOURNAMENT data available');
-            //     } else {
-            //       // Render your ChallengesWidget with the fetched data
-            //       return TournamentWidget(
-            //           title: 'Tournament', data: snapshot.data!);
-            //     }
-            //   },
-            // ),
             const SizedBox(height: 70),
           ],
         ),
@@ -191,7 +133,7 @@ class _HomeMain extends State<HomeMain> {
 class HomeSwipper extends StatefulWidget {
   final List<String> imageUrls;
 
-  const HomeSwipper({required this.imageUrls});
+  const HomeSwipper({super.key, required this.imageUrls});
 
   @override
   _HomeSwipperState createState() => _HomeSwipperState();
@@ -245,7 +187,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
                     widget.imageUrls.length, // Adjust based on image list
                 position: _currentIndex, // Use current index for active dot
                 decorator: DotsDecorator(
-                  color: Color.fromARGB(
+                  color: const Color.fromARGB(
                       156, 234, 234, 234), // Use hex code with opacity (255)
                   activeColor: Color.fromARGB(255, 255, 255, 255),
                   size: const Size(8.0, 8.0),
@@ -259,88 +201,5 @@ class _HomeSwipperState extends State<HomeSwipper> {
         ],
       ),
     );
-  }
-}
-
-AppBar navigationWithWallet(
-  String screenName,
-  double walletAmount, {
-  bool showBack = true,
-}) {
-  return AppBar(
-    centerTitle: false,
-    automaticallyImplyLeading: false,
-    shape: const Border(
-      bottom: BorderSide(
-        color: Color.fromRGBO(0, 0, 0, 0.10),
-        width: 1,
-      ),
-    ),
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        if (showBack) // Conditionally show back icon based on showBack value
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              "assets/icons/arrow-left.svg",
-              height: 20,
-              width: 20,
-            ),
-          ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            screenName,
-            style: const TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-        ),
-      ],
-    ),
-    actions: [WalletIcon(walletAmount: walletAmount)],
-  );
-}
-
-class WalletIcon extends StatelessWidget {
-  final double walletAmount;
-
-  const WalletIcon({
-    Key? key,
-    required this.walletAmount,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        margin: const EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-            color: const Color(0xffFDF0CE),
-            borderRadius: BorderRadius.circular(8.0)),
-        child: Container(
-          child: Row(
-            children: [
-              Container(
-                child: SvgPicture.asset(
-                  "assets/icons/wallet.svg",
-                  height: 20,
-                  width: 20,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 4),
-                child: Text(
-                  walletAmount.toStringAsFixed(1),
-                  style: const TextStyle(
-                      color: Color(0xff181201), fontWeight: FontWeight.w500),
-                ),
-              )
-            ],
-          ),
-        ));
   }
 }

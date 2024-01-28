@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_specs.dart';
-import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
+import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/alert_banner.dart';
 import 'package:skills_pe/sharedWidgets/custom_checkbox.dart';
 import 'package:skills_pe/sharedWidgets/hyperlink_text.dart';

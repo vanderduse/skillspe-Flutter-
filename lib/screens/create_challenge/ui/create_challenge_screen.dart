@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/bloc/create_challenge_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/models/create_challenge_request.dart';
 import 'package:skills_pe/screens/create_challenge/repository/create_challenge_repository.dart';
-import 'package:skills_pe/sharedWidgets/app_bar_widget.dart';
+import 'package:skills_pe/sharedWidgets/appBars/app_bar_widget.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/screens/create_challenge/ui/text_form_field_widget.dart';
 import 'package:skills_pe/utility/date_utility.dart';

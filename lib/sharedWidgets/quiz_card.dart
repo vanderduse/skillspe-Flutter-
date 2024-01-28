@@ -130,7 +130,7 @@ class QuizCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  '$INR_CURRENCY ${item.participationFee!.toString()}',
+                                  '$RUPEE_SYMBOL ${item.participationFee!.toString()}',
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 12.0,

@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
+import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 
 class TournamentCard extends StatelessWidget {
   final TournamentsListResponse item;
-  final dynamic leftBorderColor;
 
-  const TournamentCard(
-      {super.key, required this.item, this.leftBorderColor = '#ED5E91'});
+  const TournamentCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.9;
 
-    // List<Map<String, dynamic>> matches =
-    //     (item['matches'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    // print("Tournament data ======> $matches");
+    List<Matches> matches = item.matches!;
 
     int displayMatchesCount = 2; // Display only the top 2 matches
 
@@ -33,7 +31,7 @@ class TournamentCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -61,14 +59,14 @@ class TournamentCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          // for (int i = 0; i < min(displayMatchesCount, matches.length); i++)
-          //   _buildMatchDetails(matches[i]),
+          for (int i = 0; i < min(displayMatchesCount, matches.length); i++)
+            _buildMatchDetails(matches[i]),
           Center(
             child: Container(
               margin: const EdgeInsets.only(top: 10),
               child: TextButton(
                 onPressed: () {
-                  // Handle the onPressed event, e.g., navigate to more matches screen
+                  // Handle the onPressed event in future
                 },
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
@@ -95,21 +93,18 @@ class TournamentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMatchDetails(Map<String, dynamic> match) {
-    String startTime = match['start_time'];
-
-    // Ensure that 'teams' is a List<Map<String, dynamic>> or an empty list
-    List<Map<String, dynamic>> teams = [];
-    if (match['teams'] is List) {
-      for (var team in match['teams']) {
-        if (team is Map<String, dynamic>) {
+  Widget _buildMatchDetails(Matches match) {
+    List<Teams> teams = match.teams!;
+    if (match.teams is List) {
+      for (var team in match.teams!) {
+        if (team is Team) {
           teams.add(team);
         } else {
           print('Unexpected team data: $team');
         }
       }
     } else {
-      print('Unexpected teams data type: ${match['teams']}');
+      print('Unexpected teams data type: ${match.teams}');
     }
 
     if (teams.isEmpty) {
@@ -138,7 +133,7 @@ class TournamentCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                startTime,
+                formatTournamentStartTime(match.startTime!),
                 style: const TextStyle(
                   fontSize: 12,
                   color: Color.fromRGBO(160, 160, 160, 1),
@@ -162,13 +157,13 @@ class TournamentCard extends StatelessWidget {
             children: [
               for (int i = 0; i < teams.length && i < 2; i++)
                 _buildTeamOption(
-                  teams[i]['name'],
-                  Color(int.parse('0xFF${teams[i]['team_accent']}')),
+                  teams[i].name!,
+                  Color(int.parse('0xFF${teams[i].teamAccent}')),
                 ),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color(0xFF7E56DA),
+                    color: const Color(0xFF7E56DA),
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),

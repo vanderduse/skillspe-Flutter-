@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
+import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/quiz_card.dart';
 

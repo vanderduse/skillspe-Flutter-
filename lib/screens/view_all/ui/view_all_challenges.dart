@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
+import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
 import 'package:dio/dio.dart';

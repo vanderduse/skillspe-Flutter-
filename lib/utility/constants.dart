@@ -122,4 +122,4 @@ const TRANSACTION_ID = 'Txn ID:';
 const ADD_MONEY = "Add Money";
 const TOPUP_WALLET = "Topup Wallet";
 const TOPUP_AMOUNTS = [1000, 500, 200, 50];
-const INR_CURRENCY = '₹';
+const RUPEE_SYMBOL = '\u20B9'; // Unicode for the Rupee symbol

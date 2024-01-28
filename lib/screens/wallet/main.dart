@@ -8,6 +8,7 @@ import 'package:skills_pe/screens/wallet/widgets/transaction_details_card.dart';
 import 'package:skills_pe/screens/wallet/widgets/transaction_history_card.dart';
 import 'package:skills_pe/screens/wallet/widgets/transaction_history_header.dart';
 import 'package:skills_pe/screens/wallet/widgets/wallet_balance_card.dart';
+import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/card.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skills_pe/sharedWidgets/transparent_text_btn.dart';
 
 AppBar navigationWithTextButton(
     BuildContext context, screenName, String btnText, VoidCallback onBtnPress) {

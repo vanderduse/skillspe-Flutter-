@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/login_screens/models/otp_request_model.dart';
 import 'package:skills_pe/screens/login_screens/models/verify_otp_request_model.dart';

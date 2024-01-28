@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skills_pe/screens/tournaments/create_tournament.dart';
+import 'package:skills_pe/screens/tournaments/main.dart';
+import 'package:skills_pe/utility/constants.dart';
 import '../../create_challenge/ui/create_challenge_screen.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
+  const BottomNavigationBarWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         // bottom: 100,
         // left: 80,
         // right: 80,
@@ -52,7 +57,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                   'assets/icons/bottomNavIcons/flag.svg'),
-                              const Text("Create Tournament",
+                              const Text(CREATE_TOURNAMENT,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Inter",
@@ -61,7 +66,12 @@ class BottomNavigationBarWidget extends StatelessWidget {
                           ),
                         ),
                         backgroundColor: Colors.white,
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TournamentHome()))
+                        },
                       ),
                       SpeedDialChild(
                         shape: const RoundedRectangleBorder(
@@ -74,7 +84,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                   'assets/icons/bottomNavIcons/cup.svg'),
-                              const Text("Create Challenge",
+                              const Text(CREATECHALLENGE,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Inter",

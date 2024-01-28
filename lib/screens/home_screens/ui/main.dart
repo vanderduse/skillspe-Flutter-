@@ -163,7 +163,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
                       builder: (BuildContext context) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
@@ -189,7 +189,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
                 decorator: DotsDecorator(
                   color: const Color.fromARGB(
                       156, 234, 234, 234), // Use hex code with opacity (255)
-                  activeColor: Color.fromARGB(255, 255, 255, 255),
+                  activeColor: const Color.fromARGB(255, 255, 255, 255),
                   size: const Size(8.0, 8.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),

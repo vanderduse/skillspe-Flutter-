@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
-import 'package:skills_pe/service/api_client.dart';
 import 'package:skills_pe/screens/login_screens/models/otp_request_model.dart';
 import 'package:skills_pe/screens/login_screens/models/otp_response_model.dart';
 import 'package:skills_pe/screens/login_screens/models/verify_otp_request_model.dart';
 import 'package:skills_pe/screens/login_screens/models/verify_otp_response_model.dart';
+import 'package:skills_pe/service/api_client.dart';
 
 class SendOTPRepository {
   final Dio? _dio = ApiClient.createDio();

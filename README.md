@@ -1,4 +1,4 @@
-# skills_pe
+# SkillsPe
 
 A new Flutter project.
 

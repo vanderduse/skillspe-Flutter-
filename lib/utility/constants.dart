@@ -6,6 +6,7 @@ const BASE_URL = "https://aristoteles-stg.skillspe.com";
 // LOCAL STORAGE KEY
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
+const FCM_TOKEN = 'firebase_token';
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
@@ -31,10 +32,22 @@ const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
 
+// Challenge Details
+const GENERAL_DETAILS = 'General Details';
+const DURATION = 'Duration';
+const FEES = 'Fees';
+const CHALLENGERS = 'Challengers';
+const MODERATORS = 'Moderators';
+const MOTIVATORS = 'Motivators';
+const SHARE = "Share";
+const INVITE_CODE = "Challenge Invite Code";
+const INVITE_CHALLENGERS = "Invite Challengers";
+const SEARCH_YOUR_FRIEND = "Search your friend";
+const INVITE = "Invite";
+
 // Quiz Home screen
 const START_QUIZ = "Start Quiz for";
 const QUESTIONS = "Questions";
-const DURATION = "Duration";
 const PRIZE_POOL = "Prize Pool";
 const ACCEPT_QUIZ = "Accept";
 const QUIZ_TNC = "terms & conditions";
@@ -115,7 +128,6 @@ const CLEAR_ALL = "Clear All";
 
 // Wallet
 const NEED_HELP = "Need Help?";
-const SHARE = "Share";
 const RECENT_TRANSACTIONS = "Recent Transactions";
 const ALL_TRANSACTIONS = "All Transactions";
 const TRANSACTION_ID = 'Txn ID:';
@@ -123,3 +135,7 @@ const ADD_MONEY = "Add Money";
 const TOPUP_WALLET = "Topup Wallet";
 const TOPUP_AMOUNTS = [1000, 500, 200, 50];
 const RUPEE_SYMBOL = '\u20B9'; // Unicode for the Rupee symbol
+
+//Tournament
+const CREATE_TOURNAMENT = "Create Tournament";
+const BID = "Bid";

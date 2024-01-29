@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
 import 'package:dio/dio.dart';
+
+import 'package:skills_pe/screens/view_all/bloc/list_filtered_challenges_bloc.dart';
+import 'package:skills_pe/screens/view_all/repository/list_filtered_challenges_repo.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 
 class ViewAllChallenges extends StatefulWidget {
   @override
@@ -11,43 +16,21 @@ class ViewAllChallenges extends StatefulWidget {
 }
 
 class _ViewAllChallengesState extends State<ViewAllChallenges> {
-  final String baseUrl = 'https://aristoteles-stg.skillspe.com/v1';
-  final String challengesApiEndpoint = '/challenges';
-
+  late ListFilteredChallengesBloc _listFilteredChallengesBloc;
   late Dio dio;
   List<ChallengesListResponse> challenges = [];
+  late List<ChallengesListResponse> filteredChallenges;
 
   @override
   void initState() {
     super.initState();
-    dio = Dio(BaseOptions(baseUrl: baseUrl));
-    fetchChallenges();
-  }
+    _listFilteredChallengesBloc =
+        ListFilteredChallengesBloc(ListFilteredChallengesRepository());
 
-  Future<void> fetchChallenges() async {
-    try {
-      final response = await dio.get(challengesApiEndpoint);
-      if (response.statusCode == 200) {
-        final responseData = response.data;
-        if (responseData is Map<String, dynamic> &&
-            responseData.containsKey('data') &&
-            responseData['data'] is List<dynamic>) {
-          setState(() {
-            challenges = List<ChallengesListResponse>.from(responseData['data']);
-          });
-        } else {
-          print('Invalid data format received: $responseData');
-          throw Exception('Invalid data format received');
-        }
-      } else {
-        print('Failed to load challenges data: ${response.statusCode}');
-        throw Exception(
-            'Failed to load challenges data: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching challenges data: $error');
-      throw Exception('Error fetching challenges data: $error');
-    }
+    _listFilteredChallengesBloc.add(FetchListFilteredChallengesEvent(
+      status: 'ALL', // Default status
+      page: 1, // Default page
+    ));
   }
 
   @override
@@ -80,25 +63,44 @@ class _ViewAllChallengesState extends State<ViewAllChallenges> {
                 buttonNames: filterButtonNames,
                 onItemSelected: (index) {
                   // Handle filter button selection here
-                  print('Selected filter index: $index');
+                  String selectedStatus = filterButtonNames[index];
+                  _listFilteredChallengesBloc.add(FilterButtonClickedEvent(
+                      status: selectedStatus.toUpperCase(), page: 1));
                 },
               ),
             ),
-
-            // Challenge cards - Vertical ListView
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: challenges.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  height: 200, // Set a fixed height or adjust as needed
-                  child: ChallengeCard(
-                    item: challenges[index],
-                    // Add your custom leftBorderColor if needed
-                  ),
-                );
+            BlocBuilder<ListFilteredChallengesBloc,
+                ListFilteredChallengesState>(
+              bloc: _listFilteredChallengesBloc,
+              builder: (context, state) {
+                if (state is ListFilteredChallengesLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
+                } else if (state is ListFilteredChallengesSuccessState) {
+                  //fetching only one card
+                  filteredChallenges = state.filteredChallenges;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: filteredChallenges.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                        height: 200, // Set a fixed height or adjust as needed
+                        child: ChallengeCard(
+                          item: filteredChallenges[index],
+                          // Add your custom leftBorderColor if needed
+                        ),
+                      );
+                    },
+                  );
+                } else if (state is ListFilteredChallengesFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
               },
             ),
           ],

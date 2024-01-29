@@ -1,23 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/service/api_client.dart';
-import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 
-class ListTournamentsRepository {
+class ListFilteredChallengesRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<TournamentsListResponse>>?>
-      fetchTournaments() async {
+  Future<BaseResponseModel<List<ChallengesListResponse>>?>
+      fetchFilteredChallenges(String status, int page) async {
     try {
-      Response? response =
-          await _dio?.get('/v1/cumulated/tournaments?page=1&limit=5');
-
-      return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
+      Response? response = await _dio?.get(
+        '/v1/challenges?status=$status&page=$page',
+      );
+      return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
         response?.data,
         (data) {
           if (data is List<dynamic>) {
             return data
-                .map((item) => TournamentsListResponse.fromJson(
+                .map((item) => ChallengesListResponse.fromJson(
                     item as Map<String, dynamic>))
                 .toList();
           } else {
@@ -25,8 +25,8 @@ class ListTournamentsRepository {
           }
         },
       );
-    } on DioException catch (e) {
-      return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
+    } on DioError catch (e) {
+      return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }

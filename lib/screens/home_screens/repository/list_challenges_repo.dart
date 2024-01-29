@@ -9,8 +9,8 @@ class ListChallengeRepository {
   Future<BaseResponseModel<List<ChallengesListResponse>>?>
       fetchChallenges() async {
     try {
-      Response? response = await _dio?.get('/v1/challenges');
-      
+      Response? response = await _dio?.get('/v1/challenges?page=1&limit=5');
+
       return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
         response?.data,
         (data) {
@@ -29,4 +29,6 @@ class ListChallengeRepository {
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }
+
+  fetchFilteredChallenges(String status, int page) {}
 }

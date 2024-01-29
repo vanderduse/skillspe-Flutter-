@@ -214,4 +214,3 @@ class TournamentCard extends StatelessWidget {
     );
   }
 }
-

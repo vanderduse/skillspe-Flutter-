@@ -39,8 +39,6 @@ class ListFilteredChallengesBloc
       try {
         var response =
             await _repository.fetchFilteredChallenges(event.status, event.page);
-        print("on button click event for status: ${event.status}");
-        print("response: ${response}");
 
         if (response != null && response.success == true) {
           emit(ListFilteredChallengesSuccessState(

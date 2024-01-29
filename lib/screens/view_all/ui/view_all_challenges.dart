@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
-import 'package:dio/dio.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 
 import 'package:skills_pe/screens/view_all/bloc/list_filtered_challenges_bloc.dart';
 import 'package:skills_pe/screens/view_all/repository/list_filtered_challenges_repo.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 
 class ViewAllChallenges extends StatefulWidget {
+  const ViewAllChallenges({super.key});
+
   @override
   _ViewAllChallengesState createState() => _ViewAllChallengesState();
 }
 
 class _ViewAllChallengesState extends State<ViewAllChallenges> {
   late ListFilteredChallengesBloc _listFilteredChallengesBloc;
-  late Dio dio;
-  List<ChallengesListResponse> challenges = [];
   late List<ChallengesListResponse> filteredChallenges;
 
   @override
@@ -35,8 +35,6 @@ class _ViewAllChallengesState extends State<ViewAllChallenges> {
 
   @override
   Widget build(BuildContext context) {
-    // Dummy wallet amount for demonstration
-    double dummyWalletAmount = 100.0;
     // Filter button names
     List<String> filterButtonNames = [
       'All',
@@ -49,7 +47,7 @@ class _ViewAllChallengesState extends State<ViewAllChallenges> {
     return Scaffold(
       appBar: AppbarWithBack(
         screenName: 'Challenges',
-        walletAmount: dummyWalletAmount,
+        walletAmount: 100.0,
       ),
       // Rest of your Scaffold content...
       body: SingleChildScrollView(
@@ -62,7 +60,6 @@ class _ViewAllChallengesState extends State<ViewAllChallenges> {
               child: ButtonGroup(
                 buttonNames: filterButtonNames,
                 onItemSelected: (index) {
-                  // Handle filter button selection here
                   String selectedStatus = filterButtonNames[index];
                   _listFilteredChallengesBloc.add(FilterButtonClickedEvent(
                       status: selectedStatus.toUpperCase(), page: 1));
@@ -79,19 +76,16 @@ class _ViewAllChallengesState extends State<ViewAllChallenges> {
                       height: 180,
                       showTitleContainer: true);
                 } else if (state is ListFilteredChallengesSuccessState) {
-                  //fetching only one card
-                  filteredChallenges = state.filteredChallenges;
                   return ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: filteredChallenges.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.filteredChallenges.length,
                     itemBuilder: (context, index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                        height: 200, // Set a fixed height or adjust as needed
+                        height: 200,
                         child: ChallengeCard(
-                          item: filteredChallenges[index],
-                          // Add your custom leftBorderColor if needed
+                          item: state.filteredChallenges[index],
                         ),
                       );
                     },

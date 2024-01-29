@@ -32,7 +32,7 @@ class QuizWidget extends StatelessWidget {
                   // Handle the 'View All' button tap
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ViewAllQuiz()),
+                    MaterialPageRoute(builder: (context) => const ViewAllQuizzes()),
                   );
                 },
                 child: const Text(

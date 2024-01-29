@@ -1,40 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/quiz_card.dart';
 
-class ViewAllQuiz extends StatelessWidget {
+import 'package:skills_pe/screens/view_all/bloc/list_filtered_quizzes_bloc.dart';
+import 'package:skills_pe/screens/view_all/repository/list_filtered_quizzes_repo.dart';
+import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
+
+class ViewAllQuizzes extends StatefulWidget {
+  const ViewAllQuizzes({super.key});
+
+  @override
+  _ViewAllQuizzesState createState() => _ViewAllQuizzesState();
+}
+
+class _ViewAllQuizzesState extends State<ViewAllQuizzes> {
+  late ListFilteredQuizzesBloc _listFilteredQuizzesBloc;
+  late List<QuizzesListResponse> filteredQuizzes;
+
+  @override
+  void initState() {
+    super.initState();
+    _listFilteredQuizzesBloc =
+        ListFilteredQuizzesBloc(ListFilteredQuizzesRepository());
+
+    _listFilteredQuizzesBloc.add(FetchListFilteredQuizzesEvent(
+      status: 'ALL', // Default status
+      page: 1, // Default page
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Dummy wallet amount for demonstration
-    double dummyWalletAmount = 100.0;
     // Filter button names
     List<String> filterButtonNames = ['All', 'Live', 'Upcoming'];
-
-    // Dummy list of challenge data for demonstration
-    List<Map<String, dynamic>> quiz = [
-      {
-        'title':
-            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-        'icon': 'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-        'participants': '100+ participants',
-        'date': 'Starts on 01 Oct 23',
-        'price': '₹50'
-      },
-      {
-        'title':
-            'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-        'icon': 'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-        'participants': '100+ participants',
-        'date': 'Starts on 01 Oct 23',
-        'price': '₹50'
-      },
-    ];
 
     return Scaffold(
       appBar: AppbarWithBack(
         screenName: 'Challenges',
-        walletAmount: dummyWalletAmount,
+        walletAmount: 100.00,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -46,26 +52,42 @@ class ViewAllQuiz extends StatelessWidget {
               child: ButtonGroup(
                 buttonNames: filterButtonNames,
                 onItemSelected: (index) {
-                  // Handle filter button selection here
-                  print('Selected filter index: $index');
+                  String selectedStatus = filterButtonNames[index];
+                  _listFilteredQuizzesBloc.add(FilterButtonClickedEvent(
+                      status: selectedStatus.toUpperCase(), page: 1));
                 },
               ),
             ),
-
-            // Challenge cards - Vertical ListView
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: quiz.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20.0),
-                  height: 250, // Set a fixed height or adjust as needed
-                  // child: QuizCard(
-                  //   item: quiz[index],
-                  //   // Add your custom leftBorderColor if needed
-                  // ),
-                );
+            
+            BlocBuilder<ListFilteredQuizzesBloc,
+                ListFilteredQuizzesState>(
+              bloc: _listFilteredQuizzesBloc,
+              builder: (context, state) {
+                if (state is ListFilteredQuizzesLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 200,
+                      showTitleContainer: true);
+                } else if (state is ListFilteredQuizzesSuccessState) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.filteredQuizzes.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                        height: 240,
+                        child: QuizCard(
+                          item: state.filteredQuizzes[index],
+                        ),
+                      );
+                    },
+                  );
+                } else if (state is ListFilteredQuizzesFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
               },
             ),
           ],

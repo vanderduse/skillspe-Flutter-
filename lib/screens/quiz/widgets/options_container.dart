@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/quiz/widgets/answer_option_btn.dart';
 import 'package:skills_pe/models/question_model.dart';
 
+// ignore: must_be_immutable
 class OptionsContainer extends StatefulWidget {
   final Question question;
+  final Function(String) selectedAnswer;
+  int selectedOptionIndex;
 
-  const OptionsContainer({
-    Key? key,
-    required this.question,
-  }) : super(key: key);
+  OptionsContainer(
+      {Key? key,
+      required this.question,
+      required this.selectedOptionIndex,
+      required this.selectedAnswer})
+      : super(key: key);
 
   @override
   _OptionsContainerState createState() => _OptionsContainerState();
 }
 
 class _OptionsContainerState extends State<OptionsContainer> {
-  int? selectedOptionIndex; // Use int? to allow for no selection
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,11 +32,12 @@ class _OptionsContainerState extends State<OptionsContainer> {
             child: AnswerOutlineBtn(
               index: index,
               answerText: option,
-              isSelected: index == selectedOptionIndex,
+              isSelected: index == widget.selectedOptionIndex,
               onPress: (int index) {
                 setState(() {
                   // Update the selected option index on press
-                  selectedOptionIndex = index;
+                  widget.selectedOptionIndex = index;
+                  widget.selectedAnswer.call(widget.question.options[index]);
                 });
               },
             ));

@@ -28,7 +28,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       setState(() {
         if (_remainingMilliseconds > 0) {
           _remainingMilliseconds -= 10;

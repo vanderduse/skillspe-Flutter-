@@ -1,4 +1,6 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -14,9 +16,13 @@ class ApiClient {
       sendTimeout: const Duration(seconds: 60 * 1000),
     ));
 
-    _dio?.interceptors.addAll({
+    _dio?.interceptors.add(
       AppInterceptors(_dio!),
-    });
+    );
+
+    if (kDebugMode) {
+      _dio?.interceptors.add(ChuckerDioInterceptor());
+    }
 
     return _dio;
   }
@@ -32,7 +38,9 @@ class AppInterceptors extends Interceptor {
     options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'authorization': 'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}'
+      'authorization':
+          'Bearer ${await StorageService().readSecureData(ACCESS_TOKEN)}',
+      'X-AUTHORIZED-FOR-ID': 'akshay',
     };
     return handler.next(options);
   }

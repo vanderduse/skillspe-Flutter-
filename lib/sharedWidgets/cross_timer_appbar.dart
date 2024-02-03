@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/sharedWidgets/timer.dart';
 
 AppBar navigationWithTimer(
-    BuildContext context, screenName, double? walletAmount) {
+    BuildContext context, screenName, double? totalTimeInSeconds) {
   return AppBar(
     centerTitle: false,
     automaticallyImplyLeading: false,
@@ -38,8 +38,8 @@ AppBar navigationWithTimer(
         ),
       ],
     ),
-    actions: walletAmount != null
-        ? [TimerWidget(totalTimeInSeconds: walletAmount)]
+    actions: totalTimeInSeconds != null
+        ? [TimerWidget(totalTimeInSeconds: totalTimeInSeconds)]
         : null,
   );
 }

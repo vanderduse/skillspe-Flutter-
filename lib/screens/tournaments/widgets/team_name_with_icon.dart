@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TeamNameWithIcon extends StatelessWidget {
-  String teamName;
-  String iconColor;
+  final String teamName;
+  final String iconColor;
 
-  TeamNameWithIcon(
+  const TeamNameWithIcon(
       {super.key, required this.teamName, required this.iconColor});
 
   @override

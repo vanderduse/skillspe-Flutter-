@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/quiz/main.dart';
+import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
@@ -74,7 +76,7 @@ class QuizCard extends StatelessWidget {
                       height: 5), // Adding space between title and date
 
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 2.0),
+                    margin: EdgeInsets.symmetric(vertical: 2.0),
                     child: Text(
                       formatQuizCardDate(item?.scheduledTime),
                       style: TextStyle(

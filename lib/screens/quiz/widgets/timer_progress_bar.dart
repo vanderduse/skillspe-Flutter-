@@ -38,6 +38,7 @@ class _TimerProgressBarState extends State<TimerProgressBar>
   @override
   void dispose() {
     _timer.cancel();
+    _controller.dispose();
     super.dispose();
   }
 

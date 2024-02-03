@@ -144,30 +144,21 @@ class ChallengeCard extends StatelessWidget {
                           ),
                         ),
 
-                        // Second container for the button
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                width: 1.1,
-                                color: Color(0xFF8C50F6)), // Border color
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 22, vertical: 10),
-                          child: const Text(
-                            'Bid',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Color(0xFF8C50F6), // Text color
-                            ),
-                          ),
-                        ),
-                      ],
+                          // Second container for the button
+                          UnFilledBtn(
+                              label: BID,
+                              onPressed: () {
+                                BottomSheetManager.showGenericBottomSheet(
+                                    context,
+                                    const BiddingStepOneScreen(),
+                                    "Bidding");
+                              }),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

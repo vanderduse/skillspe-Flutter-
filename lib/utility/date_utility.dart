@@ -88,3 +88,11 @@ String formatTournamentStartTime(String? startTime) {
     return '';
   }
 }
+
+double? convertMintuesToSeconds(double? timeInMins) {
+  try {
+    return timeInMins!.toInt() * 60;
+  } catch (e) {
+    return null;
+  }
+}

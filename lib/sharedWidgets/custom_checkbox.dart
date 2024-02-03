@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class CustomCheckbox extends StatefulWidget {
   final bool checked;
-  final VoidCallback onChanged;
+  final ValueChanged<bool?>? onChange;
 
   const CustomCheckbox({
     Key? key,
     required this.checked,
-    required this.onChanged,
+    required this.onChange,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           unselectedWidgetColor: Colors.transparent, // Hide checkbox outline
           checkboxTheme: CheckboxThemeData(
             fillColor: MaterialStateProperty.all(
-              widget.checked ? Color(0xFF7E56DA) : Colors.transparent,
+              widget.checked ? const Color(0xFF7E56DA) : Colors.transparent,
             ),
             checkColor: MaterialStateProperty.all(Colors.white),
             side: const BorderSide(
@@ -36,10 +36,12 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           ),
         ),
         child: Transform.scale(
-          scale: 1.25,
+          scale: 1,
           child: Checkbox(
             value: widget.checked,
-            onChanged: (state) => {},
+            onChanged: (value) {
+              widget.onChange?.call(value);
+            },
           ),
         ));
   }

@@ -1,12 +1,11 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:skills_pe/firebase_options.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
-import 'bloc/challenges_bloc.dart';
-import 'package:skills_pe/screens/home_screens/ui/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +17,8 @@ void main() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
       alert: true, announcement: true, badge: true, sound: true);
-  runApp(
-    BlocProvider(
-      create: (context) => ChallengeBloc(),
-      child: const MyApp(),
-    ),
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'SkillPe',
         theme: ThemeData(
           primaryColor: Color(0xff7E56DA),
@@ -69,6 +65,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const HomeMain());
+        home: const SplashManager());
   }
 }

@@ -148,18 +148,21 @@ class ChallengeCard extends StatelessWidget {
                           ),
                         ),
 
-                        // Second container for the button
-                        UnFilledBtn(
-                            label: BID,
-                            onPressed: () {
-                              BottomSheetManager.showGenericBottomSheet(context,
-                                  const BiddingStepOneScreen(), "Bidding");
-                            }),
-                      ],
+                          // Second container for the button
+                          UnFilledBtn(
+                              label: BID,
+                              onPressed: () {
+                                BottomSheetManager.showGenericBottomSheet(
+                                    context,
+                                    const BiddingStepOneScreen(),
+                                    "Bidding");
+                              }),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

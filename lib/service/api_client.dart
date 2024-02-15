@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
@@ -34,13 +35,14 @@ class AppInterceptors extends Interceptor {
       'Content-Type': 'application/json',
       'authorization': 'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}'
     };
+    log(options.uri.toString());
     return handler.next(options);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    print('status code ${err.response?.statusCode}');
-    print('error data ${err.response?.data}');
+    log('status code ${err.response?.statusCode}');
+    log('error data ${err.response?.data}');
     return handler.next(err);
   }
 

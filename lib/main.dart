@@ -3,10 +3,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/firebase_options.dart';
-import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'bloc/challenges_bloc.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'SkillPe',
         theme: ThemeData(
           primaryColor: Color(0xff7E56DA),
           primaryColorDark: Color(0xff2E1452),
@@ -69,6 +69,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const SplashManager());
+        home: const HomeMain());
   }
 }

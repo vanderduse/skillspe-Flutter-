@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class WalletIcon extends StatelessWidget {
   final double walletAmount;
@@ -28,8 +29,18 @@ class WalletIcon extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(left: 4),
-              child: Text(walletAmount.toStringAsFixed(1),
-                  style: Theme.of(context).textTheme.bodyMedium),
+              child: Row(
+                children: [
+                  Text(
+                    RUPEE_SYMBOL,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text(
+                    walletAmount.toStringAsFixed(1),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             )
           ],
         ));

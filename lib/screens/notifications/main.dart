@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/notifications/widgets/notification_card.dart';
-import 'package:skills_pe/sharedWidgets/back_text_btn_appbar.dart';
+import 'package:skills_pe/sharedWidgets/appBars/back_text_btn_appbar.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class Notifications extends StatefulWidget {

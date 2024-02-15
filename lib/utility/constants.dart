@@ -1,10 +1,18 @@
 // ignore_for_file: constant_identifier_names
 
-const BASE_URL = "https://api-stage.skillspe.com";
+// const BASE_URL = "https://api-stage.skillspe.com";
+const BASE_URL = "https://aristoteles-stg.skillspe.com";
+
 // LOCAL STORAGE KEY
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
 const FCM_TOKEN = 'firebase_token';
+
+// Query Params Key
+
+const PAGE = 'Page';
+const LIMIT = 'limit';
+const STATUS = "status";
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
@@ -29,6 +37,7 @@ const CHALLENGE_FEES_MAX_VALIDATION =
 const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
+const CHALLENGES = 'Challenges';
 
 // Challenge Details
 const GENERAL_DETAILS = 'General Details';
@@ -132,7 +141,15 @@ const TRANSACTION_ID = 'Txn ID:';
 const ADD_MONEY = "Add Money";
 const TOPUP_WALLET = "Topup Wallet";
 const TOPUP_AMOUNTS = [1000, 500, 200, 50];
+const RUPEE_SYMBOL = '\u20B9'; // Unicode for the Rupee symbol
 
 //Tournament
 const CREATE_TOURNAMENT = "Create Tournament";
 const BID = "Bid";
+
+// Common
+const ALL = 'All';
+const LIVE = 'Live';
+const REQUEST = 'Request';
+const UPCOMING = 'Upcoming';
+const COMPLETED = 'Completed';

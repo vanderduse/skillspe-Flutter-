@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
+import 'dart:math';
+import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
+import 'package:skills_pe/screens/tournaments/widgets/team_name_with_icon.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 
 class TournamentCard extends StatelessWidget {
-  final Map<String, dynamic> item;
-  final dynamic leftBorderColor;
+  final TournamentsListResponse item;
 
-  const TournamentCard({required this.item, this.leftBorderColor = '#ED5E91'});
+  const TournamentCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.9;
+    List<Matches> matches = item.matches ?? [];
+    int displayMatchesCount = 2; // Display only the top 2 matches
 
     return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 14),
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       width: cardWidth,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -25,7 +27,7 @@ class TournamentCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -33,120 +35,135 @@ class TournamentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            item['title'],
-            style: TextStyle(
+            item.title ?? "",
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
-          SizedBox(height: 10),
-          Container(
+          const SizedBox(height: 10),
+          SizedBox(
             width: double.infinity,
-            height: 150, // Set the desired height of the image
+            height: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
-                item['image'],
+                "https://img.freepik.com/free-vector/gradient-national-sports-day-illustration_23-2148995776.jpg?w=1480&t=st=1707417363~exp=1707417963~hmac=a72602ab69f0fded9c163d908ad6c720f34ee9d1f589a944ea4e17d4e138e46b",
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          SizedBox(height: 10),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8), // Adding vertical margin
-            width: double.infinity,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Color.fromRGBO(160, 160, 160, 0.5),
-                    thickness: 1.2,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Round 1 | 06 Oct 23',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color.fromRGBO(160, 160, 160, 1),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Divider(
-                    color: Color.fromRGBO(160, 160, 160, 0.5),
-                    thickness: 1.2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(height: 10),
+          for (int i = 0; i < min(displayMatchesCount, matches.length); i++)
+            _buildMatchDetails(matches[i]),
+          Center(
+            child: TextButton(
+              onPressed: () {
+                // Handle the onPressed event in future
+              },
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildTeamOption('Team E', Color(0xFFA64242)),
-                  SizedBox(height: 5),
-                  _buildTeamOption('Team H', Color(0xFF425EA6)),
+                  Text(
+                    'View all matches ',
+                    style: TextStyle(
+                      color: Color(0xFF8C50F6),
+                      fontSize: 14,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Color(0xFF8C50F6),
+                    size: 16,
+                  ),
                 ],
               ),
-              UnFilledBtn(label: "Predict & Win", onPressed: () {}),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMatchDetails(Matches? match) {
+    //print('${match?.teams?.length}');
+    List<Teams>? teams = match?.teams;
+
+    if (teams == null || teams.isEmpty == true) {
+      // Handle the case where 'teams' is empty
+      return const Text(
+        'No teams available for this match',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          width: double.infinity,
+          child: Row(
+            children: [
+              const Expanded(
+                child: Divider(
+                  color: Color.fromRGBO(160, 160, 160, 0.5),
+                  thickness: 1.2,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                formatTournamentStartTime(match?.startTime),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color.fromRGBO(160, 160, 160, 1),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Expanded(
+                child: Divider(
+                  color: Color.fromRGBO(160, 160, 160, 0.5),
+                  thickness: 1.2,
+                ),
+              ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8), // Adding vertical margin
-            width: double.infinity,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Color.fromRGBO(160, 160, 160, 0.5),
-                    thickness: 1.2,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Round 2 | 20 Oct 23',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color.fromRGBO(160, 160, 160, 1),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Divider(
-                    color: Color.fromRGBO(160, 160, 160, 0.5),
-                    thickness: 1.2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
+        ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(bottom: 10), // Add margin to the bottom
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildTeamOption('Team E', Color(0xFF9942A6)),
-                  SizedBox(height: 5),
-                  _buildTeamOption('Team H', Color(0xFFED6F5E)),
+                  TeamNameWithIcon(
+                      teamName: teams[0].teamName,
+                      iconColor:
+                          "0xff${teams[0].teamAccent?.replaceAll("#", "")}"),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TeamNameWithIcon(
+                      teamName: teams[1].teamName,
+                      iconColor:
+                          "0xff${teams[1].teamAccent?.replaceAll("#", "")}"),
                 ],
               ),
+              // "Predict & Win" Button Container
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: Color(0xFF7E56DA)), // Button border color
+                    color: const Color(0xFF7E56DA),
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Predict & win',
                     style: TextStyle(color: Color(0xFF7E56DA)),
@@ -155,32 +172,6 @@ class TournamentCard extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTeamOption(String text, Color color) {
-    return Row(
-      children: [
-        Container(
-          width: 24,
-          height: 24,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: SvgPicture.asset(
-              'assets/icons/t-shirt-white.svg', // Replace 'assets/tshirt.svg' with your SVG file path
-            ),
-          ),
-        ),
-        SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(fontSize: 14),
         ),
       ],
     );

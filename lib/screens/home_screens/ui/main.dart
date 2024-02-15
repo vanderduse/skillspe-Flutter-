@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
-import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skills_pe/screens/home_screens/bloc/home_screen_bloc.dart';
+import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
+import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -15,6 +18,25 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
+  late HomeScreenBloc _homeScreenChallengesBloc;
+  late HomeScreenBloc _homeScreenQuizBloc;
+  late HomeScreenBloc _homeScreenTournamentBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    HomeScreenRepository homeScreenRepository = HomeScreenRepository();
+
+    _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenChallengesBloc.add(HomeScreenFetchChallengesEvent());
+
+    _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
+
+    _homeScreenTournamentBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenTournamentBloc.add(HomeScreenFetchTournamentEvent());
+  }
+
   final List<String> imageUrls = [
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
     'https://res.cloudinary.com/dkxdyhmij/image/upload/v1702836936/dev/file_gqtuxt.png',
@@ -29,239 +51,75 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             HomeSwipper(imageUrls: imageUrls),
-            ChallengesWidget(
-              title: 'Challenges',
-              data: const [
-                {
-                  'title':
-                      'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Motivator',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Lorem ipsum dolor sit amet.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/1800/1800912.png',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-
-                // Add more data items as needed
-              ],
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: 'Challenges',
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
             ),
-            QuizWidget(
-              title: 'Quiz',
-              data: const [
-                {
-                  'title':
-                      'Lorem ipsum dolor sit amet consectetur. GdhEst dolor sit amet consectetur',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-                  'participants': '100+ participants',
-                  'date': 'Starts on 01 Oct 23',
-                  'price': '₹50'
-                },
-                {
-                  'title': 'Lorem ipsum dolor sit amet consectetur.',
-                  'icon':
-                      'https://cdn-icons-png.flaticon.com/512/4999/4999578.png',
-                  'participants': '100+ participants',
-                  'date': 'Starts on 01 Oct 23',
-                  'price': '₹20'
-                },
-                // Add more data items as needed
-              ],
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenQuizBloc,
+              builder: (context, state) {
+                if (state is HomeScreenQuizLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
+                } else if (state is HomeScreenQuizSuccessState) {
+                  return SingleChildScrollView(
+                      child: QuizWidget(
+                    title: 'Quizzes',
+                    data: state.quizzes,
+                  ));
+                } else if (state is HomeScreenQuizFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
             ),
-            TournamentWidget(
-              title: 'Tournaments',
-              data: const [
-                {
-                  'title': 'Tournament Name',
-                  'image':
-                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
-                  'type': 'Motivator',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-                {
-                  'title': 'Tournament Name',
-                  'image':
-                      'https://static.vecteezy.com/system/resources/previews/001/988/091/non_2x/cricket-championship-tournament-free-vector.jpg',
-                  'type': 'Inspiration',
-                  'date': 'Jun 30 - Jul 30, 2023',
-                  // Add more properties as needed
-                },
-
-                // Add more data items as needed
-              ],
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenTournamentBloc,
+              builder: (context, state) {
+                if (state is HomeScreenTournamentsLoadingState) {
+                  return ShimmerBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 180,
+                      showTitleContainer: true);
+                } else if (state is HomeScreenTournamentsSuccessState) {
+                  return SingleChildScrollView(
+                      child: TournamentWidget(
+                    title: 'Tournaments',
+                    data: state.tournaments,
+                  ));
+                } else if (state is HomeScreenTournamentsFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
             ),
-            SizedBox(height: 70),
+            const SizedBox(height: 70),
           ],
         ),
       ),
-      floatingActionButton: BottomNavigationBarWidget(),
+      floatingActionButton: const BottomNavigationBarWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-  }
-}
-
-class HomeSwipper extends StatefulWidget {
-  final List<String> imageUrls;
-
-  const HomeSwipper({required this.imageUrls});
-
-  @override
-  _HomeSwipperState createState() => _HomeSwipperState();
-}
-
-class _HomeSwipperState extends State<HomeSwipper> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-      height: 200,
-      child: Stack(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 200.0,
-              autoPlay: true,
-              enlargeCenterPage: true,
-              viewportFraction: 0.9,
-              onPageChanged: (index, reason) =>
-                  setState(() => _currentIndex = index), // Track current index
-            ),
-            items: widget.imageUrls // Access imageUrls via widget property
-                .map((imageUrl) => Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(imageUrl), // Load image from URL
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        );
-                      },
-                    ))
-                .toList(),
-          ),
-          Positioned(
-            bottom: 10.0,
-            left: 0.0,
-            right: 0.0,
-            child: Center(
-              child: DotsIndicator(
-                dotsCount:
-                    widget.imageUrls.length, // Adjust based on image list
-                position: _currentIndex, // Use current index for active dot
-                decorator: DotsDecorator(
-                  color: const Color.fromARGB(
-                      156, 234, 234, 234), // Use hex code with opacity (255)
-                  activeColor: const Color.fromARGB(255, 255, 255, 255),
-                  size: const Size(8.0, 8.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-AppBar navigationWithWallet(
-  String screenName,
-  double walletAmount, {
-  bool showBack = true,
-}) {
-  return AppBar(
-    centerTitle: false,
-    automaticallyImplyLeading: false,
-    shape: const Border(
-      bottom: BorderSide(
-        color: Color.fromRGBO(0, 0, 0, 0.10),
-        width: 1,
-      ),
-    ),
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        if (showBack) // Conditionally show back icon based on showBack value
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              "assets/icons/arrow-left.svg",
-              height: 20,
-              width: 20,
-            ),
-          ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            screenName,
-            style: const TextStyle(
-              fontSize: 18.0,
-            ),
-          ),
-        ),
-      ],
-    ),
-    actions: [WalletIcon(walletAmount: walletAmount)],
-  );
-}
-
-class WalletIcon extends StatelessWidget {
-  final double walletAmount;
-
-  const WalletIcon({
-    Key? key,
-    required this.walletAmount,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        margin: const EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-            color: const Color(0xffFDF0CE),
-            borderRadius: BorderRadius.circular(8.0)),
-        child: Container(
-          child: Row(
-            children: [
-              Container(
-                child: SvgPicture.asset(
-                  "assets/icons/wallet.svg",
-                  height: 20,
-                  width: 20,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 4),
-                child: Text(
-                  walletAmount.toStringAsFixed(1),
-                  style: const TextStyle(
-                      color: Color(0xff181201), fontWeight: FontWeight.w500),
-                ),
-              )
-            ],
-          ),
-        ));
   }
 }

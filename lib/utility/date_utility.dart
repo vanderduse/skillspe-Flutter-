@@ -54,13 +54,13 @@ String formatChallengeDate(String? startTime, String? endTime) {
 
     return '$formattedStartDate - $formattedEndDate';
   } catch (e) {
-    return 'Invalid Date';
+    return '';
   }
 }
 
-String formatQuizCardDate(String eventTimeInSecondsString) {
+String formatQuizCardDate(String? eventTimeInSecondsString) {
   try {
-    int eventTimeInSeconds = int.tryParse(eventTimeInSecondsString) ?? 0;
+    int eventTimeInSeconds = int.tryParse(eventTimeInSecondsString!) ?? 0;
     DateTime currentTime = DateTime.now();
     DateTime eventTime =
         DateTime.fromMillisecondsSinceEpoch(eventTimeInSeconds * 1000);
@@ -74,17 +74,17 @@ String formatQuizCardDate(String eventTimeInSecondsString) {
       return 'Starts in ${difference.inHours}h ${difference.inMinutes.remainder(60)}m';
     }
   } catch (e) {
-    return 'Invalid Date';
+    return '';
   }
 }
 
-String formatTournamentStartTime(String startTime) {
+String formatTournamentStartTime(String? startTime) {
   try {
-    DateTime parsedDateTime = DateTime.parse(startTime);
+    DateTime parsedDateTime = DateTime.parse(startTime!);
     String formattedDate = DateFormat('d MMM yyyy').format(parsedDateTime);
     String formattedTime = DateFormat('h:mma').format(parsedDateTime);
     return '$formattedDate | $formattedTime';
   } catch (e) {
-    return 'Invalid Date';
+    return '';
   }
 }

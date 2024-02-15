@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
-import 'package:skills_pe/screens/view_all/ui/view_all_challenges.dart';
+import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
 
 class ChallengesWidget extends StatelessWidget {
   final String title;
@@ -18,6 +18,7 @@ class ChallengesWidget extends StatelessWidget {
   ];
 
   ChallengesWidget({
+    super.key,
     required this.title,
     required this.data,
   });
@@ -28,13 +29,14 @@ class ChallengesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 16.0, right: 8.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
@@ -42,11 +44,11 @@ class ChallengesWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ViewAllChallenges(),
+                      builder: (context) => const ChallengesListScreen(),
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'View All',
                   style: TextStyle(
                     color: Color(0xFF8C50F6), // Customize text color

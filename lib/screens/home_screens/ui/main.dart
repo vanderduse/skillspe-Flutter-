@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
-
-import 'package:skills_pe/screens/home_screens/bloc/list_challenges_bloc.dart';
-import 'package:skills_pe/screens/home_screens/bloc/list_quizzes_bloc.dart';
-import 'package:skills_pe/screens/home_screens/bloc/list_tournaments_bloc.dart';
-import 'package:skills_pe/screens/home_screens/repository/list_challenges_repo.dart';
-import 'package:skills_pe/screens/home_screens/repository/list_quizzes_repo.dart';
-import 'package:skills_pe/screens/home_screens/repository/list_tournaments_repo.dart';
-
-import 'package:skills_pe/screens/home_screens/ui/quiz_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/challenges_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/tournament_widget.dart';
-
-import 'package:skills_pe/screens/home_screens/ui/bottom_navbar.dart';
+import 'package:skills_pe/screens/home_screens/bloc/home_screen_bloc.dart';
+import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 
@@ -26,21 +18,23 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
-  late ListChallengeBloc _listChallengeBloc;
-  late ListQuizzesBloc _listQuizzesBloc;
-  late ListTournamentsBloc _listTournamentsBloc;
+  late HomeScreenBloc _homeScreenChallengesBloc;
+  late HomeScreenBloc _homeScreenQuizBloc;
+  late HomeScreenBloc _homeScreenTournamentBloc;
 
   @override
   void initState() {
     super.initState();
-    _listChallengeBloc = ListChallengeBloc(ListChallengeRepository());
-    _listChallengeBloc.add(FetchListChallengeEvent());
+    HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
-    _listQuizzesBloc = ListQuizzesBloc(ListQuizzesRepository());
-    _listQuizzesBloc.add(FetchListQuizzesEvent());
+    _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenChallengesBloc.add(HomeScreenFetchChallengesEvent());
 
-    _listTournamentsBloc = ListTournamentsBloc(ListTournamentsRepository());
-    _listTournamentsBloc.add(FetchListTournamentsEvent());
+    _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
+
+    _homeScreenTournamentBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenTournamentBloc.add(HomeScreenFetchTournamentEvent());
   }
 
   final List<String> imageUrls = [
@@ -57,63 +51,63 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             HomeSwipper(imageUrls: imageUrls),
-            BlocBuilder<ListChallengeBloc, ListChallengeState>(
-              bloc: _listChallengeBloc,
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
               builder: (context, state) {
-                if (state is ListChallengeLoadingState) {
+                if (state is HomeScreenChallengeLoadingState) {
                   return ShimmerBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: 180,
                       showTitleContainer: true);
-                } else if (state is ListChallengeSuccessState) {
+                } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: ChallengesWidget(
                     title: 'Challenges',
                     data: state.challenges,
                   ));
-                } else if (state is ListChallengeFailureState) {
+                } else if (state is HomeScreenChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
                 }
               },
             ),
-            BlocBuilder<ListQuizzesBloc, ListQuizzesState>(
-              bloc: _listQuizzesBloc,
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenQuizBloc,
               builder: (context, state) {
-                if (state is ListQuizzesLoadingState) {
+                if (state is HomeScreenQuizLoadingState) {
                   return ShimmerBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: 180,
                       showTitleContainer: true);
-                } else if (state is ListQuizzesSuccessState) {
+                } else if (state is HomeScreenQuizSuccessState) {
                   return SingleChildScrollView(
                       child: QuizWidget(
                     title: 'Quizzes',
                     data: state.quizzes,
                   ));
-                } else if (state is ListQuizzesFailureState) {
+                } else if (state is HomeScreenQuizFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
                 }
               },
             ),
-            BlocBuilder<ListTournamentsBloc, ListTournamentsState>(
-              bloc: _listTournamentsBloc,
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenTournamentBloc,
               builder: (context, state) {
-                if (state is ListTournamentsLoadingState) {
+                if (state is HomeScreenTournamentsLoadingState) {
                   return ShimmerBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: 180,
                       showTitleContainer: true);
-                } else if (state is ListTournamentsSuccessState) {
+                } else if (state is HomeScreenTournamentsSuccessState) {
                   return SingleChildScrollView(
                       child: TournamentWidget(
                     title: 'Tournaments',
                     data: state.tournaments,
                   ));
-                } else if (state is ListTournamentsFailureState) {
+                } else if (state is HomeScreenTournamentsFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
@@ -124,82 +118,8 @@ class _HomeMain extends State<HomeMain> {
           ],
         ),
       ),
-      floatingActionButton: BottomNavigationBarWidget(),
+      floatingActionButton: const BottomNavigationBarWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-}
-
-class HomeSwipper extends StatefulWidget {
-  final List<String> imageUrls;
-
-  const HomeSwipper({super.key, required this.imageUrls});
-
-  @override
-  _HomeSwipperState createState() => _HomeSwipperState();
-}
-
-class _HomeSwipperState extends State<HomeSwipper> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-      height: 200,
-      child: Stack(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 200.0,
-              autoPlay: true,
-              enlargeCenterPage: true,
-              viewportFraction: 0.9,
-              onPageChanged: (index, reason) =>
-                  setState(() => _currentIndex = index), // Track current index
-            ),
-            items: widget.imageUrls // Access imageUrls via widget property
-                .map((imageUrl) => Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(imageUrl), // Load image from URL
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        );
-                      },
-                    ))
-                .toList(),
-          ),
-          Positioned(
-            bottom: 10.0,
-            left: 0.0,
-            right: 0.0,
-            child: Center(
-              child: DotsIndicator(
-                dotsCount:
-                    widget.imageUrls.length, // Adjust based on image list
-                position: _currentIndex, // Use current index for active dot
-                decorator: DotsDecorator(
-                  color: const Color.fromARGB(
-                      156, 234, 234, 234), // Use hex code with opacity (255)
-                  activeColor: const Color.fromARGB(255, 255, 255, 255),
-                  size: const Size(8.0, 8.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

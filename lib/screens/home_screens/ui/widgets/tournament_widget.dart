@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/sharedWidgets/quiz_card.dart';
-import 'package:skills_pe/screens/view_all/ui/view_all_quiz.dart';
-import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
+import 'package:skills_pe/sharedWidgets/tournament_card.dart';
+import 'package:skills_pe/screens/view_all/ui/tournament_list_screen.dart';
+import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 
-class QuizWidget extends StatelessWidget {
+class TournamentWidget extends StatelessWidget {
   final String title;
-  final List<QuizzesListResponse> data;
+  final List<TournamentsListResponse> data;
 
-  const QuizWidget({
+  const TournamentWidget({
     super.key,
     required this.title,
     required this.data,
@@ -25,14 +25,16 @@ class QuizWidget extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               TextButton(
                 onPressed: () {
                   // Handle the 'View All' button tap
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ViewAllQuizzes()),
+                    MaterialPageRoute(
+                        builder: (context) => const TournamentListScreen()),
                   );
                 },
                 child: const Text(
@@ -46,20 +48,20 @@ class QuizWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 240, // Set a fixed height for the horizontal ListView
+          height: 530,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 width: MediaQuery.of(context).size.width *
-                    0.8, // 80% of screen width
+                    0.9, // 90% of screen width
                 margin: EdgeInsets.symmetric(
-                  horizontal: index == 0
-                      ? 16.0
-                      : (index == data.length - 1 ? 16.0 : 10.0),
-                ),
-                child: QuizCard(
+                    horizontal: index == 0
+                        ? 16.0
+                        : (index == data.length - 1 ? 16.0 : 10.0),
+                    vertical: 10),
+                child: TournamentCard(
                   item: data[index],
                 ),
               );

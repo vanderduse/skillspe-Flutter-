@@ -3,7 +3,7 @@ import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 
 class ChallengeCard extends StatelessWidget {
-  final ChallengesListResponse item;
+  final ChallengesListResponse? item;
   final dynamic leftBorderColor;
 
   const ChallengeCard(
@@ -64,7 +64,8 @@ class ChallengeCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 5.0), // Adjust the value as needed
+            padding:
+                const EdgeInsets.only(left: 5.0), // Adjust the value as needed
             child: SizedBox(
               width: middleWidth,
               child: Center(
@@ -73,7 +74,7 @@ class ChallengeCard extends StatelessWidget {
                     width: 48.0,
                     height: 58.0,
                     child: Text(
-                      item.challengeEmoji!,
+                      item?.challengeEmoji ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 32,
@@ -89,106 +90,84 @@ class ChallengeCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(
-              color: Colors.yellow[100], // Change this to your desired color
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 6,
-                    child: Container(
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 50.0),
-                            child: Text(
-                              item.title!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                8, // Adding some space between title and tag
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            child: SizedBox(
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 100.0),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF5F5F5),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 2),
-                                    child: Text(
-                                      item.category!,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item?.title ?? "",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
+                      Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          margin: const EdgeInsets.only(top: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            item?.category ?? "",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                          )),
+                    ],
                   ),
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // First container displaying text
-                          Container(
-                            width: 140,
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              formatChallengeDate(item.startTime, item.endTime),
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // First container displaying text
+                        Container(
+                          width: 140,
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            formatChallengeDate(item?.startTime, item?.endTime),
+                            style: const TextStyle(
+                              fontSize: 12,
                             ),
                           ),
+                        ),
 
-                          // Second container for the button
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  width: 1.1,
-                                  color: Color(0xFF8C50F6)), // Border color
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 22, vertical: 10),
-                            child: const Text(
-                              'Bid',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                                color: Color(0xFF8C50F6), // Text color
-                              ),
+                        // Second container for the button
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                width: 1.1,
+                                color: Color(0xFF8C50F6)), // Border color
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 22, vertical: 10),
+                          child: const Text(
+                            'Bid',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Color(0xFF8C50F6), // Text color
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

@@ -4,10 +4,10 @@ import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 
 class QuizCard extends StatelessWidget {
-  final QuizzesListResponse item;
+  final QuizzesListResponse? item;
   final String? backgroundColor; // Use nullable string for optional parameter
 
-  const QuizCard({required this.item, this.backgroundColor});
+  const QuizCard({super.key, required this.item, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class QuizCard extends StatelessWidget {
         children: [
           Expanded(
             // Use Expanded instead of Container for flexible sizing
-            flex: 4, // Divide space according to desired ratio (40% : 60%)
+            flex: 3, // Divide space according to desired ratio (40% : 60%)
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xFFFD5CCFF),
@@ -43,7 +43,7 @@ class QuizCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Image.network(
-                    item.banner!,
+                    item?.banner ?? "",
                     width: 54,
                     height: 54,
                     // You can adjust the width and height as needed
@@ -62,7 +62,7 @@ class QuizCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    item.name!,
+                    item?.name ?? "",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14.0,
@@ -76,17 +76,17 @@ class QuizCard extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 2.0),
                     child: Text(
-                      formatQuizCardDate(item.scheduledTime!),
+                      formatQuizCardDate(item?.scheduledTime),
                       style: TextStyle(
-                        color: formatQuizCardDate(item.scheduledTime!) == 'LIVE'
+                        color: formatQuizCardDate(item?.scheduledTime) == 'LIVE'
                             ? Colors.red
                             : Color(0xFF5C6068),
                         fontSize:
-                            formatQuizCardDate(item.scheduledTime!) == 'LIVE'
+                            formatQuizCardDate(item?.scheduledTime) == 'LIVE'
                                 ? 14.0
                                 : 12.0,
                         fontWeight:
-                            formatQuizCardDate(item.scheduledTime!) == 'Live'
+                            formatQuizCardDate(item?.scheduledTime) == 'Live'
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                       ),
@@ -103,12 +103,12 @@ class QuizCard extends StatelessWidget {
                           width: 100,
                           padding: const EdgeInsets.all(3.0), // Adding padding
                           decoration: BoxDecoration(
-                            color: Color(0xFFF5F5F5),
+                            color: const Color(0xFFF5F5F5),
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           child: Center(
                             child: Text(
-                              item.category!,
+                              item?.category ?? "",
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12.0,
@@ -130,7 +130,7 @@ class QuizCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
-                                  '$RUPEE_SYMBOL ${item.participationFee!.toString()}',
+                                  '$RUPEE_SYMBOL ${item?.participationFee.toString() ?? ""}',
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 12.0,

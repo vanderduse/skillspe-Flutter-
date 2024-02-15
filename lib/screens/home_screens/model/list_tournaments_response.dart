@@ -61,15 +61,15 @@ class Matches {
 }
 
 class Teams {
-  String? name;
+  String? teamName;
   String? teamAccent;
   String? tournamentId;
   String? group;
 
-  Teams({this.name, this.teamAccent, this.tournamentId, this.group});
+  Teams({this.teamName, this.teamAccent, this.tournamentId, this.group});
 
   Teams.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    teamName = json['team_name'];
     teamAccent = json['team_accent'];
     tournamentId = json['tournament_id'];
     group = json['group'];
@@ -77,7 +77,7 @@ class Teams {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
+    data['team_name'] = teamName;
     data['team_accent'] = teamAccent;
     data['tournament_id'] = tournamentId;
     data['group'] = group;

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TeamNameWithIcon extends StatelessWidget {
-  String teamName;
-  String iconColor;
+  final String? teamName;
+  final String? iconColor;
 
-  TeamNameWithIcon(
+  const TeamNameWithIcon(
       {super.key, required this.teamName, required this.iconColor});
 
   @override
@@ -16,7 +16,7 @@ class TeamNameWithIcon extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: ShapeDecoration(
-            color: Color(int.parse(iconColor)),
+            color: Color(int.parse(iconColor!)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
@@ -37,7 +37,7 @@ class TeamNameWithIcon extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          teamName,
+          teamName ?? "",
           style: Theme.of(context).textTheme.bodyMedium,
         )
       ],

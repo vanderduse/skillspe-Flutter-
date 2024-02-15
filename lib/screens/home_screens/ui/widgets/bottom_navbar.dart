@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/tournaments/create_tournament.dart';
-import 'package:skills_pe/screens/tournaments/main.dart';
 import 'package:skills_pe/utility/constants.dart';
-import '../../create_challenge/ui/create_challenge_screen.dart';
+import '../../../create_challenge/ui/create_challenge_screen.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   const BottomNavigationBarWidget({super.key});
@@ -70,7 +69,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const TournamentHome()))
+                                  builder: (context) =>
+                                      const CreateTournament()))
                         },
                       ),
                       SpeedDialChild(

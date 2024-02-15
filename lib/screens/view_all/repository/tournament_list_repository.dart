@@ -1,17 +1,25 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
-import 'package:skills_pe/service/api_client.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
+import 'package:skills_pe/service/api_client.dart';
+import 'package:skills_pe/utility/constants.dart';
 
-class ListTournamentsRepository {
+class TournamentListRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<TournamentsListResponse>>?>
-      fetchTournaments() async {
+  Future<BaseResponseModel<List<TournamentsListResponse>>?> fetchTournaments(
+      String status, int page) async {
     try {
-      Response? response =
-          await _dio?.get('/v1/cumulated/tournaments?page=1&limit=5');
-
+      Map<String, dynamic> queryParameters = {
+        PAGE: page,
+        LIMIT: 10,
+        STATUS: status
+      };
+      Response? response = await _dio?.get('/v1/cumulated/tournaments',
+          queryParameters: queryParameters);
+      log('${response?.data.toString()}, $status');
       return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
         response?.data,
         (data) {

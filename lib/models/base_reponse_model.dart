@@ -27,7 +27,7 @@ class BaseResponseModel<T> {
 }
 
 class Pagination {
-  int? count;
+  dynamic count;
   bool? hasNext;
   bool? hasPrevious;
 
@@ -67,7 +67,7 @@ Map<String, dynamic> _$BaseResponseModelToJson<T>(
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) {
   return Pagination(
-    count: json['count'] as int?,
+    count: json['count'] as dynamic,
     hasNext: json['has_next'] as bool?,
     hasPrevious: json['has_previous'] as bool?,
   );

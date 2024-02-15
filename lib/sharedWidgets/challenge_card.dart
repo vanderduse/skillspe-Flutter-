@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
+import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
+import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
+import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 
@@ -144,21 +148,18 @@ class ChallengeCard extends StatelessWidget {
                           ),
                         ),
 
-                          // Second container for the button
-                          UnFilledBtn(
-                              label: BID,
-                              onPressed: () {
-                                BottomSheetManager.showGenericBottomSheet(
-                                    context,
-                                    const BiddingStepOneScreen(),
-                                    "Bidding");
-                              }),
-                        ],
-                      ),
+                        // Second container for the button
+                        UnFilledBtn(
+                            label: BID,
+                            onPressed: () {
+                              BottomSheetManager.showGenericBottomSheet(context,
+                                  const BiddingStepOneScreen(), "Bidding");
+                            }),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

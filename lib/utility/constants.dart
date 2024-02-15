@@ -57,6 +57,7 @@ const QUESTIONS = "Questions";
 const PRIZE_POOL = "Prize Pool";
 const ACCEPT_QUIZ = "Accept";
 const QUIZ_TNC = "terms & conditions";
+const PLAY = "Play";
 
 // Quiz Question Screen
 const SUBMIT_AND_NEXT = "Submit & Next";

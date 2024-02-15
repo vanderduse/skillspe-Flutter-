@@ -141,24 +141,16 @@ class QuizCard extends StatelessWidget {
                               ),
                               const SizedBox(
                                   width: 16), // Adding space between containers
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      width: 1.1,
-                                      color: Color(0xFF8C50F6)), // Border color
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 22, vertical: 10),
-                                child: const Text(
-                                  'Play',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Color(0xFF8C50F6), // Text color
-                                  ),
-                                ),
-                              ),
+                              UnFilledBtn(
+                                  label: PLAY,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => QuizHome(
+                                                  quizId: item?.id ?? "",
+                                                )));
+                                  }),
                             ],
                           ),
                         ),

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/quiz/main.dart';
+import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 
 class QuizCard extends StatelessWidget {
   final QuizzesListResponse? item;
-  final String? backgroundColor; // Use nullable string for optional parameter
+  final String? backgroundColor;
 
   const QuizCard({super.key, required this.item, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
+    final quizStatus = formatQuizCardDate(item?.scheduledTime);
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 14),
       decoration: BoxDecoration(
@@ -33,7 +36,7 @@ class QuizCard extends StatelessWidget {
             flex: 3, // Divide space according to desired ratio (40% : 60%)
             child: Container(
               decoration: const BoxDecoration(
-                color: Color(0xFFFD5CCFF),
+                color: Color(0xfffd5ccff),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
@@ -76,19 +79,15 @@ class QuizCard extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 2.0),
                     child: Text(
-                      formatQuizCardDate(item?.scheduledTime),
+                      quizStatus,
                       style: TextStyle(
-                        color: formatQuizCardDate(item?.scheduledTime) == 'LIVE'
+                        color: quizStatus == 'LIVE'
                             ? Colors.red
                             : Color(0xFF5C6068),
-                        fontSize:
-                            formatQuizCardDate(item?.scheduledTime) == 'LIVE'
-                                ? 14.0
-                                : 12.0,
-                        fontWeight:
-                            formatQuizCardDate(item?.scheduledTime) == 'Live'
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                        fontSize: quizStatus == 'LIVE' ? 14.0 : 12.0,
+                        fontWeight: quizStatus == 'Live'
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                   ),
@@ -100,6 +99,7 @@ class QuizCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
+                            child: Container(
                           width: 100,
                           padding: const EdgeInsets.all(3.0), // Adding padding
                           decoration: BoxDecoration(
@@ -116,7 +116,7 @@ class QuizCard extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
+                        )),
                         Container(
                           // padding: EdgeInsets.all(8.0),
                           child: Row(
@@ -126,7 +126,7 @@ class QuizCard extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 5.0, horizontal: 10.0),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFFDF0CE),
+                                  color: const Color(0xFFFDF0CE),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Text(
@@ -139,24 +139,17 @@ class QuizCard extends StatelessWidget {
                               ),
                               const SizedBox(
                                   width: 16), // Adding space between containers
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      width: 1.1,
-                                      color: Color(0xFF8C50F6)), // Border color
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 22, vertical: 10),
-                                child: const Text(
-                                  'Play',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Color(0xFF8C50F6), // Text color
-                                  ),
-                                ),
-                              ),
+                              UnFilledBtn(
+                                label: PLAY,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            QuizHome(quizId: item?.id ?? "")),
+                                  );
+                                },
+                              )
                             ],
                           ),
                         ),

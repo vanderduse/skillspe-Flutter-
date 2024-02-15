@@ -1,8 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-// const BASE_URL = "https://api-stage.skillspe.com";
+//const BASE_URL = "https://api-stage.skillspe.com";
 const BASE_URL = "https://aristoteles-stg.skillspe.com";
-
 // LOCAL STORAGE KEY
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
@@ -53,14 +52,16 @@ const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
 
 // Quiz Home screen
-const START_QUIZ = "Start Quiz for";
+const START_QUIZ = "Start Quiz";
 const QUESTIONS = "Questions";
 const PRIZE_POOL = "Prize Pool";
 const ACCEPT_QUIZ = "Accept";
 const QUIZ_TNC = "terms & conditions";
+const PLAY = "Play";
 
 // Quiz Question Screen
 const SUBMIT_AND_NEXT = "Submit & Next";
+const NEXT = "Next";
 const SUBMIT = "Submit";
 
 // Login Screen

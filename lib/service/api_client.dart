@@ -1,5 +1,7 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -15,9 +17,13 @@ class ApiClient {
       sendTimeout: const Duration(seconds: 60 * 1000),
     ));
 
-    _dio?.interceptors.addAll({
+    _dio?.interceptors.add(
       AppInterceptors(_dio!),
-    });
+    );
+
+    if (kDebugMode) {
+      _dio?.interceptors.add(ChuckerDioInterceptor());
+    }
 
     return _dio;
   }

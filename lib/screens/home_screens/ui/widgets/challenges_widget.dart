@@ -59,7 +59,7 @@ class ChallengesWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 200, // Set a fixed height for the horizontal ListView
+          height: 190, // Set a fixed height for the horizontal ListView
           child: Container(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,

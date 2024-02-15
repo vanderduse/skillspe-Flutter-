@@ -23,7 +23,7 @@ class ChallengeCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(top: 10, bottom: 14),
-      padding: const EdgeInsets.only(top: 15, bottom: 10, right: 15),
+      padding: const EdgeInsets.only(top: 15, right: 15),
       width: cardWidth,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -138,7 +138,7 @@ class ChallengeCard extends StatelessWidget {
                       children: [
                         // First container displaying text
                         Container(
-                          width: 140,
+                          width: 160,
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             formatChallengeDate(item?.startTime, item?.endTime),
@@ -148,23 +148,20 @@ class ChallengeCard extends StatelessWidget {
                           ),
                         ),
 
-                          // Second container for the button
-                          UnFilledBtn(
-                              label: BID,
-                              onPressed: () {
-                                BottomSheetManager.showGenericBottomSheet(
-                                    context,
-                                    const BiddingStepOneScreen(),
-                                    "Bidding");
-                              }),
-                        ],
-                      ),
+                        // Second container for the button
+                        UnFilledBtn(
+                            label: BID,
+                            onPressed: () {
+                              BottomSheetManager.showGenericBottomSheet(context,
+                                  const BiddingStepOneScreen(), "Bidding");
+                            }),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );

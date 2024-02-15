@@ -4,13 +4,14 @@ import 'package:skills_pe/screens/quiz/bloc/quiz_bloc.dart';
 import 'package:skills_pe/screens/quiz/quiz_question.dart';
 import 'package:skills_pe/screens/quiz/repository/quiz_repository.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_specs.dart';
-import 'package:skills_pe/sharedWidgets/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/custom_checkbox.dart';
 import 'package:skills_pe/sharedWidgets/hyperlink_text.dart';
 import 'package:skills_pe/sharedWidgets/filled_btn.dart';
 import 'package:skills_pe/screens/quiz/widgets/quiz_details_cards.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/utility.dart';
+
+import '../../sharedWidgets/appBars/back_wallet_appbar.dart';
 
 class QuizHome extends StatefulWidget {
   final String quizId;

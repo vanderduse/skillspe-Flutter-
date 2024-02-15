@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:intl/intl.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 const DDMMYYYY_SLASH_FORMAT = "dd/MM/yyyy";
 const YYYYMMDD_DASH_FORMAT = "yyyy-MM-dd";
@@ -67,7 +68,7 @@ String formatQuizCardDate(String? eventTimeInSecondsString) {
     Duration difference = eventTime.difference(currentTime);
 
     if (difference.inSeconds < 0) {
-      return 'LIVE';
+      return LIVE.toUpperCase();
     } else if (difference.inHours >= 24) {
       return 'Starts on ${DateFormat('dd MMM yy').format(eventTime)}';
     } else {
@@ -86,14 +87,6 @@ String formatTournamentStartTime(String? startTime) {
     return '$formattedDate | $formattedTime';
   } catch (e) {
     return '';
-  }
-}
-
-double? convertMintuesToSeconds(double? timeInMins) {
-  try {
-    return timeInMins!.toInt() * 60;
-  } catch (e) {
-    return null;
   }
 }
 

@@ -1,14 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/view_all/repository/challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/challenge_card.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 import 'package:skills_pe/screens/view_all/bloc/challengesBloc/challenges_list_bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class ChallengesListScreen extends StatefulWidget {
@@ -94,7 +92,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
               if (state is ChallengesListSuccessState) {
                 if (state.challengesList.isNotEmpty ||
                     challengesList.isNotEmpty) {
-                  log(challengesList.toString());
+                  // log(challengesList.toString());
                   challengesList.addAll(state.challengesList);
                   _isLoading = false;
                   return Expanded(
@@ -112,10 +110,10 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                           ),
                         );
                       } else if (state.hasNext) {
-                        return ShimmerBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 180,
-                            showTitleContainer: true);
+                        return Column(
+                          children: List.generate(
+                              3, (index) => const ChallengeCardSkeleton()),
+                        );
                       } else {
                         _isLoading = true;
                         return null;
@@ -133,10 +131,10 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
               } else if (state is ChallengesListFailureState) {
                 return Text('Error: ${state.errorMessage}');
               } else {
-                return ShimmerBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 180,
-                    showTitleContainer: true);
+                return Column(
+                  children: List.generate(
+                      3, (index) => const ChallengeCardSkeleton()),
+                );
               }
             },
           ),

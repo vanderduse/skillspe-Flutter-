@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/view_all/repository/quiz_list_repository.dart';
@@ -8,8 +7,8 @@ import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/quiz_card.dart';
 import 'package:skills_pe/screens/view_all/bloc/quizBloc/quiz_list_bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
 
 class QuizListScreen extends StatefulWidget {
   const QuizListScreen({super.key});
@@ -109,10 +108,10 @@ class _QuizListScreenState extends State<QuizListScreen> {
                               item: _quizList[index],
                             ));
                       } else if (state.hasNext) {
-                        return ShimmerBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 180,
-                            showTitleContainer: true);
+                        return Column(
+                          children: List.generate(
+                              2, (index) => const QuizCardSkeleton()),
+                        );
                       } else {
                         _isLoading = true;
                         return null;
@@ -130,10 +129,10 @@ class _QuizListScreenState extends State<QuizListScreen> {
               } else if (state is QuizListFailureState) {
                 return Text('Error: ${state.errorMessage}');
               } else {
-                return ShimmerBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 180,
-                    showTitleContainer: true);
+                return Column(
+                  children:
+                      List.generate(2, (index) => const QuizCardSkeleton()),
+                );
               }
             },
           ),

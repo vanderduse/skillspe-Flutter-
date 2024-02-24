@@ -15,9 +15,9 @@ const STATUS = "status";
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
-const CHALLENGENAME = "Challenge Name";
+const CHALLENGENAME = "Enter Challenge Name";
 const CHALLENGEGOAL = "Challenge Goal";
-const CHALLENGEEMOJI = "Challenge Emoji";
+const CHALLENGEEMOJI = "Emoji";
 const STARTDATE = "Start Date";
 const ENDDATE = "End Date";
 const CHALLENGEFEES = "Challenge Fees";

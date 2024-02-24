@@ -9,6 +9,7 @@ import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 import 'package:skills_pe/screens/home_screens/ui/main.dart';
+import 'package:skills_pe/screens/create_challenge/ui/create_challenge_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +69,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const HomeMain());
+        home: const CreateChallengeScreen());
   }
 }

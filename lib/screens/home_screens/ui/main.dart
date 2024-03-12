@@ -7,8 +7,9 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart
 import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -55,10 +56,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
+                  return const ChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: ChallengesWidget(
@@ -76,10 +74,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenQuizBloc,
               builder: (context, state) {
                 if (state is HomeScreenQuizLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
+                  return const QuizCardSkeleton();
                 } else if (state is HomeScreenQuizSuccessState) {
                   return SingleChildScrollView(
                       child: QuizWidget(
@@ -93,27 +88,27 @@ class _HomeMain extends State<HomeMain> {
                 }
               },
             ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenTournamentBloc,
-              builder: (context, state) {
-                if (state is HomeScreenTournamentsLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
-                } else if (state is HomeScreenTournamentsSuccessState) {
-                  return SingleChildScrollView(
-                      child: TournamentWidget(
-                    title: 'Tournaments',
-                    data: state.tournaments,
-                  ));
-                } else if (state is HomeScreenTournamentsFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
+            // BlocBuilder<HomeScreenBloc, HomeScreenState>(
+            //   bloc: _homeScreenTournamentBloc,
+            //   builder: (context, state) {
+            //     if (state is HomeScreenTournamentsLoadingState) {
+            //       return ShimmerBox(
+            //           width: MediaQuery.of(context).size.width * 0.9,
+            //           height: 180,
+            //           showTitleContainer: true);
+            //     } else if (state is HomeScreenTournamentsSuccessState) {
+            //       return SingleChildScrollView(
+            //           child: TournamentWidget(
+            //         title: 'Tournaments',
+            //         data: state.tournaments,
+            //       ));
+            //     } else if (state is HomeScreenTournamentsFailureState) {
+            //       return Text('Error: ${state.errorMessage}');
+            //     } else {
+            //       return const Text('Unexpected state');
+            //     }
+            //   },
+            // ),
             const SizedBox(height: 70),
           ],
         ),

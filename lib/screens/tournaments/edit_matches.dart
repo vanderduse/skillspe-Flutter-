@@ -2,7 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/models/expansion_item.dart';
 import 'package:skills_pe/screens/tournaments/widgets/edit_match_card.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import '../../sharedWidgets/cross_timer_appbar.dart';
 import 'package:skills_pe/models/match_model.dart';
 

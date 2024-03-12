@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/cards/challenge_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
 
-class ChallengesWidget extends StatelessWidget {
+class PublicChallengesWidget extends StatelessWidget {
   final String title;
   final List<ChallengesListResponse> data;
 
@@ -17,7 +17,7 @@ class ChallengesWidget extends StatelessWidget {
     '#9d00bd',
   ];
 
-  ChallengesWidget({
+  PublicChallengesWidget({
     super.key,
     required this.title,
     required this.data,
@@ -59,7 +59,7 @@ class ChallengesWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 190, // Set a fixed height for the horizontal ListView
+          height: 260, // Set a fixed height for the horizontal ListView
           child: Container(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -76,7 +76,7 @@ class ChallengesWidget extends StatelessWidget {
                         ? 16.0
                         : (index == data.length - 1 ? 16.0 : 10.0),
                   ),
-                  child: ChallengeCard(
+                  child: PublicChallengeCard(
                     item: data[index],
                     leftBorderColor: leftBorderColor,
                   ),

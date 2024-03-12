@@ -5,6 +5,7 @@ import 'package:skills_pe/screens/home_screens/repository/home_screen_repository
 import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/public_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
@@ -61,6 +62,24 @@ class _HomeMain extends State<HomeMain> {
                   return SingleChildScrollView(
                       child: ChallengesWidget(
                     title: 'Challenges',
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: PublicChallengesWidget(
+                    title: 'Public Challenges',
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {

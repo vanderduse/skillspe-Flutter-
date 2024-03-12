@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/view_all/ui/quiz_list_screen.dart';
-import 'package:skills_pe/sharedWidgets/quiz_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/quiz_card.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 
 class QuizWidget extends StatelessWidget {

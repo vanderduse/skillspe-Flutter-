@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/edit_matches.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/screens/tournaments/widgets/match_card.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
-import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/models/match_model.dart';
 
 class TournamentFixture extends StatefulWidget {

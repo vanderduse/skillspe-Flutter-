@@ -6,9 +6,9 @@ import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.d
 import 'package:skills_pe/screens/view_all/bloc/tournamentBloc/tournament_list_bloc.dart';
 import 'package:skills_pe/screens/view_all/repository/tournament_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
-import 'package:skills_pe/sharedWidgets/filter_buttons.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
-import 'package:skills_pe/sharedWidgets/tournament_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/tournament_card.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class TournamentListScreen extends StatefulWidget {

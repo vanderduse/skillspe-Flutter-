@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/sharedWidgets/tournament_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/tournament_card.dart';
 import 'package:skills_pe/screens/view_all/ui/tournament_list_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 

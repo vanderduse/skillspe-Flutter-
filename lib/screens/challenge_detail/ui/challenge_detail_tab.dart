@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/model_bottom_sheet.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/utility/utility.dart';

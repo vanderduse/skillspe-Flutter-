@@ -7,6 +7,7 @@ import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PublicChallengeCard extends StatelessWidget {
   final ChallengesListResponse? item;
@@ -50,40 +51,70 @@ class PublicChallengeCard extends StatelessWidget {
             flex: 2,
             child: Row(
               children: [
-                Container(
-                  height: 50,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xffFF34C1),
-                    borderRadius: BorderRadius.circular(10.0),
+                Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(0, 2, 10, 2),
+                      height: 100.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFF34C1),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.all(8.0),
+                        height: 10.0,
+                        width: 10.0,
+                        child: SvgPicture.asset(
+                          'assets/icons/question.svg',
+                          fit: BoxFit.contain,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Center(
-                    child: Image.network(
-                      'https://placehold.co/10x10',
-                      height: 100, // Path to your image asset
-                      // Adjust as needed
+                ),
+                const Expanded(
+                  flex: 4,
+                  child: Text(
+                    'Challenge Name',
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: Container(
-                    color: Colors.green, // Adjust as needed
-                    // Widget for the second part here
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.blue, // Adjust as needed
-                    // Widget for the second part here
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    color: Colors.green, // Adjust as needed
-                    // Widget for the third part here
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 5.0),
+                    child: Center(
+                      child: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          border: Border.all(
+                            color: const Color(0xFF8247DF),
+                            width: 1.0,
+                          ),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/icons/share.svg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -138,7 +138,7 @@ class ChallengeCard extends StatelessWidget {
                       children: [
                         // First container displaying text
                         Container(
-                          width: 160,
+                          width: 100,
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             formatChallengeDate(item?.startTime, item?.endTime),

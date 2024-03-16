@@ -31,7 +31,8 @@ class _HomeMain extends State<HomeMain> {
     HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
     _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenChallengesBloc.add(HomeScreenFetchChallengesEvent());
+    _homeScreenChallengesBloc
+        .add(HomeScreenFetchChallengesEvent(isPublic: false));
 
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
@@ -61,26 +62,9 @@ class _HomeMain extends State<HomeMain> {
                   return const ChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
-                      child: ChallengesWidget(
-                    title: 'Challenges',
-                    data: state.challenges,
-                  ));
-                } else if (state is HomeScreenChallengeFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
-              builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
-                  return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
-                  return SingleChildScrollView(
                       child: PublicChallengesWidget(
-                    title: 'Public Challenges',
+                    title: 'New Discoveries',
+                    subTitle: 'Unique experiences curated for you!',
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {
@@ -98,7 +82,6 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: CampaignsWidget(
-                    title: 'Campaigns',
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {
@@ -109,6 +92,26 @@ class _HomeMain extends State<HomeMain> {
               },
             ),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: 'Challenge Hub',
+                    subTitle: 'Your Invites & Creations',
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenQuizBloc,
               builder: (context, state) {
                 if (state is HomeScreenQuizLoadingState) {
@@ -116,7 +119,8 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is HomeScreenQuizSuccessState) {
                   return SingleChildScrollView(
                       child: QuizWidget(
-                    title: 'Quizzes',
+                    title: 'Quiz Zone',
+                    subTitle: 'Test Your Skills & Win Rewards',
                     data: state.quizzes,
                   ));
                 } else if (state is HomeScreenQuizFailureState) {

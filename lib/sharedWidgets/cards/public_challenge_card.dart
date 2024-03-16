@@ -56,12 +56,12 @@ class PublicChallengeCard extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: const EdgeInsets.fromLTRB(0, 2, 10, 2),
+                      margin: const EdgeInsets.fromLTRB(0, 5, 10, 5),
                       height: 100.0,
                       width: 100.0,
                       decoration: BoxDecoration(
                         color: const Color(0xFFFF34C1),
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(7.0),
                       ),
                       child: Container(
                         margin: const EdgeInsets.all(8.0),

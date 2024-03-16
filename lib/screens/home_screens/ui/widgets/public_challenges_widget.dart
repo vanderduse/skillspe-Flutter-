@@ -5,6 +5,7 @@ import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
 
 class PublicChallengesWidget extends StatelessWidget {
   final String title;
+  final String subTitle;
   final List<ChallengesListResponse> data;
 
   final List<String> leftBorderColors = [
@@ -20,6 +21,7 @@ class PublicChallengesWidget extends StatelessWidget {
   PublicChallengesWidget({
     super.key,
     required this.title,
+    required this.subTitle,
     required this.data,
   });
 
@@ -29,18 +31,34 @@ class PublicChallengesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 8.0),
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 8.0, top: 10.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E1452),
+                    ),
+                  ),
+                  Text(
+                    subTitle,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      // fontWeight: FontWeight.bold,
+                      color: Color(0xFF5C6068),
+                    ),
+                  ),
+                ],
               ),
               TextButton(
                 onPressed: () {
-                  // Navigate to ViewAllChallenges screen
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -49,16 +67,18 @@ class PublicChallengesWidget extends StatelessWidget {
                   );
                 },
                 child: const Text(
-                  'View All',
+                  'See All',
                   style: TextStyle(
-                    color: Color(0xFF8C50F6), // Customize text color
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF8C50F6),
                   ),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(
+        Container(
+          margin: const EdgeInsets.only(bottom: 15.0),
           height: 260, // Set a fixed height for the horizontal ListView
           child: Container(
             child: ListView.builder(

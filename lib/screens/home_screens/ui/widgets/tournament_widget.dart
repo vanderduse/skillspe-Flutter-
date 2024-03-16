@@ -47,7 +47,8 @@ class TournamentWidget extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        Container(
+          margin: const EdgeInsets.only(bottom: 15.0),
           height: 530,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,

@@ -22,9 +22,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       Emitter<HomeScreenState> emit) async {
     emit(HomeScreenChallengeLoadingState());
     try {
-      var response = await _homeScreenRepository.fetchChallenges();
-      print("respoise from home screen bloc===>");
-      print(response);
+      var response = await _homeScreenRepository.fetchChallenges(event.isPublic);
       if (response != null &&
           response.responseCode == "SS0200" &&
           response.data != null) {

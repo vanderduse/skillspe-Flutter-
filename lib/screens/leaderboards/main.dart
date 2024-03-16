@@ -102,7 +102,7 @@ class _LeaderboardState extends State<Leaderboard> {
                                 alignment: Alignment.topCenter,
                                 height: 18,
                                 child:
-                                    SvgPicture.asset("assets/white-logo.svg"),
+                                    SvgPicture.asset("assets/icons/white-logo.svg"),
                               ),
                               SizedBox(
                                 height: 24,

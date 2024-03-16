@@ -76,7 +76,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SvgPicture.asset(
-                            "assets/skillspe_logo.svg",
+                            "assets/icons/skillspe_logo.svg",
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           const VerticalSeparator(

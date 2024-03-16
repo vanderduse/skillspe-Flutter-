@@ -77,7 +77,6 @@ flutter:
   assets:
     - assets/splash_screen_2.png
     - assets/logo.png
-    - assets/skillspe_logo.svg
     - assets/logo2.png
     - assets/login_page.png
     - assets/skills_pe_logo.png
@@ -90,7 +89,6 @@ flutter:
     - assets/icons/tabicons/active/
     - assets/icons/tabicons/inactive/
     - assets/icons/bottomNavIcons/
-    - assets/white-logo.svg
     - assets/tournament.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

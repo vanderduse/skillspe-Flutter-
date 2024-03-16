@@ -45,7 +45,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                       children: [
                         Container(
                           child: SvgPicture.asset(
-                            "assets/skillspe_logo.svg",
+                            "assets/icons/skillspe_logo.svg",
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                         ),

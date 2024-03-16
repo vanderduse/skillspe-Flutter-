@@ -42,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
     var response = await _sendOTPRepository.verifyOTP(VerifyOtpRequestModel(
         otp: event.otp, mobileNumber: event.mobileNumber));
-    if (response.success == true) {
+    if (response.responseCode == "SS0200") {
       StorageService()
           .writeSecureData(ACCESS_TOKEN, response.data?.tokenDetails?.access);
       StorageService()
@@ -50,8 +50,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(VerifyOtpSuccessState(
           message: response.message!, verifyOtpResponseModel: response.data!));
     } else {
-      if (response.error != null) {
-        emit(VerifyOtpFailureState(error: response.error!));
+      if (response.responseCode != "SS0200") {
+        emit(VerifyOtpFailureState(error: response.message!));
       } else if (response.message != null) {
         emit(VerifyOtpFailureState(error: response.message!));
       }

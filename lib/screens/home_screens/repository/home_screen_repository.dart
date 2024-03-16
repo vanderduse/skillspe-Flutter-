@@ -15,10 +15,13 @@ class HomeScreenRepository {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
       Response? response =
           await _dio?.get('/v1/challenges', queryParameters: queryParameters);
+      print("challenge response ===========> ");
+      print(response);
       return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
         response?.data,
         (data) {
           if (data is List<dynamic>) {
+            print("under if ");
             return data
                 .map((item) => ChallengesListResponse.fromJson(
                     item as Map<String, dynamic>))

@@ -35,12 +35,12 @@ class SendOTPRepository {
           response?.data,
           (data) =>
               VerifyOtpResponseModel.fromJson(data as Map<String, dynamic>));
-      responseModel.success = true;
+    responseModel.responseCode = "SS0200";
     } on DioException catch (error) {
       print(error.response?.data);
       responseModel = BaseResponseModel<VerifyOtpResponseModel>.fromJson(
           error.response?.data as Map<String, dynamic>, (data) => null);
-      responseModel.success = false;
+      responseModel.responseCode = "SS0500";
     }
     return responseModel;
   }

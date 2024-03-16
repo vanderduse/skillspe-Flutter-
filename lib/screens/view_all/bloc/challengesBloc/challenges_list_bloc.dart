@@ -21,7 +21,7 @@ class ChallengesListBloc
       var response =
           await _repository.fetchChallengesList(event.status, event.page);
       if (response != null &&
-          response.success == true &&
+          response.responseCode == "SS0200" &&
           response.data != null) {
         emit(ChallengesListSuccessState(
           challengesList: response.data!,

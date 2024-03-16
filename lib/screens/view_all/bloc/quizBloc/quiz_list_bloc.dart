@@ -16,7 +16,7 @@ class QuizListBloc extends Bloc<FetchQuizListEvent, QuizListState> {
         var response =
             await _repository.fetchQuizList(event.status, event.page);
         if (response != null &&
-            response.success == true &&
+            response.responseCode == "SS0200" &&
             response.data != null) {
           emit(QuizListSuccessState(
             quizList: response.data!,

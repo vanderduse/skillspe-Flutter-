@@ -19,7 +19,7 @@ class TournamentListBloc
       var response =
           await _repository.fetchTournaments(event.status, event.page);
       if (response != null &&
-          response.success == true &&
+          response.responseCode == "SS0200" &&
           response.data != null) {
         emit(TournamentListSuccessState(
           tournamentList: response.data!,

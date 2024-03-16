@@ -23,8 +23,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(HomeScreenChallengeLoadingState());
     try {
       var response = await _homeScreenRepository.fetchChallenges();
+      print("respoise from home screen bloc===>");
+      print(response);
       if (response != null &&
-          response.success == true &&
+          response.responseCode == "SS0200" &&
           response.data != null) {
         emit(HomeScreenChallengeSuccessState(response.data!));
       } else {
@@ -41,7 +43,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     try {
       var response = await _homeScreenRepository.fetchQuizzes();
       if (response != null &&
-          response.success == true &&
+          response.responseCode == "SS0200" &&
           response.data != null) {
         emit(HomeScreenQuizSuccessState(response.data!));
       } else {
@@ -57,7 +59,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     try {
       var response = await _homeScreenRepository.fetchTournaments();
       if (response != null &&
-          response.success == true &&
+          response.responseCode == "SS0200" &&
           response.data != null) {
         emit(HomeScreenTournamentsSuccessState(response.data!));
       } else {

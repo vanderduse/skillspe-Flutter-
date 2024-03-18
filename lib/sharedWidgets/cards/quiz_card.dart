@@ -4,6 +4,7 @@ import 'package:skills_pe/sharedWidgets/buttons/unfilled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class QuizCard extends StatelessWidget {
   final QuizzesListResponse? item;
@@ -24,7 +25,7 @@ class QuizCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2), // Shadow color
             spreadRadius: 1, // Spread radius
             blurRadius: 10, // Blur radius
-            offset: const Offset(0, 5), // Shadow position
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -32,8 +33,7 @@ class QuizCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            // Use Expanded instead of Container for flexible sizing
-            flex: 3, // Divide space according to desired ratio (40% : 60%)
+            flex: 3, // dividing space according to desired ratio (40% : 60%)
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xfffd5ccff),
@@ -49,14 +49,11 @@ class QuizCard extends StatelessWidget {
                     item?.banner ?? "",
                     width: 54,
                     height: 54,
-                    // You can adjust the width and height as needed
                   ),
                 ),
               ),
-              // Add your desired content for the top section here
             ),
           ),
-          // Bottom section with remaining space
           Expanded(
             flex: 6,
             child: Container(
@@ -81,11 +78,11 @@ class QuizCard extends StatelessWidget {
                     child: Text(
                       quizStatus,
                       style: TextStyle(
-                        color: quizStatus == 'LIVE'
+                        color: quizStatus == CAPITAL_LIVE
                             ? Colors.red
                             : Color(0xFF5C6068),
-                        fontSize: quizStatus == 'LIVE' ? 14.0 : 12.0,
-                        fontWeight: quizStatus == 'Live'
+                        fontSize: quizStatus == CAPITAL_LIVE ? 14.0 : 12.0,
+                        fontWeight: quizStatus == CAPITAL_LIVE
                             ? FontWeight.bold
                             : FontWeight.normal,
                       ),
@@ -99,9 +96,8 @@ class QuizCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            child: Container(
                           width: 100,
-                          padding: const EdgeInsets.all(3.0), // Adding padding
+                          padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                             color: const Color(0xFFF5F5F5),
                             borderRadius: BorderRadius.circular(20.0),
@@ -116,42 +112,38 @@ class QuizCard extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                        )),
-                        Container(
-                          // padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5.0, horizontal: 10.0),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFDF0CE),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Text(
-                                  '$RUPEE_SYMBOL ${item?.participationFee.toString() ?? ""}',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12.0,
-                                  ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 10.0),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFDF0CE),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Text(
+                                '$RUPEE_SYMBOL ${item?.participationFee.toString() ?? ""}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
                                 ),
                               ),
-                              const SizedBox(
-                                  width: 16), // Adding space between containers
-                              UnFilledBtn(
-                                label: PLAY,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            QuizHome(quizId: item?.id ?? "")),
-                                  );
-                                },
-                              )
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 16),
+                            UnFilledBtn(
+                              label: PLAY,
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          QuizHome(quizId: item?.id ?? "")),
+                                );
+                              },
+                            )
+                          ],
                         ),
                       ],
                     ),

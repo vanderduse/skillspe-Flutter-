@@ -4,6 +4,7 @@ import 'package:skills_pe/screens/login_screens/models/otp_request_model.dart';
 import 'package:skills_pe/screens/login_screens/models/otp_response_model.dart';
 import 'package:skills_pe/screens/login_screens/models/verify_otp_request_model.dart';
 import 'package:skills_pe/screens/login_screens/models/verify_otp_response_model.dart';
+import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/service/api_client.dart';
 
 class SendOTPRepository {
@@ -35,12 +36,12 @@ class SendOTPRepository {
           response?.data,
           (data) =>
               VerifyOtpResponseModel.fromJson(data as Map<String, dynamic>));
-    responseModel.responseCode = "SS0200";
+      responseModel.responseCode = API_SUCCESS_CODE;
     } on DioException catch (error) {
       print(error.response?.data);
       responseModel = BaseResponseModel<VerifyOtpResponseModel>.fromJson(
           error.response?.data as Map<String, dynamic>, (data) => null);
-      responseModel.responseCode = "SS0500";
+      responseModel.responseCode = API_SUCCESS_CODE;
     }
     return responseModel;
   }

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/view_all/repository/quiz_list_repository.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
-
+import 'package:skills_pe/utility/constants.dart';
 part 'quiz_list_event.dart';
 part 'quiz_list_state.dart';
 
@@ -16,7 +16,7 @@ class QuizListBloc extends Bloc<FetchQuizListEvent, QuizListState> {
         var response =
             await _repository.fetchQuizList(event.status, event.page);
         if (response != null &&
-            response.responseCode == "SS0200" &&
+            response.responseCode == API_SUCCESS_CODE &&
             response.data != null) {
           emit(QuizListSuccessState(
             quizList: response.data!,

@@ -29,28 +29,26 @@ class CampaignsWidget extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
           height: 320,
-          child: Container(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
-                String leftBorderColor =
-                    leftBorderColors[index % leftBorderColors.length];
-                return Container(
-                  width: MediaQuery.of(context).size.width *
-                      0.8, // 80% of screen width
-                  margin: EdgeInsets.symmetric(
-                    horizontal: index == 0
-                        ? 16.0
-                        : (index == data.length - 1 ? 16.0 : 10.0),
-                  ),
-                  child: CampaignsCard(
-                    item: data[index],
-                    leftBorderColor: leftBorderColor,
-                  ),
-                );
-              },
-            ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              String leftBorderColor =
+                  leftBorderColors[index % leftBorderColors.length];
+              return Container(
+                width: MediaQuery.of(context).size.width *
+                    0.8, // 80% of screen width
+                margin: EdgeInsets.symmetric(
+                  horizontal: index == 0
+                      ? 16.0
+                      : (index == data.length - 1 ? 16.0 : 10.0),
+                ),
+                child: CampaignsCard(
+                  item: data[index],
+                  leftBorderColor: leftBorderColor,
+                ),
+              );
+            },
           ),
         ),
       ],

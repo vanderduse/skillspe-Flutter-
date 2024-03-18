@@ -20,12 +20,10 @@ class WalletIcon extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0)),
         child: Row(
           children: [
-            Container(
-              child: SvgPicture.asset(
-                "assets/icons/wallet.svg",
-                height: 20,
-                width: 20,
-              ),
+            SvgPicture.asset(
+              "assets/icons/wallet.svg",
+              height: 20,
+              width: 20,
             ),
             Container(
               margin: const EdgeInsets.only(left: 4),

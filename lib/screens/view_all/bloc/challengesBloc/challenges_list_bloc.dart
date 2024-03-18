@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/view_all/repository/challenges_list_repository.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/utility/constants.dart';
 part 'challenges_list_event.dart';
 part 'challenges_list_state.dart';
 
@@ -21,7 +22,7 @@ class ChallengesListBloc
       var response =
           await _repository.fetchChallengesList(event.status, event.page);
       if (response != null &&
-          response.responseCode == "SS0200" &&
+          response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
         emit(ChallengesListSuccessState(
           challengesList: response.data!,

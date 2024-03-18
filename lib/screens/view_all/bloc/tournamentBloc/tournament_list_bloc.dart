@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 import 'package:skills_pe/screens/view_all/repository/tournament_list_repository.dart';
-
+import 'package:skills_pe/utility/constants.dart';
 part 'tournament_list_event.dart';
 part 'tournament_list_state.dart';
 
@@ -19,7 +19,7 @@ class TournamentListBloc
       var response =
           await _repository.fetchTournaments(event.status, event.page);
       if (response != null &&
-          response.responseCode == "SS0200" &&
+          response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
         emit(TournamentListSuccessState(
           tournamentList: response.data!,

@@ -6,6 +6,7 @@ import 'package:skills_pe/screens/home_screens/model/list_challenges_response.da
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 part 'home_screen_event.dart';
 part 'home_screen_state.dart';
@@ -22,9 +23,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       Emitter<HomeScreenState> emit) async {
     emit(HomeScreenChallengeLoadingState());
     try {
-      var response = await _homeScreenRepository.fetchChallenges(event.isPublic);
+      var response =
+          await _homeScreenRepository.fetchChallenges(event.isPublic);
       if (response != null &&
-          response.responseCode == "SS0200" &&
+          response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
         emit(HomeScreenChallengeSuccessState(response.data!));
       } else {
@@ -41,7 +43,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     try {
       var response = await _homeScreenRepository.fetchQuizzes();
       if (response != null &&
-          response.responseCode == "SS0200" &&
+          response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
         emit(HomeScreenQuizSuccessState(response.data!));
       } else {
@@ -57,7 +59,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     try {
       var response = await _homeScreenRepository.fetchTournaments();
       if (response != null &&
-          response.responseCode == "SS0200" &&
+          response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
         emit(HomeScreenTournamentsSuccessState(response.data!));
       } else {

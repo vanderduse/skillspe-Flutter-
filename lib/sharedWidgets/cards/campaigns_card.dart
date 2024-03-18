@@ -8,6 +8,7 @@ import 'package:skills_pe/screens/home_screens/model/list_challenges_response.da
 import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class CampaignsCard extends StatelessWidget {
   final ChallengesListResponse? item;
@@ -87,18 +88,19 @@ class CampaignsCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'PREDICT & WIN BIG!!',
+                            'PREDICT & WIN BIG!!', //THIS WILL BE REMOVED AFTER API INTEGRATION
                             textAlign: TextAlign.left,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w900,
                               fontStyle: FontStyle.italic,
                             ),
                           ),
                           SizedBox(height: 5.0),
+                          //THIS WILL BE REMOVED AFTER API INTEGRATION
                           Text(
                             'Win the every match by predicting scores, choose sides, choose victory!',
                             textAlign: TextAlign.left,
@@ -190,7 +192,7 @@ class CampaignsCard extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Play',
+                      PLAY,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

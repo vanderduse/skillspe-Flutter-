@@ -11,12 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PublicChallengeCard extends StatelessWidget {
   final ChallengesListResponse? item;
-  final dynamic leftBorderColor;
 
   const PublicChallengeCard({
     Key? key,
     required this.item,
-    this.leftBorderColor = '#ED5E91',
   }) : super(key: key);
 
   @override
@@ -79,6 +77,7 @@ class PublicChallengeCard extends StatelessWidget {
                 ),
                 const Expanded(
                   flex: 4,
+                  //This will be removed after api integration
                   child: Text(
                     'Challenge Name',
                     textAlign: TextAlign.left,

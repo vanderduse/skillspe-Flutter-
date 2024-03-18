@@ -84,10 +84,6 @@ class ChallengeCard extends StatelessWidget {
                         fontSize: 32,
                       ),
                     ),
-                    // child: Image.network(
-                    //   "https://cdn-icons-png.flaticon.com/512/3176/3176382.png",
-                    //   fit: BoxFit.cover,
-                    // ),
                   ),
                 ),
               ),

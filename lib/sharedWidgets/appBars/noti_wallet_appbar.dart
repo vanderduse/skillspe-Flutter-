@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/sharedWidgets/wallet_icon.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 AppBar navigationWithWallet(
   String screenName,
@@ -31,7 +32,7 @@ AppBar navigationWithWallet(
             ),
           ),
         // Conditionally show home icon if screenName is "Home"
-        if (screenName == "Home")
+        if (screenName == HOME)
           Container(
             alignment: Alignment.center,
             child: SvgPicture.asset(
@@ -41,7 +42,7 @@ AppBar navigationWithWallet(
             ),
           ),
         // Conditionally show home icon if screenName is not "Home"
-        if (screenName != "Home")
+        if (screenName != HOME)
           Align(
             alignment: Alignment.centerLeft,
             child: Text(

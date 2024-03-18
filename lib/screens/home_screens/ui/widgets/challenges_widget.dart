@@ -2,23 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/cards/challenge_card.dart';
 import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class ChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
   final List<ChallengesListResponse> data;
 
-  final List<String> leftBorderColors = [
-    '#ED5E91',
-    '#5241AC',
-    '#DA5EED',
-    '#ffc800',
-    '#00b6bd',
-    '#0dbd00',
-    '#9d00bd',
-  ];
-
-  ChallengesWidget({
+  const ChallengesWidget({
     super.key,
     required this.title,
     required this.subTitle,
@@ -50,8 +41,7 @@ class ChallengesWidget extends StatelessWidget {
                   Text(
                     subTitle,
                     style: const TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.bold,
+                      fontSize: 12,
                       color: Color(0xFF5C6068),
                     ),
                   ),
@@ -67,7 +57,7 @@ class ChallengesWidget extends StatelessWidget {
                   );
                 },
                 child: const Text(
-                  'See All',
+                  SEE_ALL,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF8C50F6),
@@ -85,9 +75,6 @@ class ChallengesWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
-                // Use modulo to loop through the colors
-                String leftBorderColor =
-                    leftBorderColors[index % leftBorderColors.length];
                 return Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   margin: EdgeInsets.symmetric(
@@ -95,11 +82,8 @@ class ChallengesWidget extends StatelessWidget {
                         ? 16.0
                         : (index == data.length - 1 ? 16.0 : 10.0),
                   ),
-                  // margin: EdgeInsets.fromLTRB(index == 0 ? 30.0 : 10, 0,
-                  //     index == data.length - 1 ? 30.0 : 10.0, 0),
                   child: ChallengeCard(
                     item: data[index],
-                    leftBorderColor: leftBorderColor,
                   ),
                 );
               },

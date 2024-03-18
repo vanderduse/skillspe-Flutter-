@@ -12,6 +12,7 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -50,7 +51,7 @@ class _HomeMain extends State<HomeMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: navigationWithWallet("Home", 120.00, showBack: false),
+      appBar: navigationWithWallet(HOME, 120.00, showBack: false),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -63,8 +64,8 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
-                    title: 'New Discoveries',
-                    subTitle: 'Unique experiences curated for you!',
+                    title: PUBLIC_CHALLENGE_TITLE,
+                    subTitle: PUBLIC_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {
@@ -99,8 +100,8 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: ChallengesWidget(
-                    title: 'Challenge Hub',
-                    subTitle: 'Your Invites & Creations',
+                    title: PRIVATE_CHALLENGE_TITLE,
+                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {
@@ -119,8 +120,8 @@ class _HomeMain extends State<HomeMain> {
                 } else if (state is HomeScreenQuizSuccessState) {
                   return SingleChildScrollView(
                       child: QuizWidget(
-                    title: 'Quiz Zone',
-                    subTitle: 'Test Your Skills & Win Rewards',
+                    title: QUIZ_TITLE,
+                    subTitle: QUIZ_SUBTITLE,
                     data: state.quizzes,
                   ));
                 } else if (state is HomeScreenQuizFailureState) {

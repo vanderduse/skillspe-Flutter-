@@ -8,10 +8,12 @@ const REFRESH_TOKEN = 'refresh_token';
 const FCM_TOKEN = 'firebase_token';
 
 // Query Params Key
-
 const PAGE = 'Page';
 const LIMIT = 'limit';
 const STATUS = "status";
+
+//API Response code
+const API_SUCCESS_CODE = "SS0200";
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
@@ -52,6 +54,8 @@ const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
 
 // Quiz Home screen
+const QUIZ_TITLE = "Quiz Zone";
+const QUIZ_SUBTITLE = "Test Your Skills & Win Rewards";
 const START_QUIZ = "Start Quiz";
 const QUESTIONS = "Questions";
 const PRIZE_POOL = "Prize Pool";
@@ -148,9 +152,20 @@ const RUPEE_SYMBOL = '\u20B9'; // Unicode for the Rupee symbol
 const CREATE_TOURNAMENT = "Create Tournament";
 const BID = "Bid";
 
+//Public Challenge
+const PUBLIC_CHALLENGE_TITLE = "New Discoveries";
+const PUBLIC_CHALLENGE_SUBTITLE = "Unique experiences curated for you!";
+
+//Private Challenge
+const PRIVATE_CHALLENGE_TITLE = "Challenge Hub";
+const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";
+
 // Common
+const HOME = 'Home';
+const SEE_ALL = 'See All';
 const ALL = 'All';
 const LIVE = 'Live';
+const CAPITAL_LIVE = 'LIVE';
 const REQUEST = 'Request';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/view_all/ui/quiz_list_screen.dart';
 import 'package:skills_pe/sharedWidgets/cards/quiz_card.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class QuizWidget extends StatelessWidget {
   final String title;
@@ -40,7 +41,7 @@ class QuizWidget extends StatelessWidget {
                   Text(
                     subTitle,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       // fontWeight: FontWeight.bold,
                       color: Color(0xFF5C6068),
                     ),
@@ -56,7 +57,7 @@ class QuizWidget extends StatelessWidget {
                   );
                 },
                 child: const Text(
-                  'See All',
+                  SEE_ALL,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF8C50F6),

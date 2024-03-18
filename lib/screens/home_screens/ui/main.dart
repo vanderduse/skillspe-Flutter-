@@ -131,6 +131,7 @@ class _HomeMain extends State<HomeMain> {
                 }
               },
             ),
+            //THIS IS TOURNAMENT CODE WILL BE USED LATER
             // BlocBuilder<HomeScreenBloc, HomeScreenState>(
             //   bloc: _homeScreenTournamentBloc,
             //   builder: (context, state) {

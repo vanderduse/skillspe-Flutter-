@@ -76,8 +76,8 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: TextFormFieldWidget(
-                                  formLabel: CHALLENGENAME,
-                                  placeholder: 'Challenge Name',
+                                  formLabel: ENTERCHALLENGENAME,
+                                  placeholder: CHALLENGE_NAME,
                                   isRequiredField: true,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -98,7 +98,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                             formLabel: CHALLENGEEMOJI,
                             isRequiredField: true,
                             isEmojiField: true,
-                            placeholder: '💰',
+                            placeholder: PLACEHOLDER_EMOJI,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return ENTER_CHALLENGE_EMOJI;
@@ -115,13 +115,13 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                       margin: const EdgeInsets.only(
                           top: 0,
                           left: 0,
-                          right: 25,
+                          right: 60,
                           bottom: 10), // Adjust margins as needed
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Choose an emoji as the symbol for your challenge name!",
+                            CHOOSE_EMOJI_TEXT,
                             style: TextStyle(fontSize: 10),
                           ),
                         ],
@@ -131,7 +131,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                       formLabel: CHALLENGEGOAL,
                       isRequiredField: true,
                       maxLines: 3,
-                      placeholder: 'Goals',
+                      placeholder: PLACEHOLDER_GOALS,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return ENTER_CHALLENGE_GOAL;
@@ -151,7 +151,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Enter Dates*",
+                                  ENTER_DATES_STAR,
                                   style: TextStyle(fontSize: 14),
                                   textAlign: TextAlign.left,
                                 ),
@@ -175,7 +175,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                                   formLabel: '',
                                   showFormLabel: false,
                                   isRequiredField: true,
-                                  placeholder: 'Start Date',
+                                  placeholder: PLACEHOLDER_START_DATE,
                                   isDateField: true,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -209,7 +209,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                             formLabel: '',
                             showFormLabel: false,
                             isRequiredField: true,
-                            placeholder: 'End Date',
+                            placeholder: PLACEHOLDER_END_DATE,
                             isDateField: true,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -231,7 +231,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                     TextFormFieldWidget(
                       formLabel: CHALLENGEFEES,
                       isRequiredField: true,
-                      placeholder: '5(Min)',
+                      placeholder: FIVRUPEEMIN,
                       isAmountTypeField: true,
                       challengeFees: _challengeFees,
                       onChange: (value) {

@@ -17,8 +17,14 @@ const API_SUCCESS_CODE = "SS0200";
 
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
-const CHALLENGENAME = "Enter Challenge Name";
+const ENTERCHALLENGENAME = "Enter Challenge Name";
+const CHALLENGE_NAME = "Challenge Name";
+const PLACEHOLDER_EMOJI = "💰";
+const PLACEHOLDER_GOALS = "Goals";
 const CHALLENGEGOAL = "Challenge Goal";
+const PLACEHOLDER_START_DATE = "Start Date";
+const PLACEHOLDER_END_DATE = "End Date";
+const ENTER_DATES_STAR = "Enter Dates*";
 const CHALLENGEEMOJI = "Emoji";
 const STARTDATE = "Start Date";
 const ENDDATE = "End Date";
@@ -27,6 +33,8 @@ const STAR = "*";
 const RUPEE = "₹";
 const FIVRUPEEMIN = "₹5(Min)";
 const THOUSANDRUPEEMAX = "₹1000(Max)";
+const CHOOSE_EMOJI_TEXT =
+    "Choose an emoji as the symbol for your challenge name!";
 const ENTER_CHALLENGE_NAME = "Please enter challenge name";
 const ENTER_CHALLENGE_GOAL = "Please enter challenge goal";
 const ENTER_CHALLENGE_EMOJI = "Please enter challenge emoji";

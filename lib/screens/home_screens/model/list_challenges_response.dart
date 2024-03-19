@@ -35,7 +35,7 @@ class ChallengesListResponse {
 
   factory ChallengesListResponse.fromJson(Map<String, dynamic> json) {
     return ChallengesListResponse(
-      id: json['_id'],
+      id: json['id'],
       createdBy: json['created_by'],
       updatedBy: json['updated_by'],
       createdAt: json['created_at'],

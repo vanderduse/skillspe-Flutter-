@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
-import 'icon_check_button.dart';
+import 'buttons/icon_check_button.dart';
 
 class IconCheckboxGrid extends StatefulWidget {
   final List<OptionDetails> options;

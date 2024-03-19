@@ -4,7 +4,7 @@ import 'package:skills_pe/screens/leaderboards/widgets/current_user_badge.dart';
 import 'package:skills_pe/screens/leaderboards/widgets/podium.dart';
 import 'package:skills_pe/screens/leaderboards/widgets/user_badge.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class Leaderboard extends StatefulWidget {
@@ -102,7 +102,7 @@ class _LeaderboardState extends State<Leaderboard> {
                                 alignment: Alignment.topCenter,
                                 height: 18,
                                 child:
-                                    SvgPicture.asset("assets/white-logo.svg"),
+                                    SvgPicture.asset("assets/icons/white-logo.svg"),
                               ),
                               SizedBox(
                                 height: 24,

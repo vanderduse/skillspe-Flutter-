@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/models/match_model.dart';
-import 'package:skills_pe/sharedWidgets/colored_outline_button.dart';
+import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 
 class MatchCard extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/skillspe_text_form_field.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/selectable_checkbox.dart';
 import 'package:skills_pe/sharedWidgets/appBars/title_cancel_appbar.dart';
 import 'package:skills_pe/sharedWidgets/image_uploader.dart';

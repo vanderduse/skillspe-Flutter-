@@ -8,6 +8,7 @@ import 'package:skills_pe/screens/login_screens/models/verify_otp_response_model
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
 import '../repository/send_otp_respository.dart';
+import 'package:skills_pe/utility/constants.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -42,7 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
     var response = await _sendOTPRepository.verifyOTP(VerifyOtpRequestModel(
         otp: event.otp, mobileNumber: event.mobileNumber));
-    if (response.success == true) {
+    if (response.responseCode == API_SUCCESS_CODE) {
       StorageService()
           .writeSecureData(ACCESS_TOKEN, response.data?.tokenDetails?.access);
       StorageService()
@@ -50,8 +51,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(VerifyOtpSuccessState(
           message: response.message!, verifyOtpResponseModel: response.data!));
     } else {
-      if (response.error != null) {
-        emit(VerifyOtpFailureState(error: response.error!));
+      if (response.responseCode != API_SUCCESS_CODE) {
+        emit(VerifyOtpFailureState(error: response.message!));
       } else if (response.message != null) {
         emit(VerifyOtpFailureState(error: response.message!));
       }

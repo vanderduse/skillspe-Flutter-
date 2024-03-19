@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/tournaments/widgets/tournament_details_cards.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 
 class TournamentOverview extends StatefulWidget {
   const TournamentOverview({Key? key}) : super(key: key);

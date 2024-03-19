@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/sharedWidgets/wallet_icon.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 AppBar navigationWithWallet(
   String screenName,
@@ -20,7 +21,8 @@ AppBar navigationWithWallet(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        if (showBack) // Conditionally show back icon based on showBack value
+        // Conditionally show back icon based on showBack value
+        if (showBack)
           Container(
             alignment: Alignment.center,
             child: SvgPicture.asset(
@@ -29,15 +31,27 @@ AppBar navigationWithWallet(
               width: 20,
             ),
           ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            screenName,
-            style: const TextStyle(
-              fontSize: 18.0,
+        // Conditionally show home icon if screenName is "Home"
+        if (screenName == HOME)
+          Container(
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              "assets/icons/skillspe_logo.svg",
+              height: 25,
+              // width: 20,
             ),
           ),
-        ),
+        // Conditionally show home icon if screenName is not "Home"
+        if (screenName != HOME)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              screenName,
+              style: const TextStyle(
+                fontSize: 18.0,
+              ),
+            ),
+          ),
       ],
     ),
     actions: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
 import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
-import 'package:skills_pe/sharedWidgets/unfilled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/unfilled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
@@ -84,10 +84,6 @@ class ChallengeCard extends StatelessWidget {
                         fontSize: 32,
                       ),
                     ),
-                    // child: Image.network(
-                    //   "https://cdn-icons-png.flaticon.com/512/3176/3176382.png",
-                    //   fit: BoxFit.cover,
-                    // ),
                   ),
                 ),
               ),
@@ -138,7 +134,7 @@ class ChallengeCard extends StatelessWidget {
                       children: [
                         // First container displaying text
                         Container(
-                          width: 160,
+                          width: 100,
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             formatChallengeDate(item?.startTime, item?.endTime),

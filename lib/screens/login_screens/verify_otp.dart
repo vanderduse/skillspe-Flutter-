@@ -7,8 +7,8 @@ import 'package:skills_pe/screens/home_screens/ui/main.dart';
 import 'package:skills_pe/screens/login_screens/bloc/login_bloc.dart';
 import 'package:skills_pe/screens/login_screens/repository/send_otp_respository.dart';
 import 'package:skills_pe/screens/login_screens/widgets/gradient_title.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
-import 'package:skills_pe/sharedWidgets/transparent_text_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/transparent_text_btn.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/utility.dart';
@@ -76,7 +76,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SvgPicture.asset(
-                            "assets/skillspe_logo.svg",
+                            "assets/icons/skillspe_logo.svg",
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           const VerticalSeparator(

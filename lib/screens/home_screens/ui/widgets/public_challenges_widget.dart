@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/view_all/ui/quiz_list_screen.dart';
-import 'package:skills_pe/sharedWidgets/cards/quiz_card.dart';
-import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
+import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class QuizWidget extends StatelessWidget {
+class PublicChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
-  final List<QuizzesListResponse> data;
+  final List<ChallengesListResponse> data;
 
-  const QuizWidget({
+  const PublicChallengesWidget({
     super.key,
     required this.title,
     required this.subTitle,
@@ -42,7 +42,6 @@ class QuizWidget extends StatelessWidget {
                     subTitle,
                     style: const TextStyle(
                       fontSize: 12,
-                      // fontWeight: FontWeight.bold,
                       color: Color(0xFF5C6068),
                     ),
                   ),
@@ -53,7 +52,8 @@ class QuizWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const QuizListScreen()),
+                      builder: (context) => const ChallengesListScreen(),
+                    ),
                   );
                 },
                 child: const Text(
@@ -69,7 +69,7 @@ class QuizWidget extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
-          height: 240, // Set a fixed height for the horizontal ListView
+          height: 260, // Set a fixed height for the horizontal ListView
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: data.length,
@@ -82,7 +82,7 @@ class QuizWidget extends StatelessWidget {
                       ? 16.0
                       : (index == data.length - 1 ? 16.0 : 10.0),
                 ),
-                child: QuizCard(
+                child: PublicChallengeCard(
                   item: data[index],
                 ),
               );

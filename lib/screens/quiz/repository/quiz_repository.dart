@@ -5,6 +5,8 @@ import 'package:skills_pe/screens/quiz/model/quiz_information_response_model.dar
 import 'package:skills_pe/screens/quiz/model/quiz_submission_request_model.dart';
 import 'package:skills_pe/screens/quiz/model/quiz_submit_response_model.dart';
 import 'package:skills_pe/service/api_client.dart';
+import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class QuizRepository {
   final Dio? _dio = ApiClient.createDio();
@@ -18,11 +20,11 @@ class QuizRepository {
           response?.data,
           (data) => QuizInformationResponseModel.fromJson(
               data as Map<String, dynamic>));
-      responseModel.success = true;
+      responseModel.responseCode = API_SUCCESS_CODE;
     } on DioException catch (error) {
       responseModel = BaseResponseModel<QuizInformationResponseModel>.fromJson(
           error.response?.data as Map<String, dynamic>, (data) => null);
-      responseModel.success = false;
+      responseModel.responseCode = API_SUCCESS_CODE;
     }
     return responseModel;
   }

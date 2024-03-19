@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:skills_pe/screens/quiz/model/quiz_information_response_model.dart';
 import 'package:skills_pe/screens/quiz/model/quiz_questions_answer_model.dart';
 import 'package:skills_pe/screens/quiz/repository/quiz_repository.dart';
+import 'package:skills_pe/utility/constants.dart';
 part 'quiz_event.dart';
 part 'quiz_state.dart';
 
@@ -23,7 +24,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       QuizInitialEvent event, Emitter<QuizState> emit) async {
     emit(QuizLoadingState());
     var response = await _quizRepository.quizInformation(event.quidId);
-    if (response?.success == true && response?.data != null) {
+    if (response?.responseCode == API_SUCCESS_CODE && response?.data != null) {
       emit(QuizApiSuccessState(response!.data!));
     } else if (response != null && response.message != null) {
       emit(QuizApiFailureState(response.message!));
@@ -34,7 +35,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       QuizPlayEvent event, Emitter<QuizState> emit) async {
     emit(QuizLoadingState());
     var response = await _quizRepository.playQuizDetail(event.quidId);
-    if (response?.success == true && response?.data != null) {
+    if (response?.responseCode == API_SUCCESS_CODE && response?.data != null) {
       String aesKey = const String.fromEnvironment('AES_KEY');
       List<dynamic>? decryptedText =
           aesDecrypt(response!.data!.questionSet!, aesKey);
@@ -56,10 +57,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         aesEncrypt(QuizAnswerSet.listToJson(event.quizAnswerSetList), aesKey);
     final response =
         await _quizRepository.quizSubmission(event.quizId, encryptedText);
-    if (response != null && response.success == true) {
+    if (response != null && response.responseCode == API_SUCCESS_CODE) {
       emit(QuizSubmitSucessState());
-    } else if (response != null && response.error != null) {
-      emit(QuizApiFailureState(response.error!));
+    } else if (response != null && response.responseCode != API_SUCCESS_CODE) {
+      emit(QuizApiFailureState(response.message!));
     }
   }
 

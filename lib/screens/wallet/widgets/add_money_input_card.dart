@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/wallet/widgets/large_numeric_text_field.dart';
-import 'package:skills_pe/sharedWidgets/card.dart';
+import 'package:skills_pe/sharedWidgets/cards/card.dart';
 import 'package:skills_pe/sharedWidgets/clickable_chip.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
 import 'package:skills_pe/utility/constants.dart';
 

@@ -4,7 +4,7 @@ import 'package:skills_pe/screens/quiz/bloc/quiz_bloc.dart';
 import 'package:skills_pe/screens/quiz/model/quiz_answer_set.dart';
 import 'package:skills_pe/screens/quiz/model/quiz_questions_answer_model.dart';
 import 'package:skills_pe/screens/quiz/repository/quiz_repository.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/show_progressDialog_with_message.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/sharedWidgets/cross_timer_appbar.dart';

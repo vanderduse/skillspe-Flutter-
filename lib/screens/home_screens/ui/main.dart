@@ -5,10 +5,14 @@ import 'package:skills_pe/screens/home_screens/repository/home_screen_repository
 import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/campaigns_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/public_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/box_with_title.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -28,7 +32,8 @@ class _HomeMain extends State<HomeMain> {
     HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
     _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenChallengesBloc.add(HomeScreenFetchChallengesEvent());
+    _homeScreenChallengesBloc
+        .add(HomeScreenFetchChallengesEvent(isPublic: false));
 
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
@@ -46,7 +51,7 @@ class _HomeMain extends State<HomeMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: navigationWithWallet("Home", 120.00, showBack: false),
+      appBar: navigationWithWallet(HOME, 120.00, showBack: false),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -55,14 +60,12 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
+                  return const ChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
-                      child: ChallengesWidget(
-                    title: 'Challenges',
+                      child: PublicChallengesWidget(
+                    title: PUBLIC_CHALLENGE_TITLE,
+                    subTitle: PUBLIC_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
                 } else if (state is HomeScreenChallengeFailureState) {
@@ -73,17 +76,52 @@ class _HomeMain extends State<HomeMain> {
               },
             ),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: CampaignsWidget(
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: PRIVATE_CHALLENGE_TITLE,
+                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenQuizBloc,
               builder: (context, state) {
                 if (state is HomeScreenQuizLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
+                  return const QuizCardSkeleton();
                 } else if (state is HomeScreenQuizSuccessState) {
                   return SingleChildScrollView(
                       child: QuizWidget(
-                    title: 'Quizzes',
+                    title: QUIZ_TITLE,
+                    subTitle: QUIZ_SUBTITLE,
                     data: state.quizzes,
                   ));
                 } else if (state is HomeScreenQuizFailureState) {
@@ -93,27 +131,28 @@ class _HomeMain extends State<HomeMain> {
                 }
               },
             ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenTournamentBloc,
-              builder: (context, state) {
-                if (state is HomeScreenTournamentsLoadingState) {
-                  return ShimmerBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 180,
-                      showTitleContainer: true);
-                } else if (state is HomeScreenTournamentsSuccessState) {
-                  return SingleChildScrollView(
-                      child: TournamentWidget(
-                    title: 'Tournaments',
-                    data: state.tournaments,
-                  ));
-                } else if (state is HomeScreenTournamentsFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
+            //THIS IS TOURNAMENT CODE WILL BE USED LATER
+            // BlocBuilder<HomeScreenBloc, HomeScreenState>(
+            //   bloc: _homeScreenTournamentBloc,
+            //   builder: (context, state) {
+            //     if (state is HomeScreenTournamentsLoadingState) {
+            //       return ShimmerBox(
+            //           width: MediaQuery.of(context).size.width * 0.9,
+            //           height: 180,
+            //           showTitleContainer: true);
+            //     } else if (state is HomeScreenTournamentsSuccessState) {
+            //       return SingleChildScrollView(
+            //           child: TournamentWidget(
+            //         title: 'Tournaments',
+            //         data: state.tournaments,
+            //       ));
+            //     } else if (state is HomeScreenTournamentsFailureState) {
+            //       return Text('Error: ${state.errorMessage}');
+            //     } else {
+            //       return const Text('Unexpected state');
+            //     }
+            //   },
+            // ),
             const SizedBox(height: 70),
           ],
         ),

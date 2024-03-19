@@ -8,16 +8,24 @@ const REFRESH_TOKEN = 'refresh_token';
 const FCM_TOKEN = 'firebase_token';
 
 // Query Params Key
-
 const PAGE = 'Page';
 const LIMIT = 'limit';
 const STATUS = "status";
 
+//API Response code
+const API_SUCCESS_CODE = "SS0200";
+
 // Create Challenge Screen
 const CREATECHALLENGE = "Create Challenge";
-const CHALLENGENAME = "Challenge Name";
+const ENTERCHALLENGENAME = "Enter Challenge Name";
+const CHALLENGE_NAME = "Challenge Name";
+const PLACEHOLDER_EMOJI = "💰";
+const PLACEHOLDER_GOALS = "Goals";
 const CHALLENGEGOAL = "Challenge Goal";
-const CHALLENGEEMOJI = "Challenge Emoji";
+const PLACEHOLDER_START_DATE = "Start Date";
+const PLACEHOLDER_END_DATE = "End Date";
+const ENTER_DATES_STAR = "Enter Dates*";
+const CHALLENGEEMOJI = "Emoji";
 const STARTDATE = "Start Date";
 const ENDDATE = "End Date";
 const CHALLENGEFEES = "Challenge Fees";
@@ -25,6 +33,8 @@ const STAR = "*";
 const RUPEE = "₹";
 const FIVRUPEEMIN = "₹5(Min)";
 const THOUSANDRUPEEMAX = "₹1000(Max)";
+const CHOOSE_EMOJI_TEXT =
+    "Choose an emoji as the symbol for your challenge name!";
 const ENTER_CHALLENGE_NAME = "Please enter challenge name";
 const ENTER_CHALLENGE_GOAL = "Please enter challenge goal";
 const ENTER_CHALLENGE_EMOJI = "Please enter challenge emoji";
@@ -52,6 +62,8 @@ const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
 
 // Quiz Home screen
+const QUIZ_TITLE = "Quiz Zone";
+const QUIZ_SUBTITLE = "Test Your Skills & Win Rewards";
 const START_QUIZ = "Start Quiz";
 const QUESTIONS = "Questions";
 const PRIZE_POOL = "Prize Pool";
@@ -148,9 +160,20 @@ const RUPEE_SYMBOL = '\u20B9'; // Unicode for the Rupee symbol
 const CREATE_TOURNAMENT = "Create Tournament";
 const BID = "Bid";
 
+//Public Challenge
+const PUBLIC_CHALLENGE_TITLE = "New Discoveries";
+const PUBLIC_CHALLENGE_SUBTITLE = "Unique experiences curated for you!";
+
+//Private Challenge
+const PRIVATE_CHALLENGE_TITLE = "Challenge Hub";
+const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";
+
 // Common
+const HOME = 'Home';
+const SEE_ALL = 'See All';
 const ALL = 'All';
 const LIVE = 'Live';
+const CAPITAL_LIVE = 'LIVE';
 const REQUEST = 'Request';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';

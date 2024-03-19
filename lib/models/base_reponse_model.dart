@@ -3,16 +3,14 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
 class BaseResponseModel<T> {
   String? message;
-  String? error;
-  bool? success;
+  String? responseCode;
   T? data;
   Pagination? pagination;
 
   BaseResponseModel({
     required this.message,
     this.data,
-    this.success,
-    this.error,
+    this.responseCode,
     this.pagination,
   });
 
@@ -45,8 +43,7 @@ BaseResponseModel<T> _$BaseResponseModelFromJson<T>(
 ) =>
     BaseResponseModel<T>(
       message: json['message'] as String?,
-      error: json['error'] as String?,
-      success: json['success'] as bool?,
+      responseCode: json['response_code'] as String?,
       data: fromJsonT!(json['data']),
       pagination: json['pagination'] != null
           ? Pagination.fromJson(json['pagination'])
@@ -59,8 +56,7 @@ Map<String, dynamic> _$BaseResponseModelToJson<T>(
 ) =>
     <String, dynamic>{
       'message': instance.message,
-      'success': instance.success,
-      'error': instance.error,
+      'response_code': instance.responseCode,
       'data': toJsonT(instance.data as T),
       'pagination': instance.pagination?.toJson(),
     };

@@ -9,12 +9,12 @@ import 'package:skills_pe/utility/constants.dart';
 class HomeScreenRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<ChallengesListResponse>>?>
-      fetchChallenges() async {
+  Future<BaseResponseModel<List<ChallengesListResponse>>?> fetchChallenges(
+      bool isPublic) async {
     try {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
-      Response? response =
-          await _dio?.get('/v1/challenges', queryParameters: queryParameters);
+      Response? response = await _dio?.get('/v1/challenges?public=$isPublic',
+          queryParameters: queryParameters);
       return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
         response?.data,
         (data) {

@@ -7,6 +7,7 @@ import 'package:skills_pe/firebase_options.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

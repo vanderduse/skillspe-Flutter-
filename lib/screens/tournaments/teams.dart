@@ -3,7 +3,7 @@ import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
 import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/screens/tournaments/widgets/no_teams_card.dart';
 import 'package:skills_pe/screens/tournaments/widgets/team_card.dart';
-import 'package:skills_pe/sharedWidgets/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/icon_checkbox_grid.dart';
 import 'package:skills_pe/sharedWidgets/skillspe_text_form_field.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';

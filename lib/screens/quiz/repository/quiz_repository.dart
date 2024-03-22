@@ -6,7 +6,6 @@ import 'package:skills_pe/screens/quiz/model/quiz_submission_request_model.dart'
 import 'package:skills_pe/screens/quiz/model/quiz_submit_response_model.dart';
 import 'package:skills_pe/service/api_client.dart';
 import 'package:skills_pe/utility/constants.dart';
-import 'package:skills_pe/utility/utility.dart';
 
 class QuizRepository {
   final Dio? _dio = ApiClient.createDio();

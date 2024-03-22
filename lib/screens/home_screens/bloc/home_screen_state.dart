@@ -46,3 +46,17 @@ class HomeScreenTournamentsFailureState extends HomeScreenState {
   final String errorMessage;
   HomeScreenTournamentsFailureState(this.errorMessage);
 }
+
+// Fetch Champaign States
+
+class HomeScreenChampaignLoadingState extends HomeScreenState {}
+
+class HomeScreenChampaignSuccessState extends HomeScreenState {
+  final List<CampaignListResponse> champaigns;
+  HomeScreenChampaignSuccessState(this.champaigns);
+}
+
+class HomeScreenChampaignFailureState extends HomeScreenState {
+  final String errorMessage;
+  HomeScreenChampaignFailureState(this.errorMessage);
+}

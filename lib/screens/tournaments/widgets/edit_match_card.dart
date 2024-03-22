@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/models/match_model.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class EditMatchCard extends StatelessWidget {
   final Match matchDetails;
@@ -49,8 +50,7 @@ class EditMatchCard extends StatelessWidget {
                         width: 24,
                         height: 24,
                         decoration: ShapeDecoration(
-                          color: Color(int.parse(
-                              "0xff${matchDetails.teamSet[0].accentColor}")),
+                          color: HexColor(matchDetails.teamSet[0].accentColor),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                           ),
@@ -102,8 +102,7 @@ class EditMatchCard extends StatelessWidget {
                         width: 24,
                         height: 24,
                         decoration: ShapeDecoration(
-                          color: Color(int.parse(
-                              "0xff${matchDetails.teamSet[1].accentColor}")),
+                          color: HexColor(matchDetails.teamSet[1].accentColor),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                           ),

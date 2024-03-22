@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/view_all/ui/campaign_list_screen.dart';
 import 'package:skills_pe/sharedWidgets/cards/campaigns_card.dart';
-import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
+import '../../model/list_campaign_response.dart';
 
 class CampaignsWidget extends StatelessWidget {
-  final List<ChallengesListResponse> data;
+  final List<CampaignListResponse> data;
 
   final List<String> leftBorderColors = [
     '#ED5E91',
@@ -28,27 +28,51 @@ class CampaignsWidget extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
-          height: 320,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              String leftBorderColor =
-                  leftBorderColors[index % leftBorderColors.length];
-              return Container(
-                width: MediaQuery.of(context).size.width *
-                    0.8, // 80% of screen width
-                margin: EdgeInsets.symmetric(
-                  horizontal: index == 0
-                      ? 16.0
-                      : (index == data.length - 1 ? 16.0 : 10.0),
-                ),
-                child: CampaignsCard(
-                  item: data[index],
-                  leftBorderColor: leftBorderColor,
-                ),
-              );
-            },
+          height: 370,
+          child: Container(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: data.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index < data.length) {
+                  String leftBorderColor =
+                      leftBorderColors[index % leftBorderColors.length];
+                  return Container(
+                    width: MediaQuery.of(context).size.width *
+                        0.8, // 80% of screen width
+                    margin: EdgeInsets.symmetric(
+                      horizontal: index == 0
+                          ? 16.0
+                          : (index == data.length - 1 ? 16.0 : 10.0),
+                    ),
+                    child: CampaignsCard(
+                      item: data[index],
+                      leftBorderColor: leftBorderColor,
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CampaignListScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'View All -> ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF8C50F6),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ],

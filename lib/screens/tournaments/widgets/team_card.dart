@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/screens/tournaments/models/TeamModel.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class TeamCard extends StatelessWidget {
   final Team teamDetails;
@@ -37,7 +38,7 @@ class TeamCard extends StatelessWidget {
                   width: 24,
                   height: 24,
                   decoration: ShapeDecoration(
-                    color: Color(int.parse("0xff${teamDetails.accentColor}")),
+                    color: HexColor(teamDetails.accentColor),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24)),
                     shadows: const [

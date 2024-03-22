@@ -174,13 +174,13 @@ class _BiddingStepOneState extends State<BiddingStepOneScreen> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TeamNameWithIcon(teamName: "Team A", iconColor: "0xffFF5733"),
-              const Text(
+              Text(
                 'vs',
                 style: TextStyle(
                   color: Color(0xFF5C6068),
@@ -217,7 +217,7 @@ class _BiddingStepOneState extends State<BiddingStepOneScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Team E to win the match against  Team H ?",
+                    "Team E to win the match against Team H ?",
                     style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.start,
                   ),
@@ -283,7 +283,7 @@ class _BiddingStepOneState extends State<BiddingStepOneScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Team E to win the match against  Team H ?",
+                  "Team E to win the match against Team H ?",
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.start,
                 ),

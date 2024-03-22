@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:skills_pe/screens/home_screens/model/list_campaign_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
@@ -16,7 +17,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   HomeScreenBloc(this._homeScreenRepository) : super(HomeScreenInitialState()) {
     on<HomeScreenFetchChallengesEvent>(_fetchChallengesList);
     on<HomeScreenFetchQuizEvent>(_fetchQuizList);
-    on<HomeScreenFetchTournamentEvent>(_fetchTournamentList);
+    on<HomeScreenFetchChampaignsEvent>(_fetchChampaignList);
+    // on<HomeScreenFetchTournamentEvent>(_fetchTournamentList);
   }
 
   FutureOr<void> _fetchChallengesList(HomeScreenFetchChallengesEvent event,
@@ -51,6 +53,23 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       }
     } catch (e) {
       emit(HomeScreenQuizFailureState('Failed to fetch Quizzes: $e'));
+    }
+  }
+
+  FutureOr<void> _fetchChampaignList(HomeScreenFetchChampaignsEvent event,
+      Emitter<HomeScreenState> emit) async {
+    emit(HomeScreenChampaignLoadingState());
+    try {
+      var response = await _homeScreenRepository.fetchChampaign();
+      if (response != null &&
+          response.responseCode == "SS0200" &&
+          response.data != null) {
+        emit(HomeScreenChampaignSuccessState(response.data!));
+      } else {
+        emit(HomeScreenChampaignFailureState('Failed to fetch champaigns'));
+      }
+    } catch (e) {
+      emit(HomeScreenChampaignFailureState('Failed to fetch champaigns: $e'));
     }
   }
 

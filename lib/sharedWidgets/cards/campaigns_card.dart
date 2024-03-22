@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
-import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
-import 'package:skills_pe/sharedWidgets/buttons/unfilled_btn.dart';
-import 'package:skills_pe/utility/constants.dart';
-import 'package:skills_pe/utility/date_utility.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
-import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/utility/utility.dart';
+import '../../screens/home_screens/model/list_campaign_response.dart';
 
 class CampaignsCard extends StatelessWidget {
-  final ChallengesListResponse? item;
+  final CampaignListResponse? item;
   final dynamic leftBorderColor;
 
   const CampaignsCard({
@@ -23,13 +15,9 @@ class CampaignsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
     final cardWidth = screenWidth * 0.9;
-    final leftWidth = cardWidth * 0.02;
-    final middleWidth = cardWidth * 0.15;
 
     return Container(
-      // padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
       margin: const EdgeInsets.symmetric(
         vertical: 15.0,
       ),
@@ -39,30 +27,32 @@ class CampaignsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withOpacity(0.9),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: const Offset(0, 5),
+            offset: const Offset(0, 7),
           ),
         ],
       ),
       child: Column(
         children: [
           Expanded(
-            flex: 7,
+            flex: 9,
             child: SizedBox(
               width: double.infinity,
               height: double.infinity,
               child: Stack(
                 children: [
                   Positioned.fill(
+                    bottom: 50,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10.0),
                         topRight: Radius.circular(10.0),
                       ),
                       child: Image.network(
-                        'https://i.ibb.co/NWb4DLD/ipl.jpg',
+                        item?.bannerConfig?.bannerImage ??
+                            'https://i.ibb.co/NWb4DLD/ipl.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -73,40 +63,45 @@ class CampaignsCard extends StatelessWidget {
                     bottom: 0,
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Color.fromARGB(255, 35, 46, 126),
-                            Colors.transparent,
-                          ],
-                          stops: [0.6, 1],
-                        ),
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              HexColor(item
+                                      ?.bannerConfig?.css?.bannerGradientColor)
+                                  .withOpacity(1),
+                              HexColor(item
+                                      ?.bannerConfig?.css?.bannerGradientColor)
+                                  .withOpacity(0.1),
+                            ],
+                            stops: const [
+                              0.5,
+                              0.9
+                            ]),
                       ),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'PREDICT & WIN BIG!!', //THIS WILL BE REMOVED AFTER API INTEGRATION
+                            item?.bannerConfig?.tagline ?? "",
                             textAlign: TextAlign.left,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w900,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
                             ),
                           ),
-                          SizedBox(height: 5.0),
-                          //THIS WILL BE REMOVED AFTER API INTEGRATION
+                          const SizedBox(height: 5.0),
                           Text(
-                            'Win the every match by predicting scores, choose sides, choose victory!',
+                            item?.bannerConfig?.description ?? "",
                             textAlign: TextAlign.left,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12.0,
                             ),
@@ -122,9 +117,9 @@ class CampaignsCard extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xFF000040),
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: HexColor(item?.bannerConfig?.css?.themeColor),
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10.0),
                   bottomRight: Radius.circular(10.0),
                 ),
@@ -145,7 +140,8 @@ class CampaignsCard extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ62bBEcaC3I6xjnSW8fwMqWzYAAvKnO722ZYmk4-JAhQ&s',
+                            item?.bannerConfig?.bannerIcon ??
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ62bBEcaC3I6xjnSW8fwMqWzYAAvKnO722ZYmk4-JAhQ&s',
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.contain,
@@ -156,21 +152,21 @@ class CampaignsCard extends StatelessWidget {
                       // Spacer
                       const SizedBox(width: 15.0),
 
-                      const Center(
+                      Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Lets Play',
-                              style: TextStyle(
+                              item?.bannerConfig?.titleTag ?? 'Lets Play',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.0,
                               ),
                             ),
                             Text(
-                              'IPL 2024',
-                              style: TextStyle(
+                              item?.bannerConfig?.title ?? "",
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
                               ),
@@ -186,14 +182,15 @@ class CampaignsCard extends StatelessWidget {
                       // Button action
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF7E56DA),
+                      backgroundColor:
+                          HexColor(item?.bannerConfig?.css?.ctaColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    child: const Text(
-                      PLAY,
-                      style: TextStyle(
+                    child: Text(
+                      item?.bannerConfig?.ctaText ?? 'Play',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),

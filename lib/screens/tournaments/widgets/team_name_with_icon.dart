@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class TeamNameWithIcon extends StatelessWidget {
   final String? teamName;
@@ -16,7 +17,7 @@ class TeamNameWithIcon extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: ShapeDecoration(
-            color: Color(int.parse(iconColor!)),
+            color: HexColor(iconColor),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),

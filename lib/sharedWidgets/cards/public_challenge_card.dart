@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
-import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
-import 'package:skills_pe/sharedWidgets/buttons/unfilled_btn.dart';
-import 'package:skills_pe/utility/constants.dart';
-import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
-import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PublicChallengeCard extends StatelessWidget {
@@ -20,10 +13,7 @@ class PublicChallengeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
     final cardWidth = screenWidth * 0.9;
-    final leftWidth = cardWidth * 0.02;
-    final middleWidth = cardWidth * 0.15;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),

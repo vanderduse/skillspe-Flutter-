@@ -4,7 +4,6 @@ import 'package:skills_pe/screens/home_screens/bloc/home_screen_bloc.dart';
 import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/widgets/tournament_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/campaigns_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/public_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
@@ -24,7 +23,8 @@ class HomeMain extends StatefulWidget {
 class _HomeMain extends State<HomeMain> {
   late HomeScreenBloc _homeScreenChallengesBloc;
   late HomeScreenBloc _homeScreenQuizBloc;
-  late HomeScreenBloc _homeScreenTournamentBloc;
+  late HomeScreenBloc _homeScreenChampaignBloc;
+  //late HomeScreenBloc _homeScreenTournamentBloc;
 
   @override
   void initState() {
@@ -38,8 +38,8 @@ class _HomeMain extends State<HomeMain> {
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
 
-    _homeScreenTournamentBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenTournamentBloc.add(HomeScreenFetchTournamentEvent());
+    _homeScreenChampaignBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenChampaignBloc.add(HomeScreenFetchChampaignsEvent());
   }
 
   final List<String> imageUrls = [
@@ -76,16 +76,16 @@ class _HomeMain extends State<HomeMain> {
               },
             ),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
+              bloc: _homeScreenChampaignBloc,
               builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
+                if (state is HomeScreenChampaignLoadingState) {
                   return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
+                } else if (state is HomeScreenChampaignSuccessState) {
                   return SingleChildScrollView(
                       child: CampaignsWidget(
-                    data: state.challenges,
+                    data: state.champaigns,
                   ));
-                } else if (state is HomeScreenChallengeFailureState) {
+                } else if (state is HomeScreenChampaignFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');

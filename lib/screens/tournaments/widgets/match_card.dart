@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/models/match_model.dart';
 import 'package:skills_pe/sharedWidgets/buttons/colored_outline_button.dart';
 import 'package:skills_pe/sharedWidgets/vertical_separator.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class MatchCard extends StatelessWidget {
   final Match matchDetails;
@@ -60,8 +61,8 @@ class MatchCard extends StatelessWidget {
                                   width: 24,
                                   height: 24,
                                   decoration: ShapeDecoration(
-                                    color: Color(int.parse(
-                                        "0xff${matchDetails.teamSet[0].accentColor}")),
+                                    color: HexColor(
+                                        matchDetails.teamSet[0].accentColor),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
                                     ),
@@ -111,8 +112,8 @@ class MatchCard extends StatelessWidget {
                                   width: 24,
                                   height: 24,
                                   decoration: ShapeDecoration(
-                                    color: Color(int.parse(
-                                        "0xff${matchDetails.teamSet[1].accentColor}")),
+                                    color: HexColor(
+                                        matchDetails.teamSet[1].accentColor),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24),
                                     ),

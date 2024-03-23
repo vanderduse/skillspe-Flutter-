@@ -24,6 +24,7 @@ class _HomeMain extends State<HomeMain> {
   late HomeScreenBloc _homeScreenChallengesBloc;
   late HomeScreenBloc _homeScreenQuizBloc;
   late HomeScreenBloc _homeScreenChampaignBloc;
+  late HomeScreenBloc _homeScreenBannerBloc;
   //late HomeScreenBloc _homeScreenTournamentBloc;
 
   @override
@@ -40,6 +41,9 @@ class _HomeMain extends State<HomeMain> {
 
     _homeScreenChampaignBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenChampaignBloc.add(HomeScreenFetchChampaignsEvent());
+
+    _homeScreenBannerBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenBannerBloc.add(HomeScreenFetchBannerEvent());
   }
 
   final List<String> imageUrls = [
@@ -55,7 +59,20 @@ class _HomeMain extends State<HomeMain> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HomeSwipper(imageUrls: imageUrls),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenBannerLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenBannerSuccessState) {
+                  return HomeSwipper(bannerList: state.bannersList);
+                } else if (state is HomeScreenBannerFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenChallengesBloc,
               builder: (context, state) {

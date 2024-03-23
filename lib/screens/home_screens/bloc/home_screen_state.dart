@@ -60,3 +60,17 @@ class HomeScreenChampaignFailureState extends HomeScreenState {
   final String errorMessage;
   HomeScreenChampaignFailureState(this.errorMessage);
 }
+
+// Fetch Banners
+
+class HomeScreenBannerLoadingState extends HomeScreenState {}
+
+class HomeScreenBannerSuccessState extends HomeScreenState {
+  final List<BannersListResponse> bannersList;
+  HomeScreenBannerSuccessState(this.bannersList);
+}
+
+class HomeScreenBannerFailureState extends HomeScreenState {
+  final String errorMessage;
+  HomeScreenBannerFailureState(this.errorMessage);
+}

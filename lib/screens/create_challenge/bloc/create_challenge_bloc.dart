@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/create_challenge/models/create_challenge_request.dart';
@@ -24,9 +23,6 @@ class CreateChallengeBloc
     if (res!.data == null) {
       emit(CreateChallengeFailureState(errorMessage: res.message!));
     } else {
-      print(res);
-      print("below is res.data");
-      print(res.data);
       emit(CreateChallengeSuccessState(
           successMessage: res.message!,
           challengeId: res.data!.id!,

@@ -53,10 +53,6 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
         } else if (state is CreateChallengeSuccessState) {
           Navigator.of(context).pop();
           showSnackBar(context, (state).successMessage);
-          print("state challenge");
-          // print(state.challengeId);
-          // var newState = state;
-
           // Navigate to ChallengeDetailScreen here
           Navigator.push(
             context,

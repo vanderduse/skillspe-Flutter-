@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:skills_pe/screens/home_screens/model/list_banners_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_campaign_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
@@ -18,6 +18,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on<HomeScreenFetchChallengesEvent>(_fetchChallengesList);
     on<HomeScreenFetchQuizEvent>(_fetchQuizList);
     on<HomeScreenFetchChampaignsEvent>(_fetchChampaignList);
+    on<HomeScreenFetchBannerEvent>(_fetchBanners);
     // on<HomeScreenFetchTournamentEvent>(_fetchTournamentList);
   }
 
@@ -73,20 +74,18 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     }
   }
 
-  FutureOr<void> _fetchTournamentList(HomeScreenFetchTournamentEvent event,
-      Emitter<HomeScreenState> emit) async {
+  FutureOr<void> _fetchBanners(
+      HomeScreenFetchBannerEvent event, Emitter<HomeScreenState> emit) async {
+    emit(HomeScreenBannerLoadingState());
     try {
-      var response = await _homeScreenRepository.fetchTournaments();
-      if (response != null &&
-          response.responseCode == API_SUCCESS_CODE &&
-          response.data != null) {
-        emit(HomeScreenTournamentsSuccessState(response.data!));
+      var response = await _homeScreenRepository.fetchBanners();
+      if (response != null && response.data != null) {
+        emit(HomeScreenBannerSuccessState(response.data!));
       } else {
-        emit(HomeScreenTournamentsFailureState('Failed to fetch Tournaments'));
+        emit(HomeScreenBannerFailureState('Failed to fetch banners'));
       }
     } catch (e) {
-      emit(
-          HomeScreenTournamentsFailureState('Failed to fetch Tournaments: $e'));
+      emit(HomeScreenBannerFailureState('Failed to fetch banners: $e'));
     }
   }
 }

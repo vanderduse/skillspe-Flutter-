@@ -12,3 +12,5 @@ class HomeScreenFetchChampaignsEvent extends HomeScreenEvent {}
 class HomeScreenFetchQuizEvent extends HomeScreenEvent {}
 
 class HomeScreenFetchTournamentEvent extends HomeScreenEvent {}
+
+class HomeScreenFetchBannerEvent extends HomeScreenEvent {}

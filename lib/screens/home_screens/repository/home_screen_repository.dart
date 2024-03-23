@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
+import 'package:skills_pe/screens/home_screens/model/list_banners_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
@@ -107,6 +108,30 @@ class HomeScreenRepository {
       );
     } on DioException catch (e) {
       return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
+          e.response?.data as Map<String, dynamic>, (data) => null);
+    }
+  }
+
+  Future<BaseResponseModel<List<BannersListResponse>>?> fetchBanners() async {
+    try {
+      Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
+      Response? response =
+          await _dio?.get('/v1/campaign', queryParameters: queryParameters);
+      return BaseResponseModel<List<BannersListResponse>>.fromJson(
+        response?.data,
+        (data) {
+          if (data is List<dynamic>) {
+            return data
+                .map((item) =>
+                    BannersListResponse.fromJson(item as Map<String, dynamic>))
+                .toList();
+          } else {
+            return []; // Handle the case where the response data is not a list
+          }
+        },
+      );
+    } on DioException catch (e) {
+      return BaseResponseModel<List<BannersListResponse>>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }

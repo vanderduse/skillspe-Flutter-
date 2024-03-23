@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/home_screens/model/list_banners_response.dart';
 
 class HomeSwipper extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<BannersListResponse> bannerList;
 
-  const HomeSwipper({super.key, required this.imageUrls});
+  const HomeSwipper({super.key, required this.bannerList});
 
   @override
   _HomeSwipperState createState() => _HomeSwipperState();
@@ -30,16 +31,16 @@ class _HomeSwipperState extends State<HomeSwipper> {
               onPageChanged: (index, reason) =>
                   setState(() => _currentIndex = index), // Track current index
             ),
-            items: widget.imageUrls // Access imageUrls via widget property
-                .map((imageUrl) => Builder(
+            items: widget.bannerList // Access imageUrls via widget property
+                .map((banner) => Builder(
                       builder: (BuildContext context) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image:
-                                  NetworkImage(imageUrl), // Load image from URL
+                              image: NetworkImage(banner.bannerImg ??
+                                  ""), // Load image from URL
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20.0),
@@ -56,7 +57,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
             child: Center(
               child: DotsIndicator(
                 dotsCount:
-                    widget.imageUrls.length, // Adjust based on image list
+                    widget.bannerList.length, // Adjust based on image list
                 position: _currentIndex, // Use current index for active dot
                 decorator: DotsDecorator(
                   color: const Color.fromARGB(

@@ -23,8 +23,11 @@ class ChallengeDetailBloc
         await _challengeDetailRepository
             .getChallengeDetails(event.challengeId!);
     if (res.data == null && res.message != null) {
+      print("res data is null");
       emit(ChallengeDetailFailureState(errorMessage: res.message!));
     } else {
+      print("res data is not null");
+
       print(res.data!.toJson());
       emit(ChallengeDetailSuccessState(challengeDetailResponse: res.data!));
     }

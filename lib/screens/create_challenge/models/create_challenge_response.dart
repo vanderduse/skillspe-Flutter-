@@ -11,7 +11,6 @@ class CreateChallengeResponse {
   String? startTime;
   String? endTime;
   double? prizeAmount;
-  String? results;
   String? category;
   String? status;
   String? challengeInfo;
@@ -30,14 +29,13 @@ class CreateChallengeResponse {
       this.startTime,
       this.endTime,
       this.prizeAmount,
-      this.results,
       this.category,
       this.status,
       this.challengeInfo,
       this.participationFee});
 
   CreateChallengeResponse.fromJson(Map<String, dynamic> json) {
-    id = json['_id'];
+    id = json['id'];
     createdBy = json['created_by'];
     updatedBy = json['updated_by'];
     createdAt = json['created_at'];
@@ -49,16 +47,14 @@ class CreateChallengeResponse {
     startTime = json['start_time'];
     endTime = json['end_time'];
     prizeAmount = json['prize_amount'];
-    results = json['results'];
     category = json['category'];
     status = json['status'];
-    challengeInfo = json['challenge_info'];
     participationFee = json['participation_fee'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = id;
+    data['id'] = id;
     data['created_by'] = createdBy;
     data['updated_by'] = updatedBy;
     data['created_at'] = createdAt;
@@ -70,10 +66,8 @@ class CreateChallengeResponse {
     data['start_time'] = startTime;
     data['end_time'] = endTime;
     data['prize_amount'] = prizeAmount;
-    data['results'] = results;
     data['category'] = category;
     data['status'] = status;
-    data['challenge_info'] = challengeInfo;
     data['participation_fee'] = participationFee;
     return data;
   }

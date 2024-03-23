@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/bloc/create_challenge_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/models/create_challenge_request.dart';
 import 'package:skills_pe/screens/create_challenge/repository/create_challenge_repository.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/sharedWidgets/appBars/app_bar_widget.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/utility/constants.dart';
@@ -52,6 +53,20 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
         } else if (state is CreateChallengeSuccessState) {
           Navigator.of(context).pop();
           showSnackBar(context, (state).successMessage);
+          print("state challenge");
+          // print(state.challengeId);
+          // var newState = state;
+
+          // Navigate to ChallengeDetailScreen here
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChallengeDetailScreen(
+                challengeId: (state).challengeId,
+                challengeName: (state).challengeName,
+              ),
+            ),
+          );
         }
       },
       builder: (context, state) {

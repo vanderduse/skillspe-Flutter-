@@ -24,7 +24,13 @@ class CreateChallengeBloc
     if (res!.data == null) {
       emit(CreateChallengeFailureState(errorMessage: res.message!));
     } else {
-      emit(CreateChallengeSuccessState(successMessage: res.message!));
+      print(res);
+      print("below is res.data");
+      print(res.data);
+      emit(CreateChallengeSuccessState(
+          successMessage: res.message!,
+          challengeId: res.data!.id!,
+          challengeName: res.data!.title!));
     }
   }
 }

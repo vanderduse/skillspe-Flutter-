@@ -9,7 +9,12 @@ class CreateChallengeLoadingState extends CreateChallengeState {}
 
 class CreateChallengeSuccessState extends CreateChallengeState {
   final String successMessage;
-  CreateChallengeSuccessState({required this.successMessage});
+  final String challengeId;
+  final String challengeName;
+  CreateChallengeSuccessState(
+      {required this.successMessage,
+      required this.challengeId,
+      required this.challengeName});
 }
 
 class CreateChallengeFailureState extends CreateChallengeState {

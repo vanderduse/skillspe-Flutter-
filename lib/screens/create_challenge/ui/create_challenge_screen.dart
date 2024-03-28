@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/bloc/create_challenge_bloc.dart';
 import 'package:skills_pe/screens/create_challenge/models/create_challenge_request.dart';
 import 'package:skills_pe/screens/create_challenge/repository/create_challenge_repository.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/sharedWidgets/appBars/app_bar_widget.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/utility/constants.dart';
@@ -18,8 +19,7 @@ class CreateChallengeScreen extends StatefulWidget {
 }
 
 class _CreateChallengeState extends State<CreateChallengeScreen> {
-  int _challengeFees = 5;
-  int a = 1;
+  int _challengeFees = 10;
   List<String> filterButtonNames = [
     "₹10",
     "₹100",
@@ -53,6 +53,16 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
         } else if (state is CreateChallengeSuccessState) {
           Navigator.of(context).pop();
           showSnackBar(context, (state).successMessage);
+          // Navigate to ChallengeDetailScreen here
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChallengeDetailScreen(
+                challengeId: (state).challengeId,
+                challengeName: (state).challengeName,
+              ),
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -113,10 +123,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 0,
-                          left: 0,
-                          right: 60,
-                          bottom: 10), // Adjust margins as needed
+                          top: 0, left: 0, right: 60, bottom: 10),
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -262,47 +269,14 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: ButtonGroup(
                 buttonNames: filterButtonNames,
-                onItemSelected: (index) {},
+                onItemSelected: (index) {
+                  setState(() {
+                    _challengeFees =
+                        int.parse(filterButtonNames[index].substring(1));
+                  });
+                },
               ),
             ),
-            // Column(
-            //   children: [
-            //     Slider(
-            //       value: _challengeFees > 1000
-            //           ? 1000
-            //           : _challengeFees < 5
-            //               ? 5
-            //               : _challengeFees.toDouble(),
-            //       onChanged: (value) {
-            //         setState(() {
-            //           _challengeFees = value.round();
-            //         });
-            //       },
-            //       min: 5,
-            //       max: 1000,
-            //     ),
-            //     Container(
-            //       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            //       child: const Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Text(
-            //             FIVRUPEEMIN,
-            //             style: TextStyle(
-            //                 fontSize: 11,
-            //                 color: Color.fromARGB(253, 131, 125, 125)),
-            //           ),
-            //           Text(
-            //             THOUSANDRUPEEMAX,
-            //             style: TextStyle(
-            //                 fontSize: 11,
-            //                 color: Color.fromARGB(253, 131, 125, 125)),
-            //           ),
-            //         ],
-            //       ),
-            //     )
-            //   ],
-            // ),
             Container(
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: ElevatedButton(
@@ -317,8 +291,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   elevation: 20,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        20.0), // Adjust the value to control the roundness
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
                 child: const Center(

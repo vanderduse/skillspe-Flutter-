@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
@@ -25,7 +24,6 @@ class ChallengeDetailBloc
     if (res.data == null && res.message != null) {
       emit(ChallengeDetailFailureState(errorMessage: res.message!));
     } else {
-      print(res.data!.toJson());
       emit(ChallengeDetailSuccessState(challengeDetailResponse: res.data!));
     }
   }

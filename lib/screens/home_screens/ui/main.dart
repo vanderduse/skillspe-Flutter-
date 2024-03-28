@@ -10,6 +10,8 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/public_challenge_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/campaign_card_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -60,7 +62,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
-                  return const ChallengeCardSkeleton();
+                  return const PublicChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
@@ -79,7 +81,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenChampaignBloc,
               builder: (context, state) {
                 if (state is HomeScreenChampaignLoadingState) {
-                  return const ChallengeCardSkeleton();
+                  return const CampaignCardSkeleton();
                 } else if (state is HomeScreenChampaignSuccessState) {
                   return SingleChildScrollView(
                       child: CampaignsWidget(

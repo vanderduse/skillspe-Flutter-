@@ -6,7 +6,7 @@ import 'package:skills_pe/screens/view_all/bloc/campaignBloc/campaign_list_bloc.
 import 'package:skills_pe/screens/view_all/repository/campaign_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/cards/campaigns_card.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/campaign_card_skeleton.dart';
 
 class CampaignListScreen extends StatefulWidget {
   const CampaignListScreen({super.key});
@@ -78,8 +78,7 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
                 log(_campaignList.toString());
                 _campaignList.addAll(state.campaignList);
                 _isLoading = false;
-                return Container(
-                    child: ListView.builder(
+                return ListView.builder(
                   shrinkWrap: true,
                   controller: _scrollController,
                   itemCount: _campaignList.length + 1,
@@ -98,14 +97,14 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
                     } else if (state.hasNext) {
                       return Column(
                         children: List.generate(
-                            5, (index) => const ChallengeCardSkeleton()),
+                            2, (index) => const CampaignCardSkeleton()),
                       );
                     } else {
                       _isLoading = true;
                       return null;
                     }
                   },
-                ));
+                );
               } else {
                 return const Center(
                   child: Text(
@@ -119,7 +118,7 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
             } else {
               return Column(
                 children:
-                    List.generate(4, (index) => const ChallengeCardSkeleton()),
+                    List.generate(2, (index) => const CampaignCardSkeleton()),
               );
             }
           },

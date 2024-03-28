@@ -12,14 +12,14 @@ class PublicChallengeCardSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
       color: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Shimmer.fromColors(
         baseColor: const Color.fromARGB(185, 223, 223, 223),
         highlightColor: Colors.grey[100]!,
         child: SizedBox(
-          width: MediaQuery.of(context).size.width - 30,
+          width: MediaQuery.of(context).size.width,
           height: height,
           child: Column(
             children: [

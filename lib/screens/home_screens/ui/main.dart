@@ -64,20 +64,6 @@ class _HomeMain extends State<HomeMain> {
                 if (state is HomeScreenChallengeLoadingState) {
                   return const PublicChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
-                  return const CampaignCardSkeleton();
-                } else if (state is HomeScreenChallengeFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
-              builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
-                  return const PublicChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
                     title: PUBLIC_CHALLENGE_TITLE,
@@ -95,7 +81,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenChampaignBloc,
               builder: (context, state) {
                 if (state is HomeScreenChampaignLoadingState) {
-                  return const ChallengeCardSkeleton();
+                  return const CampaignCardSkeleton();
                 } else if (state is HomeScreenChampaignSuccessState) {
                   return SingleChildScrollView(
                       child: CampaignsWidget(

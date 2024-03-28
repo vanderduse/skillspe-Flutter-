@@ -11,6 +11,7 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/public_challenge_skeleton.dart';
+import 'package:skills_pe/sharedWidgets/skeletonLoaders/campaign_card_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -63,7 +64,7 @@ class _HomeMain extends State<HomeMain> {
                 if (state is HomeScreenChallengeLoadingState) {
                   return const PublicChallengeCardSkeleton();
                 } else if (state is HomeScreenChallengeSuccessState) {
-                  return const PublicChallengeCardSkeleton();
+                  return const CampaignCardSkeleton();
                 } else if (state is HomeScreenChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {

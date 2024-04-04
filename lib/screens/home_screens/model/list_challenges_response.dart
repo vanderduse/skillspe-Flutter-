@@ -10,8 +10,8 @@ class ChallengesListResponse {
   String? description;
   String? challengeEmoji;
   bool? isPublic;
-  String? startTime;
-  String? endTime;
+  String startTime;
+  String endTime;
   double? prizeAmount;
   String? category;
   String? status;

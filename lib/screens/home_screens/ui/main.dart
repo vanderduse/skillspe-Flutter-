@@ -62,6 +62,25 @@ class _HomeMain extends State<HomeMain> {
           children: [
             HomeSwipper(imageUrls: imageUrls),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenPrivateChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: ChallengesWidget(
+                    title: PRIVATE_CHALLENGE_TITLE,
+                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenPublicChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
@@ -91,25 +110,6 @@ class _HomeMain extends State<HomeMain> {
                     data: state.champaigns,
                   ));
                 } else if (state is HomeScreenChampaignFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenPrivateChallengesBloc,
-              builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
-                  return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
-                  return SingleChildScrollView(
-                      child: ChallengesWidget(
-                    title: PRIVATE_CHALLENGE_TITLE,
-                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
-                    data: state.challenges,
-                  ));
-                } else if (state is HomeScreenChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');

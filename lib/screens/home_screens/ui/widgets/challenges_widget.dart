@@ -23,7 +23,7 @@ class ChallengesWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-              left: 16.0, right: 8.0, top: 10.0, bottom: 10.0),
+              left: 16.0, right: 8.0, top: 20.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -69,25 +69,23 @@ class ChallengesWidget extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
-          child: SizedBox(
-            height: 190,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: index == 0
-                        ? 16.0
-                        : (index == data.length - 1 ? 16.0 : 10.0),
-                  ),
-                  child: ChallengeCard(
-                    item: data[index],
-                  ),
-                );
-              },
-            ),
+          height: 290, // Set a fixed height for the horizontal ListView
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                margin: EdgeInsets.symmetric(
+                  horizontal: index == 0
+                      ? 16.0
+                      : (index == data.length - 1 ? 16.0 : 10.0),
+                ),
+                child: ChallengeCard(
+                  item: data[index],
+                ),
+              );
+            },
           ),
         ),
       ],

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:skills_pe/screens/bidding/bidding_stepone_screen.dart';
 import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/buttons/unfilled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/utility/text_utility.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class ChallengeCard extends StatelessWidget {
   final ChallengesListResponse? item;
@@ -20,144 +25,231 @@ class ChallengeCard extends StatelessWidget {
     final cardWidth = screenWidth * 0.9;
     final leftWidth = cardWidth * 0.02;
     final middleWidth = cardWidth * 0.15;
+    final DateTime startDate =
+        DateFormat("yyyy-MM-dd").parse(item?.startTime ?? "");
+    final String formattedEndDate = DateFormat("MMM dd, yyyy")
+        .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
+    ;
+    final String formattedStartDate =
+        '${DateFormat.MMM().format(startDate)} ${DateFormat("d").format(startDate)}';
 
+    double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 14),
-      padding: const EdgeInsets.only(top: 15, right: 15),
-      width: cardWidth,
+      width: 0.9 * deviceWidth,
+      margin: EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(top: 8, bottom: 16, left: 8, right: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2), // Shadow color
-            spreadRadius: 1, // Spread radius
-            blurRadius: 10, // Blur radius
-            offset: const Offset(0, 5), // Shadow position
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: leftWidth,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Container(
-                      // margin: EdgeInsets.only(right: 16.0),
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: leftBorderColor != null
-                            ? Color(int.parse(leftBorderColor.substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000)
-                            : Colors
-                                .transparent, // Provide a default color or handle null
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(8.0),
-                          bottomRight: Radius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2), // Shadow color
+              spreadRadius: 1, // Spread radius
+              blurRadius: 10, // Blur radius
+              offset: const Offset(0, 5),
             ),
-          ),
-          Padding(
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(16))),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
             padding:
-                const EdgeInsets.only(left: 5.0), // Adjust the value as needed
-            child: SizedBox(
-              width: middleWidth,
-              child: Center(
-                child: ClipRect(
-                  child: SizedBox(
-                    width: 48.0,
-                    height: 58.0,
-                    child: Text(
-                      item?.challengeEmoji ?? "",
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 32,
-                      ),
-                    ),
-                  ),
-                ),
+                const EdgeInsets.all(16), // Occupy complete available width
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF8C50F6), // #8C50F6
+                  Color(0xFF141941), // #141941
+                ],
+                stops: [0.0, 1.0],
+                transform: GradientRotation(
+                    107.04 * 3.14 / 180), // Convert degrees to radians
               ),
             ),
-          ),
-          Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item?.title ?? "",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          margin: const EdgeInsets.only(top: 8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF5F5F5),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            item?.participationDetails?.type ?? "",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // First container displaying text
                         Container(
-                          width: 150,
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            formatChallengeDate(item?.startTime, item?.endTime),
-                            style: const TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-
-                        // Second container for the button
-                        UnFilledBtn(
-                            label: BID,
-                            onPressed: () {
-                              BottomSheetManager.showGenericBottomSheet(context,
-                                  const BiddingStepOneScreen(), "Bidding");
-                            }),
+                            padding: const EdgeInsets.all(8),
+                            height: 46,
+                            width: 46,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            child: Text(
+                              item?.challengeEmoji ?? "",
+                              style: TextStyle(fontSize: 20),
+                              textAlign: TextAlign.center,
+                            ))
                       ],
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/person_check.svg",
+                          height: 18,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "Owner",
+                          style: TextStyle(
+                              color: HexColor("#a99acf"),
+                              fontFamily: "Inter",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Half Marathon Virtual Running Challenge ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          border: Border.all(
+                            color: Color(0xFFFFFFFF)
+                                .withOpacity(0.5), // Color #FFFFFF80
+                            width: 0.5,
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 6,
+                            width: 6,
+                            decoration: BoxDecoration(
+                                color: HexColor("#FD1010"),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30))),
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            TextUtility.toSentenceCase(item?.status ?? ""),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          border: Border.all(
+                            color: Color(0xFFFFFFFF)
+                                .withOpacity(0.5), // Color #FFFFFF80
+                            width: 0.5,
+                          )),
+                      child: Text(
+                        '${TextUtility.toSentenceCase(formattedStartDate)} - ${TextUtility.toSentenceCase(formattedEndDate)}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
-          )
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(8),
+                        height: 46,
+                        width: 46,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: Text(
+                          item?.challengeEmoji ?? "",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ))
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Button action
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Text(
+                    'View',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          // Container(
+          //     width: double.infinity,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Container(
+          //           child: FilledBtn(
+          //               label: "View",
+          //               onPressed: () {},
+          //               backgroundColor: Theme.of(context).primaryColor,
+          //               textColor: Colors.white),
+          //         )
+          //       ],
+          //     ))
         ],
       ),
     );

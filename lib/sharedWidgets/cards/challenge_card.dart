@@ -116,7 +116,7 @@ class ChallengeCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            item?.category ?? "",
+                            item?.participationDetails?.type ?? "",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -134,7 +134,7 @@ class ChallengeCard extends StatelessWidget {
                       children: [
                         // First container displaying text
                         Container(
-                          width: 100,
+                          width: 150,
                           padding: const EdgeInsets.all(8),
                           child: Text(
                             formatChallengeDate(item?.startTime, item?.endTime),

@@ -21,7 +21,8 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
-  late HomeScreenBloc _homeScreenChallengesBloc;
+  late HomeScreenBloc _homeScreenPublicChallengesBloc;
+  late HomeScreenBloc _homeScreenPrivateChallengesBloc;
   late HomeScreenBloc _homeScreenQuizBloc;
   late HomeScreenBloc _homeScreenChampaignBloc;
   //late HomeScreenBloc _homeScreenTournamentBloc;
@@ -31,8 +32,12 @@ class _HomeMain extends State<HomeMain> {
     super.initState();
     HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
-    _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenChallengesBloc
+    _homeScreenPublicChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenPublicChallengesBloc
+        .add(HomeScreenFetchChallengesEvent(isPublic: true));
+
+    _homeScreenPrivateChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenPrivateChallengesBloc
         .add(HomeScreenFetchChallengesEvent(isPublic: false));
 
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
@@ -57,7 +62,7 @@ class _HomeMain extends State<HomeMain> {
           children: [
             HomeSwipper(imageUrls: imageUrls),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
+              bloc: _homeScreenPublicChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
                   return const ChallengeCardSkeleton();
@@ -93,7 +98,7 @@ class _HomeMain extends State<HomeMain> {
               },
             ),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
+              bloc: _homeScreenPrivateChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
                   return const ChallengeCardSkeleton();

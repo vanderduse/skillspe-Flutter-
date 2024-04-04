@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
-import 'package:skills_pe/screens/challenge_detail/ui/model_bottom_sheet.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/invite_challengers_bottom_sheet.dart';
+import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
@@ -46,10 +47,14 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
             var _challengeDetail = state.challengeDetailResponse;
             return Container(
               color: const Color.fromARGB(255, 245, 240, 240),
-              padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Column(children: [
                 const Text(GENERAL_DETAILS,
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500)),
                 Card(
                   margin: const EdgeInsets.only(top: 10),
                   color: Colors.white,
@@ -68,8 +73,12 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                             children: [
                               Expanded(
                                 child: Text(
-                                  _challengeDetail.title!,
+                                  _challengeDetail.title ?? "",
                                   maxLines: 2,
+                                  style: const TextStyle(
+                                      fontFamily: "Inter",
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 16),
                                 ),
                               ),
                               Text(
@@ -89,31 +98,35 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                 ),
                 invitationCards(
                     CHALLENGERS,
-                    'assets/images/cup.svg',
+                    "assets/icons/cup.svg",
                     () => {
-                          showModalBottomSheet<dynamic>(
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const ModelBottomSheet();
-                              })
+                          BottomSheetManager.showGenericBottomSheet(
+                              context,
+                              const InviteChallengersBottomSheet(),
+                              INVITE_CHALLENGERS)
+
+                          // showModalBottomSheet<dynamic>(
+                          //     isScrollControlled: true,
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return const ModelBottomSheet();
+                          //     })
                         }),
-                invitationCards(MODERATORS, 'assets/images/cup.svg',
+                invitationCards(MODERATORS, "assets/icons/ranking.svg",
                     () => {print('invite 2')}),
-                invitationCards(MOTIVATORS, 'assets/images/cup.svg',
+                invitationCards(MOTIVATORS, "assets/icons/user.svg",
                     () => {print('invite 3')}),
                 Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      height: 40,
-                      child: FilledBtn(
-                        textColor: Colors.white,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        onPressed: () {},
-                        label: SHARE,
-                      ),
-                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: FilledBtn(
+                          textColor: Colors.white,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          onPressed: () {},
+                          label: SHARE,
+                        )),
                   ),
                 )
               ]),
@@ -132,9 +145,19 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
           children: [
             Text(
               label,
-              style: const TextStyle(color: Color.fromARGB(255, 139, 135, 135)),
+              style: const TextStyle(
+                  color: Color.fromARGB(255, 139, 135, 135),
+                  fontFamily: "Inter",
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
             ),
-            Text(description),
+            Text(
+              description,
+              style: const TextStyle(
+                  fontFamily: "Inter",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14),
+            ),
           ],
         ));
   }
@@ -156,26 +179,33 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
         child: Row(children: [
           SvgPicture.asset(
             iconPath,
           ),
           Expanded(
               child: Padding(
-            padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+            padding: const EdgeInsets.only(left: 20, bottom: 10, top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label),
+                Text(
+                  "$label (${RandomImages.length})",
+                  style: const TextStyle(
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14),
+                ),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     for (int i = 0; i < RandomImages.length; i++)
                       Align(
-                        widthFactor: 0.6,
+                        widthFactor: 0.9,
                         child: CircleAvatar(
-                          radius: 10,
+                          radius: 9,
                           backgroundImage: NetworkImage(RandomImages[i]),
                         ),
                       )
@@ -184,11 +214,16 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
               ],
             ),
           )),
-          TextButton(
-            onPressed: () {
-              onPressedCallback();
-            },
-            child: const Text('+ Invite'),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+                  onTap: () {
+                    onPressedCallback();
+                  },
+                )),
           )
         ]),
       ),

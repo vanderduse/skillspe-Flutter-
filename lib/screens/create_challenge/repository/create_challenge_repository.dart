@@ -12,6 +12,7 @@ class CreateChallengeRepository {
   Future<BaseResponseModel<CreateChallengeResponse>?> createChallenge(
       {required CreateChallengeRequest createChallengeRequest}) async {
     try {
+      print(createChallengeRequest.toJson());
       Response? response =
           await _dio?.post('/v1/challenges', data: createChallengeRequest);
       return BaseResponseModel<CreateChallengeResponse>.fromJson(

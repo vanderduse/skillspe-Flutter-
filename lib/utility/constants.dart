@@ -47,6 +47,8 @@ const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
 const CHALLENGES = 'Challenges';
+const CHALLENGE_ACCEPTING_CONDITION_TEXT =
+    "Start once all participants accepts the challenge";
 
 // Challenge Details
 const GENERAL_DETAILS = 'General Details';

@@ -5,7 +5,9 @@ import 'package:skills_pe/screens/create_challenge/models/create_challenge_reque
 import 'package:skills_pe/screens/create_challenge/repository/create_challenge_repository.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/sharedWidgets/appBars/app_bar_widget.dart';
+import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
+import 'package:skills_pe/sharedWidgets/custom_checkbox.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/screens/create_challenge/ui/text_form_field_widget.dart';
 import 'package:skills_pe/utility/date_utility.dart';
@@ -28,6 +30,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
     "₹700",
     "₹1000"
   ];
+  bool isConditionAccepted = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -67,207 +70,219 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
       },
       builder: (context, state) {
         return SingleChildScrollView(
-            child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: TextFormFieldWidget(
-                                  formLabel: ENTERCHALLENGENAME,
-                                  placeholder: CHALLENGE_NAME,
-                                  isRequiredField: true,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return ENTER_CHALLENGE_NAME;
-                                    } else {
-                                      createChallengeRequest.title = value;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: TextFormFieldWidget(
-                            formLabel: CHALLENGEEMOJI,
-                            isRequiredField: true,
-                            isEmojiField: true,
-                            placeholder: PLACEHOLDER_EMOJI,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return ENTER_CHALLENGE_EMOJI;
-                              } else {
-                                createChallengeRequest.challengeEmoji = value;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 0, left: 0, right: 60, bottom: 10),
-                      child: const Column(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            CHOOSE_EMOJI_TEXT,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextFormFieldWidget(
-                      formLabel: CHALLENGEGOAL,
-                      isRequiredField: true,
-                      maxLines: 3,
-                      placeholder: PLACEHOLDER_GOALS,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return ENTER_CHALLENGE_GOAL;
-                        } else {
-                          createChallengeRequest.description = value;
-                        }
-                        return null;
-                      },
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 10, left: 5, right: 0, bottom: 0),
-                      child: const Row(
-                        children: [
                           Expanded(
+                            flex: 8,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  ENTER_DATES_STAR,
-                                  style: TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.left,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: TextFormFieldWidget(
+                                    formLabel: ENTERCHALLENGENAME,
+                                    placeholder: CHALLENGE_NAME,
+                                    isRequiredField: true,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return ENTER_CHALLENGE_NAME;
+                                      } else {
+                                        createChallengeRequest.title = value;
+                                      }
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                           ),
+                          Expanded(
+                            flex: 2,
+                            child: TextFormFieldWidget(
+                              formLabel: CHALLENGEEMOJI,
+                              isRequiredField: true,
+                              isEmojiField: true,
+                              placeholder: PLACEHOLDER_EMOJI,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return ENTER_CHALLENGE_EMOJI;
+                                } else {
+                                  createChallengeRequest.challengeEmoji = value;
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: TextFormFieldWidget(
-                                  formLabel: '',
-                                  showFormLabel: false,
-                                  isRequiredField: true,
-                                  placeholder: PLACEHOLDER_START_DATE,
-                                  isDateField: true,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return ENTER_START_DATE;
-                                    } else if (value.isNotEmpty &&
-                                        selectedEndDate.isNotEmpty == true) {
-                                      if (dateComparision(
-                                          date1: value,
-                                          date2: selectedEndDate)) {
-                                        return START_DATE_END_DATE_VALIDATION;
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 0, left: 0, right: 60, bottom: 10),
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              CHOOSE_EMOJI_TEXT,
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TextFormFieldWidget(
+                        formLabel: CHALLENGEGOAL,
+                        isRequiredField: true,
+                        maxLines: 3,
+                        placeholder: PLACEHOLDER_GOALS,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return ENTER_CHALLENGE_GOAL;
+                          } else {
+                            createChallengeRequest.description = value;
+                          }
+                          return null;
+                        },
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 10, left: 5, right: 0, bottom: 0),
+                        child: const Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ENTER_DATES_STAR,
+                                    style: TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: TextFormFieldWidget(
+                                    formLabel: '',
+                                    showFormLabel: false,
+                                    isRequiredField: true,
+                                    placeholder: PLACEHOLDER_START_DATE,
+                                    isDateField: true,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return ENTER_START_DATE;
+                                      } else if (value.isNotEmpty &&
+                                          selectedEndDate.isNotEmpty == true) {
+                                        if (dateComparision(
+                                            date1: value,
+                                            date2: selectedEndDate)) {
+                                          return START_DATE_END_DATE_VALIDATION;
+                                        } else {
+                                          createChallengeRequest.startTime =
+                                              getDateInISOFormat(
+                                                  convertStringDateFormat(
+                                                      inputFormat:
+                                                          DDMMYYYY_SLASH_FORMAT,
+                                                      outputFormat:
+                                                          YYYYMMDD_DASH_FORMAT,
+                                                      dateToBeFormatted:
+                                                          value));
+                                        }
+                                      } else {
+                                        createChallengeRequest.startTime =
+                                            getDateInISOFormat(
+                                                convertStringDateFormat(
+                                                    inputFormat:
+                                                        DDMMYYYY_SLASH_FORMAT,
+                                                    outputFormat:
+                                                        YYYYMMDD_DASH_FORMAT,
+                                                    dateToBeFormatted: value));
                                       }
-                                    } else {
-                                      createChallengeRequest.startTime =
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: TextFormFieldWidget(
+                              formLabel: '',
+                              showFormLabel: false,
+                              isRequiredField: true,
+                              placeholder: PLACEHOLDER_END_DATE,
+                              isDateField: true,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return ENTER_END_DATE;
+                                } else {
+                                  selectedEndDate = value;
+                                  createChallengeRequest.endTime =
+                                      getDateInISOFormat(
                                           convertStringDateFormat(
                                               inputFormat:
                                                   DDMMYYYY_SLASH_FORMAT,
                                               outputFormat:
                                                   YYYYMMDD_DASH_FORMAT,
-                                              dateToBeFormatted: value);
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
+                                              dateToBeFormatted: value));
+                                }
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: TextFormFieldWidget(
-                            formLabel: '',
-                            showFormLabel: false,
-                            isRequiredField: true,
-                            placeholder: PLACEHOLDER_END_DATE,
-                            isDateField: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return ENTER_END_DATE;
-                              } else {
-                                selectedEndDate = value;
-                                createChallengeRequest.endTime =
-                                    convertStringDateFormat(
-                                        inputFormat: DDMMYYYY_SLASH_FORMAT,
-                                        outputFormat: YYYYMMDD_DASH_FORMAT,
-                                        dateToBeFormatted: value);
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextFormFieldWidget(
-                      formLabel: CHALLENGEFEES,
-                      isRequiredField: true,
-                      placeholder: FIVRUPEEMIN,
-                      isAmountTypeField: true,
-                      challengeFees: _challengeFees,
-                      onChange: (value) {
-                        setState(() {
-                          _challengeFees = int.parse(value);
-                        });
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return ENTER_CHALLENGE_FEES;
-                        } else if (value.isNotEmpty &&
-                            int.parse(value) > 1000) {
-                          return CHALLENGE_FEES_MAX_VALIDATION;
-                        } else if (value.isNotEmpty && int.parse(value) < 5) {
-                          return CHALLENGE_FEES_MIN_VALIDATION;
-                        } else {
-                          createChallengeRequest.participationFee =
-                              int.parse(value);
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
+                        ],
+                      ),
+                      TextFormFieldWidget(
+                        formLabel: CHALLENGEFEES,
+                        isRequiredField: true,
+                        placeholder: FIVRUPEEMIN,
+                        isAmountTypeField: true,
+                        challengeFees: _challengeFees,
+                        onChange: (value) {
+                          setState(() {
+                            _challengeFees = int.parse(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return ENTER_CHALLENGE_FEES;
+                          } else if (value.isNotEmpty &&
+                              int.parse(value) > 1000) {
+                            return CHALLENGE_FEES_MAX_VALIDATION;
+                          } else if (value.isNotEmpty && int.parse(value) < 5) {
+                            return CHALLENGE_FEES_MIN_VALIDATION;
+                          } else {
+                            createChallengeRequest.participationFee =
+                                int.parse(value);
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: ButtonGroup(
+              ButtonGroup(
                 buttonNames: filterButtonNames,
                 onItemSelected: (index) {
                   setState(() {
@@ -276,37 +291,44 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                   });
                 },
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    createChallengeBloc.add(CreateChallengeButtonClickedEvent(
-                        createChallengeRequest));
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  elevation: 20,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomCheckbox(
+                    checked: isConditionAccepted,
+                    onChange: (value) {
+                      setState(() {
+                        isConditionAccepted = value!;
+                      });
+                    },
                   ),
-                ),
-                child: const Center(
-                  child: Text(
-                    CREATECHALLENGE,
+                  const Text(
+                    CHALLENGE_ACCEPTING_CONDITION_TEXT,
                     style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                  ),
-                ),
+                        fontFamily: "Inter", fontWeight: FontWeight.w400),
+                  )
+                ],
               ),
-            )
-          ],
-        ));
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                child: FilledBtn(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      createChallengeBloc.add(CreateChallengeButtonClickedEvent(
+                          createChallengeRequest));
+                    }
+                  },
+                  label: '$CREATECHALLENGE  ->',
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  textColor: Colors.white,
+                  isButtonEnabled: isConditionAccepted,
+                ),
+              )
+            ],
+          ),
+        );
       },
     );
   }

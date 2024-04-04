@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class ModelBottomSheet extends StatefulWidget {
-  const ModelBottomSheet({super.key});
+class InviteChallengersBottomSheet extends StatefulWidget {
+  const InviteChallengersBottomSheet({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ModelBottomSheetState();
+  State<StatefulWidget> createState() => _InviteChallengersBottomSheetState();
 }
 
-class _ModelBottomSheetState extends State<ModelBottomSheet> {
+class _InviteChallengersBottomSheetState
+    extends State<InviteChallengersBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -17,22 +18,6 @@ class _ModelBottomSheetState extends State<ModelBottomSheet> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-              child: Row(children: [
-                const Icon(Icons.curtains_closed_sharp),
-                const Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(INVITE_CHALLENGERS),
-                )),
-                IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.cancel))
-              ]),
-            ),
             Container(
               width: MediaQuery.of(context).size.width, // Width of the line
               height: 0.1, // Height of the line
@@ -46,16 +31,23 @@ class _ModelBottomSheetState extends State<ModelBottomSheet> {
               ),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
                 child: const Column(children: [
-                  Text(INVITE_CODE),
+                  Text(
+                    INVITE_CODE,
+                    style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400),
+                  ),
                   Text(
                     "942052",
                     style: TextStyle(
-                        letterSpacing: 13,
-                        fontSize: 25,
+                        fontFamily: "Inter",
+                        letterSpacing: 11,
+                        fontSize: 30,
                         color: Color.fromRGBO(70, 43, 156, 1),
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w600),
                   ),
                 ]),
               ),

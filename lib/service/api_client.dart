@@ -39,7 +39,9 @@ class AppInterceptors extends Interceptor {
     options.headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'authorization': 'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}'
+      'authorization':
+          'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}',
+      'X-AUTHORIZED-FOR-ID': 'Uakshay'
     };
     log(options.uri.toString());
     return handler.next(options);

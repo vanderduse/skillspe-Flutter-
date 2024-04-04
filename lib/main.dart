@@ -7,7 +7,6 @@ import 'package:skills_pe/firebase_options.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
-import 'package:skills_pe/screens/home_screens/ui/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,9 +33,9 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'SkillPe',
         theme: ThemeData(
-          primaryColor: Color(0xff7E56DA),
-          primaryColorDark: Color(0xff2E1452),
-          primaryColorLight: Color.fromRGBO(201, 179, 239, 0.20),
+          primaryColor: const Color(0xff7E56DA),
+          primaryColorDark: const Color(0xff2E1452),
+          primaryColorLight: const Color.fromRGBO(201, 179, 239, 0.20),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           textTheme: const TextTheme(
               titleLarge: TextStyle(

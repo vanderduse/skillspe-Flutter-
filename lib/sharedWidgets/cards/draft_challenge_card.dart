@@ -76,7 +76,7 @@ class DraftChallengeCard extends ChallengeCard {
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
                               item?.challengeEmoji ?? "",
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
                       ],
@@ -185,11 +185,12 @@ class DraftChallengeCard extends ChallengeCard {
           Container(
             width: double.infinity,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 38,
+                  height: 38,
                   child: OutlinedButton(
                     onPressed: () {
                       // Button action

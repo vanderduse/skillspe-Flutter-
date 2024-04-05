@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/screens/view_all/repository/challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
-import 'package:skills_pe/sharedWidgets/cards/challenge_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/bloc/challengesBloc/challenges_list_bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
@@ -102,12 +103,12 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                     itemCount: challengesList.length + 1,
                     itemBuilder: (context, index) {
                       if (index < challengesList.length) {
+                        final challengeCard =
+                            _getChallengeCard(challengesList[index]);
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20.0),
                           height: 200,
-                          child: ChallengeCard(
-                            item: challengesList[index],
-                          ),
+                          child: challengeCard,
                         );
                       } else if (state.hasNext) {
                         return Column(
@@ -141,5 +142,11 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
         ],
       ),
     );
+  }
+
+  Widget _getChallengeCard(ChallengesListResponse item) {
+    final factory =
+        ChallengeCardFactory.getChallengeCardFactory(item?.status ?? "");
+    return factory.createChallengeCard(item); // Return Widget directly
   }
 }

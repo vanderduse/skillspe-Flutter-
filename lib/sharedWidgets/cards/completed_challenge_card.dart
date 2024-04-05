@@ -6,9 +6,9 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory
 import 'package:skills_pe/utility/text_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
 
-class DraftChallengeCard extends ChallengeCard {
+class CompletedChallengeCard extends ChallengeCard {
   final dynamic leftBorderColor;
-  const DraftChallengeCard(
+  const CompletedChallengeCard(
       {Key? key,
       required ChallengesListResponse item,
       this.leftBorderColor = '#ED5E91'})
@@ -52,9 +52,19 @@ class DraftChallengeCard extends ChallengeCard {
             width: double.infinity,
             padding:
                 const EdgeInsets.all(16), // Occupy complete available width
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: HexColor("#F4F4F4"),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF8C50F6), // #8C50F6
+                  Color(0xFF141941), // #141941
+                ],
+                stops: [0.0, 1.0],
+                transform: GradientRotation(
+                    107.04 * 3.14 / 180), // Convert degrees to radians
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +86,7 @@ class DraftChallengeCard extends ChallengeCard {
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
                               item?.challengeEmoji ?? "",
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
                       ],
@@ -85,10 +95,10 @@ class DraftChallengeCard extends ChallengeCard {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset("assets/icons/person_check.svg",
-                            height: 18,
-                            colorFilter: ColorFilter.mode(
-                                HexColor("#646464"), BlendMode.srcIn)),
+                        SvgPicture.asset(
+                          "assets/icons/person_check.svg",
+                          height: 18,
+                        ),
                         const SizedBox(
                           width: 4,
                         ),
@@ -96,7 +106,7 @@ class DraftChallengeCard extends ChallengeCard {
                           TextUtility.toSentenceCase(
                               item?.participationDetails?.type ?? ""),
                           style: TextStyle(
-                              color: HexColor("#646464"),
+                              color: HexColor("#a99acf"),
                               fontFamily: "Inter",
                               fontSize: 14,
                               fontWeight: FontWeight.w500),
@@ -110,8 +120,8 @@ class DraftChallengeCard extends ChallengeCard {
                 ),
                 Text(
                   item?.title ?? "",
-                  style: TextStyle(
-                      color: HexColor("#0A121A"),
+                  style: const TextStyle(
+                      color: Colors.white,
                       fontFamily: "Inter",
                       fontSize: 16,
                       fontWeight: FontWeight.w600),
@@ -129,7 +139,8 @@ class DraftChallengeCard extends ChallengeCard {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4)),
                           border: Border.all(
-                            color: HexColor("#C8C8C8"), // Color #FFFFFF80
+                            color: const Color(0xFFFFFFFF)
+                                .withOpacity(0.5), // Color #FFFFFF80
                             width: 0.5,
                           )),
                       child: Row(
@@ -140,15 +151,15 @@ class DraftChallengeCard extends ChallengeCard {
                             height: 6,
                             width: 6,
                             decoration: BoxDecoration(
-                                color: HexColor("#96F023"),
+                                color: HexColor("#00E43C"),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(30))),
                           ),
                           const SizedBox(width: 6),
                           Text(
                             TextUtility.toSentenceCase(item?.status ?? ""),
-                            style: TextStyle(
-                                color: HexColor("#646464"),
+                            style: const TextStyle(
+                                color: Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                           )
@@ -163,13 +174,14 @@ class DraftChallengeCard extends ChallengeCard {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4)),
                           border: Border.all(
-                            color: HexColor("#C8C8C8"), // Color #FFFFFF80
+                            color: Color(0xFFFFFFFF)
+                                .withOpacity(0.5), // Color #FFFFFF80
                             width: 0.5,
                           )),
                       child: Text(
                         '${TextUtility.toSentenceCase(formattedStartDate)} - ${TextUtility.toSentenceCase(formattedEndDate)}',
                         style: TextStyle(
-                            color: HexColor("#646464"),
+                            color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.w400),
                       ),
@@ -185,57 +197,49 @@ class DraftChallengeCard extends ChallengeCard {
           Container(
             width: double.infinity,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      // Button action
-                    },
-                    style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          color: Color(0xFFFF34C1), // Outline color
-                          width: 1, // Outline width
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: HexColor("#F0F0F0"),
+                      borderRadius: BorderRadius.all(Radius.circular(300))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      for (int i = 0; i < RandomImages.length; i++)
+                        Align(
+                          widthFactor: 0.8,
+                          child: CircularImage(
+                            height: 24,
+                            imageUrl: RandomImages[i],
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        padding: EdgeInsets.all(0)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                        "assets/icons/edit.svg",
-                        color: Color(0xFFFF34C1), // Change icon color
-                        height: 24,
+                      SizedBox(
+                        width: 4,
                       ),
-                    ),
+                      Text("+4")
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: 12,
-                ),
-                Container(
-                    height: 40.0,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Button action
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        'View',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ))
+                ElevatedButton(
+                  onPressed: () {
+                    // Button action
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Text(
+                    'Results',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
               ],
             ),
           ),

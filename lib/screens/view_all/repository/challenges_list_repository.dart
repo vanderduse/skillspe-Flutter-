@@ -14,11 +14,13 @@ class ChallengesListRepository {
       Map<String, dynamic> queryParameters = {
         PAGE: page,
         LIMIT: 10,
-        STATUS: status
       };
+      if (status != "ALL") {
+        queryParameters["status"] = status;
+      }
       log('$page');
-      Response? response =
-          await _dio?.get('/v1/challenges', queryParameters: queryParameters);
+      Response? response = await _dio?.get('/v1/feed/private/challenges',
+          queryParameters: queryParameters);
       log('${response?.data.toString()}, $status');
       return BaseResponseModel<List<ChallengesListResponse>>.fromJson(
         response?.data,

@@ -12,6 +12,7 @@ class TextUtility {
       if (words[i].isNotEmpty) {
         words[i] =
             words[i][0].toUpperCase() + words[i].substring(1).toLowerCase();
+        words[i] = words[i].replaceAll("_", " ");
       }
     }
 

@@ -62,7 +62,15 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   @override
   Widget build(BuildContext context) {
     // Filter button names
-    List<String> filterButtonNames = [ALL, LIVE, REQUEST, UPCOMING, COMPLETED];
+    List<ChallengeStatus> filterButtonNames = [
+      ChallengeStatus.ALL,
+      ChallengeStatus.DRAFT,
+      ChallengeStatus.LIVE,
+      ChallengeStatus.RESULTS_PENDING,
+      ChallengeStatus.COMPLETED,
+      ChallengeStatus.REQUEST,
+      ChallengeStatus.UPCOMING
+    ];
 
     return Scaffold(
       appBar: AppbarWithBack(
@@ -77,9 +85,11 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
-              buttonNames: filterButtonNames,
+              buttonNames: filterButtonNames.map((ChallengeStatus status) {
+                return status.displayName;
+              }).toList(),
               onItemSelected: (index) {
-                selectedFilter = filterButtonNames[index];
+                selectedFilter = filterButtonNames[index].label;
                 challengesList.clear();
                 _pageNumber = 1;
                 _challengesListBloc.add(FetchChallengesListEvent(
@@ -107,7 +117,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                             _getChallengeCard(challengesList[index]);
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          height: 200,
+                          height: 290,
                           child: challengeCard,
                         );
                       } else if (state.hasNext) {

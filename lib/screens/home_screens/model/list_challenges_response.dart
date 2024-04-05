@@ -17,25 +17,26 @@ class ChallengesListResponse {
   String? status;
   double? participationFee;
   ParticipationDetails? participationDetails;
+  dynamic options;
 
-  ChallengesListResponse({
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.title,
-    required this.description,
-    required this.challengeEmoji,
-    required this.isPublic,
-    required this.startTime,
-    required this.endTime,
-    required this.prizeAmount,
-    required this.category,
-    required this.status,
-    required this.participationFee,
-    this.participationDetails,
-  });
+  ChallengesListResponse(
+      {required this.id,
+      required this.createdBy,
+      required this.updatedBy,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.title,
+      required this.description,
+      required this.challengeEmoji,
+      required this.isPublic,
+      required this.startTime,
+      required this.endTime,
+      required this.prizeAmount,
+      required this.category,
+      required this.status,
+      required this.participationFee,
+      this.participationDetails,
+      this.options});
 
   factory ChallengesListResponse.fromJson(Map<String, dynamic> json) {
     return ChallengesListResponse(

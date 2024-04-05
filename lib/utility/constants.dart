@@ -174,8 +174,26 @@ const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";
 const HOME = 'Home';
 const SEE_ALL = 'See All';
 const ALL = 'All';
+const DRAFT = 'Draft';
 const LIVE = 'Live';
 const CAPITAL_LIVE = 'LIVE';
 const REQUEST = 'Request';
+const RESULTS_PENDING = 'RESULTS_PENDING';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';
+
+class ChallengeStatus {
+  final String label;
+  final String displayName;
+
+  const ChallengeStatus(this.label, this.displayName);
+
+  static const ALL = ChallengeStatus('ALL', 'All');
+  static const DRAFT = ChallengeStatus('DRAFT', 'Draft');
+  static const LIVE = ChallengeStatus('LIVE', 'Live');
+  static const REQUEST = ChallengeStatus('REQUESTED', 'Request');
+  static const RESULTS_PENDING =
+      ChallengeStatus('RESULTS_PENDING', 'Results Pending');
+  static const UPCOMING = ChallengeStatus('UPCOMING', 'Upcoming');
+  static const COMPLETED = ChallengeStatus('COMPLETED', 'Completed');
+}

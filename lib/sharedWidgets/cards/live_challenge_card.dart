@@ -67,6 +67,7 @@ class LiveChallengeCard extends ChallengeCard {
               ),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +86,7 @@ class LiveChallengeCard extends ChallengeCard {
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
                               item?.challengeEmoji ?? "",
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
                       ],
@@ -102,11 +103,12 @@ class LiveChallengeCard extends ChallengeCard {
                           width: 4,
                         ),
                         Text(
-                          "Owner",
+                          TextUtility.toSentenceCase(
+                              item?.participationDetails?.type ?? ""),
                           style: TextStyle(
                               color: HexColor("#a99acf"),
                               fontFamily: "Inter",
-                              fontSize: 12,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500),
                         )
                       ],

@@ -3,6 +3,8 @@ import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_respon
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/cards/draft_challenge_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/result_pending_challenge_card.dart';
+import 'package:skills_pe/sharedWidgets/cards/completed_challenge_card.dart';
 
 abstract class ChallengeCard extends StatelessWidget {
   final ChallengesListResponse item;
@@ -18,6 +20,10 @@ abstract class ChallengeCardFactory {
         return DraftChallengeCardFactory();
       case "LIVE":
         return LiveChallengeCardFactory();
+      case "RESULTS_PENDING":
+        return ResultPendingChallengeCardFactory();
+      case "COMPLETED":
+        return CompletedChallengeCardFactory();
       // Add cases for other statuses as needed
       default:
         throw Exception("Unknown status: $status");
@@ -36,5 +42,19 @@ class DraftChallengeCardFactory implements ChallengeCardFactory {
   @override
   ChallengeCard createChallengeCard(ChallengesListResponse item) {
     return DraftChallengeCard(item: item);
+  }
+}
+
+class ResultPendingChallengeCardFactory implements ChallengeCardFactory {
+  @override
+  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+    return ResultPendingChallengeCard(item: item);
+  }
+}
+
+class CompletedChallengeCardFactory implements ChallengeCardFactory {
+  @override
+  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+    return CompletedChallengeCard(item: item);
   }
 }

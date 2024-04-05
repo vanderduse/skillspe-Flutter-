@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/cards/challenge_card.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
+import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -74,21 +75,26 @@ class ChallengesWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
+              final challengeCard = _getChallengeCard(data[index]);
               return Container(
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.85,
                 margin: EdgeInsets.symmetric(
                   horizontal: index == 0
                       ? 16.0
                       : (index == data.length - 1 ? 16.0 : 10.0),
                 ),
-                child: ChallengeCard(
-                  item: data[index],
-                ),
+                child: challengeCard,
               );
             },
           ),
         ),
       ],
     );
+  }
+
+  Widget _getChallengeCard(ChallengesListResponse item) {
+    final factory =
+        ChallengeCardFactory.getChallengeCardFactory(item?.status ?? "");
+    return factory.createChallengeCard(item); // Return Widget directly
   }
 }

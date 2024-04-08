@@ -33,8 +33,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       appBar: navigationWithWallet(PROFILE, 120.00, showBack: false),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(
-              top: 22.0), // Adding padding only at the top
+          padding: const EdgeInsets.only(top: 22.0),
           child: Column(
             children: profileOptions
                 .map((option) => ProfileOptionCard(title: option))

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/tournaments/create_tournament.dart';
+import 'package:skills_pe/screens/profile/ui/main.dart';
 import 'package:skills_pe/utility/constants.dart';
 import '../../../create_challenge/ui/create_challenge_screen.dart';
 
@@ -103,7 +104,17 @@ class BottomNavigationBarWidget extends StatelessWidget {
                       ),
                     ],
                   )),
-              SvgPicture.asset('assets/icons/bottomNavIcons/profile_circle.svg')
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileScreen()),
+                  );
+                },
+                child: SvgPicture.asset(
+                    'assets/icons/bottomNavIcons/profile_circle.svg'),
+              ),
             ],
           ),
         ));

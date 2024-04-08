@@ -4,6 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:skills_pe/firebase_options.dart';
+import 'package:skills_pe/screens/home_screens/ui/main.dart';
+import 'package:skills_pe/screens/profile/ui/main.dart';
 import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
@@ -66,6 +68,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const SplashManager());
+        home: const ProfileScreen());
   }
 }

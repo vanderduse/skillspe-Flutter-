@@ -151,7 +151,7 @@ const CLEAR_ALL = "Clear All";
 // Profile
 const PROFILE = "Profile";
 const PERSONAL_DETAILS = "Personal Details";
-const WALLET = "WALLET";
+const WALLET = "Wallet";
 const MY_ACTIVITY = "My Activity";
 const KYC = "KYC";
 const TERMS_AND_CONDITIONS = "Terms & Conditions";

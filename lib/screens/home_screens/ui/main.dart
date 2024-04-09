@@ -162,7 +162,7 @@ class _HomeMain extends State<HomeMain> {
           ],
         ),
       ),
-      floatingActionButton: const BottomNavigationBarWidget(),
+      floatingActionButton: const BottomNavigationBarWidget(activeTab: 'home'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

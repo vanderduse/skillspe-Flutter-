@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorObservers: [ChuckerFlutter.navigatorObserver],
-        title: 'SkillPe',
+        title: 'SkillsPe',
         theme: ThemeData(
           primaryColor: const Color(0xff7E56DA),
           primaryColorDark: const Color(0xff2E1452),

@@ -37,7 +37,7 @@ class _HomeMain extends State<HomeMain> {
 
     _homeScreenPublicChallengesBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenPublicChallengesBloc
-        .add(HomeScreenFetchChallengesEvent(isPublic: true));
+        .add(HomeScreenFetchPublicChallengesEvent());
 
     _homeScreenPrivateChallengesBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenPrivateChallengesBloc
@@ -102,16 +102,16 @@ class _HomeMain extends State<HomeMain> {
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenPublicChallengesBloc,
               builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
+                if (state is HomeScreenPublicChallengeLoadingState) {
                   return const PublicChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
+                } else if (state is HomeScreenPublicChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
                     title: PUBLIC_CHALLENGE_TITLE,
                     subTitle: PUBLIC_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
-                } else if (state is HomeScreenChallengeFailureState) {
+                } else if (state is HomeScreenPublicChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');

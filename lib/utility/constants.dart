@@ -148,6 +148,15 @@ const TEAMS = "Teams";
 const NOTIFICATIONS = "Notifications";
 const CLEAR_ALL = "Clear All";
 
+// Profile
+const PROFILE = "Profile";
+const PERSONAL_DETAILS = "Personal Details";
+const WALLET = "WALLET";
+const MY_ACTIVITY = "My Activity";
+const KYC = "KYC";
+const TERMS_AND_CONDITIONS = "Terms & Conditions";
+const SUPPORT = "Support";
+
 // Wallet
 const NEED_HELP = "Need Help?";
 const RECENT_TRANSACTIONS = "Recent Transactions";

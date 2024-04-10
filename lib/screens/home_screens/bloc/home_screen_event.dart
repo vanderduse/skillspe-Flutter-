@@ -7,6 +7,8 @@ class HomeScreenFetchChallengesEvent extends HomeScreenEvent {
   HomeScreenFetchChallengesEvent({required this.isPublic});
 }
 
+class HomeScreenFetchPublicChallengesEvent extends HomeScreenEvent {}
+
 class HomeScreenFetchChampaignsEvent extends HomeScreenEvent {}
 
 class HomeScreenFetchQuizEvent extends HomeScreenEvent {}

@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/home_screens/model/list_campaign_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
 import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
@@ -16,6 +17,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final HomeScreenRepository _homeScreenRepository;
   HomeScreenBloc(this._homeScreenRepository) : super(HomeScreenInitialState()) {
     on<HomeScreenFetchChallengesEvent>(_fetchChallengesList);
+    on<HomeScreenFetchPublicChallengesEvent>(_fetchPublicChallengesList);
     on<HomeScreenFetchQuizEvent>(_fetchQuizList);
     on<HomeScreenFetchChampaignsEvent>(_fetchChampaignList);
     // on<HomeScreenFetchTournamentEvent>(_fetchTournamentList);
@@ -36,6 +38,28 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       }
     } catch (e) {
       emit(HomeScreenChallengeFailureState('Failed to fetch challenges: $e'));
+    }
+  }
+
+  FutureOr<void> _fetchPublicChallengesList(
+      HomeScreenFetchPublicChallengesEvent event,
+      Emitter<HomeScreenState> emit) async {
+    emit(HomeScreenPublicChallengeLoadingState());
+    try {
+      var response = await _homeScreenRepository.fetchPublicChallenges();
+      if (response != null &&
+          response.responseCode == API_SUCCESS_CODE &&
+          response.data != null) {
+        print("hello===========================>");
+        emit(HomeScreenPublicChallengeSuccessState(response.data!));
+      } else {
+        print("else===========================>");
+        emit(HomeScreenPublicChallengeFailureState(
+            'Failed to fetch challenges'));
+      }
+    } catch (e) {
+      emit(HomeScreenPublicChallengeFailureState(
+          'Failed to fetch challenges: $e'));
     }
   }
 

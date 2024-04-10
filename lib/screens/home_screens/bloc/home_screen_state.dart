@@ -6,7 +6,6 @@ sealed class HomeScreenState {}
 class HomeScreenInitialState extends HomeScreenState {}
 
 // Fetch Challenges States
-
 class HomeScreenChallengeLoadingState extends HomeScreenState {}
 
 class HomeScreenChallengeSuccessState extends HomeScreenState {
@@ -19,8 +18,20 @@ class HomeScreenChallengeFailureState extends HomeScreenState {
   HomeScreenChallengeFailureState(this.errorMessage);
 }
 
-// Fetch Quiz List State
+// Fetch Public Challenges States
+class HomeScreenPublicChallengeLoadingState extends HomeScreenState {}
 
+class HomeScreenPublicChallengeSuccessState extends HomeScreenState {
+  final List<PublicChallengesListResponse> challenges;
+  HomeScreenPublicChallengeSuccessState(this.challenges);
+}
+
+class HomeScreenPublicChallengeFailureState extends HomeScreenState {
+  final String errorMessage;
+  HomeScreenPublicChallengeFailureState(this.errorMessage);
+}
+
+// Fetch Quiz List State
 class HomeScreenQuizLoadingState extends HomeScreenState {}
 
 class HomeScreenQuizSuccessState extends HomeScreenState {

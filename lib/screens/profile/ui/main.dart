@@ -41,7 +41,9 @@ class _ProfileScreen extends State<ProfileScreen> {
           ),
         ),
       ),
-      floatingActionButton: const BottomNavigationBarWidget(),
+      floatingActionButton: const BottomNavigationBarWidget(
+        activeTab: 'profile',
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

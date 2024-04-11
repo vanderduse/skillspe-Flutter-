@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/cards/draft_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/cards/result_pending_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/cards/completed_challenge_card.dart';
 
 abstract class ChallengeCard extends StatelessWidget {
-  final ChallengesListResponse item;
+  final PrivateChallengesListResponse item;
   const ChallengeCard({Key? key, required this.item}) : super(key: key);
 }
 
 abstract class ChallengeCardFactory {
-  ChallengeCard createChallengeCard(ChallengesListResponse item);
+  ChallengeCard createChallengeCard(PrivateChallengesListResponse item);
 
   static ChallengeCardFactory getChallengeCardFactory(String status) {
     switch (status) {
@@ -33,28 +33,28 @@ abstract class ChallengeCardFactory {
 
 class LiveChallengeCardFactory implements ChallengeCardFactory {
   @override
-  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+  ChallengeCard createChallengeCard(PrivateChallengesListResponse item) {
     return LiveChallengeCard(item: item);
   }
 }
 
 class DraftChallengeCardFactory implements ChallengeCardFactory {
   @override
-  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+  ChallengeCard createChallengeCard(PrivateChallengesListResponse item) {
     return DraftChallengeCard(item: item);
   }
 }
 
 class ResultPendingChallengeCardFactory implements ChallengeCardFactory {
   @override
-  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+  ChallengeCard createChallengeCard(PrivateChallengesListResponse item) {
     return ResultPendingChallengeCard(item: item);
   }
 }
 
 class CompletedChallengeCardFactory implements ChallengeCardFactory {
   @override
-  ChallengeCard createChallengeCard(ChallengesListResponse item) {
+  ChallengeCard createChallengeCard(PrivateChallengesListResponse item) {
     return CompletedChallengeCard(item: item);
   }
 }

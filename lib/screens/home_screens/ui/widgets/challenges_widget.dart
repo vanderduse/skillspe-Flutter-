@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
@@ -8,7 +8,7 @@ import 'package:skills_pe/utility/constants.dart';
 class ChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
-  final List<ChallengesListResponse> data;
+  final List<PrivateChallengesListResponse> data;
 
   const ChallengesWidget({
     super.key,
@@ -92,9 +92,9 @@ class ChallengesWidget extends StatelessWidget {
     );
   }
 
-  Widget _getChallengeCard(ChallengesListResponse item) {
+  Widget _getChallengeCard(PrivateChallengesListResponse item) {
     final factory =
-        ChallengeCardFactory.getChallengeCardFactory(item?.status ?? "");
+        ChallengeCardFactory.getChallengeCardFactory(item.status ?? "");
     return factory.createChallengeCard(item); // Return Widget directly
   }
 }

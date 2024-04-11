@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:skills_pe/screens/home_screens/model/list_banners_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_campaign_response.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_quizzes_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
@@ -16,7 +16,7 @@ part 'home_screen_state.dart';
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final HomeScreenRepository _homeScreenRepository;
   HomeScreenBloc(this._homeScreenRepository) : super(HomeScreenInitialState()) {
-    on<HomeScreenFetchChallengesEvent>(_fetchChallengesList);
+    on<HomeScreenFetchPrivateChallengesEvent>(_fetchPrivateChallengesList);
     on<HomeScreenFetchPublicChallengesEvent>(_fetchPublicChallengesList);
     on<HomeScreenFetchQuizEvent>(_fetchQuizList);
     on<HomeScreenFetchChampaignsEvent>(_fetchChampaignList);
@@ -24,21 +24,25 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     // on<HomeScreenFetchTournamentEvent>(_fetchTournamentList);
   }
 
-  FutureOr<void> _fetchChallengesList(HomeScreenFetchChallengesEvent event,
+  FutureOr<void> _fetchPrivateChallengesList(
+      HomeScreenFetchPrivateChallengesEvent event,
       Emitter<HomeScreenState> emit) async {
     emit(HomeScreenChallengeLoadingState());
     try {
-      var response =
-          await _homeScreenRepository.fetchChallenges(event.isPublic);
+      var response = await _homeScreenRepository.fetchPrivateChallenges();
       if (response != null &&
           response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
-        emit(HomeScreenChallengeSuccessState(response.data!));
+        print("print====================>");
+        emit(HomeScreenPrivateChallengeSuccessState(response.data!));
       } else {
-        emit(HomeScreenChallengeFailureState('Failed to fetch challenges'));
+        print("else====================>");
+        emit(HomeScreenPrivateChallengeFailureState(
+            'Failed to fetch challenges'));
       }
     } catch (e) {
-      emit(HomeScreenChallengeFailureState('Failed to fetch challenges: $e'));
+      emit(HomeScreenPrivateChallengeFailureState(
+          'Failed to fetch challenges: $e'));
     }
   }
 
@@ -51,10 +55,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       if (response != null &&
           response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
-        print("hello===========================>");
         emit(HomeScreenPublicChallengeSuccessState(response.data!));
       } else {
-        print("else===========================>");
         emit(HomeScreenPublicChallengeFailureState(
             'Failed to fetch challenges'));
       }

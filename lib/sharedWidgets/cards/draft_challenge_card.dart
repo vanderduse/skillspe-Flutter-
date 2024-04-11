@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/utility/text_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
@@ -10,15 +10,14 @@ class DraftChallengeCard extends ChallengeCard {
   final dynamic leftBorderColor;
   const DraftChallengeCard(
       {Key? key,
-      required ChallengesListResponse item,
+      required PrivateChallengesListResponse item,
       this.leftBorderColor = '#ED5E91'})
       : super(key: key, item: item);
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final DateTime startDate =
-        DateFormat("yyyy-MM-dd").parse(item?.startTime ?? "");
+        DateFormat("yyyy-MM-dd").parse(item.startTime);
     final String formattedEndDate = DateFormat("MMM dd, yyyy")
         .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
     ;
@@ -94,7 +93,7 @@ class DraftChallengeCard extends ChallengeCard {
                         ),
                         Text(
                           TextUtility.toSentenceCase(
-                              item?.participationDetails?.type ?? ""),
+                              item.participationDetails?.type ?? ""),
                           style: TextStyle(
                               color: HexColor("#646464"),
                               fontFamily: "Inter",
@@ -179,16 +178,16 @@ class DraftChallengeCard extends ChallengeCard {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
+                SizedBox(
                   width: 38,
                   height: 38,
                   child: OutlinedButton(
@@ -196,7 +195,7 @@ class DraftChallengeCard extends ChallengeCard {
                       // Button action
                     },
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Color(0xFFFF34C1), // Outline color
                           width: 1, // Outline width
                         ),
@@ -208,16 +207,16 @@ class DraftChallengeCard extends ChallengeCard {
                       padding: const EdgeInsets.all(8.0),
                       child: SvgPicture.asset(
                         "assets/icons/edit.svg",
-                        color: Color(0xFFFF34C1), // Change icon color
+                        color: const Color(0xFFFF34C1), // Change icon color
                         height: 24,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
-                Container(
+                SizedBox(
                     height: 40.0,
                     child: ElevatedButton(
                       onPressed: () {
@@ -229,9 +228,9 @@ class DraftChallengeCard extends ChallengeCard {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'View',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),

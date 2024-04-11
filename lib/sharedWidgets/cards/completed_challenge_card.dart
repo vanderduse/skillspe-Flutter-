@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/utility/text_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
@@ -10,17 +10,16 @@ class CompletedChallengeCard extends ChallengeCard {
   final dynamic leftBorderColor;
   const CompletedChallengeCard(
       {Key? key,
-      required ChallengesListResponse item,
+      required PrivateChallengesListResponse item,
       this.leftBorderColor = '#ED5E91'})
       : super(key: key, item: item);
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final DateTime startDate =
-        DateFormat("yyyy-MM-dd").parse(item?.startTime ?? "");
+        DateFormat("yyyy-MM-dd").parse(item.startTime);
     final String formattedEndDate = DateFormat("MMM dd, yyyy")
-        .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
+        .format(DateFormat("yyyy-MM-dd").parse(item.endTime));
     ;
     final String formattedStartDate =
         '${DateFormat.MMM().format(startDate)} ${DateFormat("d").format(startDate)}';
@@ -119,7 +118,7 @@ class CompletedChallengeCard extends ChallengeCard {
                   height: 16,
                 ),
                 Text(
-                  item?.title ?? "",
+                  item.title ?? "",
                   style: const TextStyle(
                       color: Colors.white,
                       fontFamily: "Inter",
@@ -191,16 +190,16 @@ class CompletedChallengeCard extends ChallengeCard {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                       color: HexColor("#F0F0F0"),
                       borderRadius: BorderRadius.all(Radius.circular(300))),
@@ -215,10 +214,10 @@ class CompletedChallengeCard extends ChallengeCard {
                             imageUrl: RandomImages[i],
                           ),
                         ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
-                      Text("+4")
+                      const Text("+4")
                     ],
                   ),
                 ),
@@ -232,9 +231,9 @@ class CompletedChallengeCard extends ChallengeCard {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Results',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),

@@ -8,14 +8,14 @@ class HomeScreenInitialState extends HomeScreenState {}
 // Fetch Challenges States
 class HomeScreenChallengeLoadingState extends HomeScreenState {}
 
-class HomeScreenChallengeSuccessState extends HomeScreenState {
-  final List<ChallengesListResponse> challenges;
-  HomeScreenChallengeSuccessState(this.challenges);
+class HomeScreenPrivateChallengeSuccessState extends HomeScreenState {
+  final List<PrivateChallengesListResponse> challenges;
+  HomeScreenPrivateChallengeSuccessState(this.challenges);
 }
 
-class HomeScreenChallengeFailureState extends HomeScreenState {
+class HomeScreenPrivateChallengeFailureState extends HomeScreenState {
   final String errorMessage;
-  HomeScreenChallengeFailureState(this.errorMessage);
+  HomeScreenPrivateChallengeFailureState(this.errorMessage);
 }
 
 // Fetch Public Challenges States

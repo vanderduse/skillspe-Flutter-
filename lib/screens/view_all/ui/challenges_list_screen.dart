@@ -6,7 +6,7 @@ import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/bloc/challengesBloc/challenges_list_bloc.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -19,7 +19,7 @@ class ChallengesListScreen extends StatefulWidget {
 
 class _ChallengesListScreenState extends State<ChallengesListScreen> {
   late ChallengesListBloc _challengesListBloc;
-  List<ChallengesListResponse> challengesList = [];
+  List<PrivateChallengesListResponse> challengesList = [];
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
   int _pageNumber = 1;
@@ -154,9 +154,9 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
     );
   }
 
-  Widget _getChallengeCard(ChallengesListResponse item) {
+  Widget _getChallengeCard(PrivateChallengesListResponse item) {
     final factory =
-        ChallengeCardFactory.getChallengeCardFactory(item?.status ?? "");
+        ChallengeCardFactory.getChallengeCardFactory(item.status ?? "");
     return factory.createChallengeCard(item); // Return Widget directly
   }
 }

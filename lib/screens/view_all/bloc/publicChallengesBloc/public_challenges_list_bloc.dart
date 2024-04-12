@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:skills_pe/screens/view_all/repository/private_challenges_list_repository.dart';
 import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/screens/view_all/repository/public_challenges_list_repository.dart';
 import 'package:skills_pe/utility/constants.dart';

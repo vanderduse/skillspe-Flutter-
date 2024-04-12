@@ -5,7 +5,6 @@ import 'package:skills_pe/screens/view_all/bloc/privateChallengesBloc/private_ch
 import 'package:skills_pe/screens/view_all/repository/private_challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
-import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';

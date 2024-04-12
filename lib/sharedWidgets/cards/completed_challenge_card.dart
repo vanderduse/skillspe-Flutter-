@@ -84,7 +84,7 @@ class CompletedChallengeCard extends ChallengeCard {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
-                              item?.challengeEmoji ?? "",
+                              item.challengeEmoji ?? "",
                               style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))

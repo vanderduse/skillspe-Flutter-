@@ -17,11 +17,9 @@ class QuizListRepository {
     if (status != ALL.toUpperCase()) {
       queryParameters.addEntries({STATUS: status}.entries);
     }
-    log(queryParameters.toString());
     try {
       Response? response =
           await _dio?.get('/v1/quizzes', queryParameters: queryParameters);
-      //log(response.toString());
       return BaseResponseModel<List<QuizzesListResponse>>.fromJson(
         response?.data,
         (data) {

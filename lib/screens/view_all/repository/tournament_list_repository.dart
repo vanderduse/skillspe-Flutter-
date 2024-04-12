@@ -19,7 +19,6 @@ class TournamentListRepository {
       };
       Response? response = await _dio?.get('/v1/cumulated/tournaments',
           queryParameters: queryParameters);
-      log('${response?.data.toString()}, $status');
       return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
         response?.data,
         (data) {

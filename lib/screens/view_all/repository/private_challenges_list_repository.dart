@@ -18,10 +18,8 @@ class PrivateChallengesListRepository {
       if (status != "ALL") {
         queryParameters["status"] = status;
       }
-      log('$page');
       Response? response = await _dio?.get('/v1/feed/private/challenges',
           queryParameters: queryParameters);
-      log('${response?.data.toString()}, $status');
       return BaseResponseModel<List<PrivateChallengesListResponse>>.fromJson(
         response?.data,
         (data) {

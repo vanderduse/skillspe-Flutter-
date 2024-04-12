@@ -30,7 +30,8 @@ class _PrivateChallengesListScreenState
   @override
   void initState() {
     super.initState();
-    _challengesListBloc = PrivateChallengesListBloc(PrivateChallengesListRepository());
+    _challengesListBloc =
+        PrivateChallengesListBloc(PrivateChallengesListRepository());
     _scrollController.addListener(() {
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
@@ -64,19 +65,19 @@ class _PrivateChallengesListScreenState
   @override
   Widget build(BuildContext context) {
     // Filter button names
-    List<ChallengeStatus> filterButtonNames = [
-      ChallengeStatus.ALL,
-      ChallengeStatus.DRAFT,
-      ChallengeStatus.LIVE,
-      ChallengeStatus.RESULTS_PENDING,
-      ChallengeStatus.COMPLETED,
-      ChallengeStatus.REQUEST,
-      ChallengeStatus.UPCOMING
+    List<PrivateChallengeStatus> filterButtonNames = [
+      PrivateChallengeStatus.ALL,
+      PrivateChallengeStatus.DRAFT,
+      PrivateChallengeStatus.LIVE,
+      PrivateChallengeStatus.RESULTS_PENDING,
+      PrivateChallengeStatus.COMPLETED,
+      PrivateChallengeStatus.REQUEST,
+      PrivateChallengeStatus.UPCOMING
     ];
 
     return Scaffold(
       appBar: AppbarWithBack(
-        screenName: CHALLENGES,
+        screenName: PRIVATE_CHALLENGE_TITLE,
         walletAmount: 100.0,
       ),
       // Rest of your Scaffold content...
@@ -87,7 +88,7 @@ class _PrivateChallengesListScreenState
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
-              buttonNames: filterButtonNames.map((ChallengeStatus status) {
+              buttonNames: filterButtonNames.map((PrivateChallengeStatus status) {
                 return status.displayName;
               }).toList(),
               onItemSelected: (index) {

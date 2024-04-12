@@ -65,19 +65,17 @@ class _PublicChallengesListScreenState
   @override
   Widget build(BuildContext context) {
     // Filter button names
-    List<ChallengeStatus> filterButtonNames = [
-      ChallengeStatus.ALL,
-      ChallengeStatus.DRAFT,
-      ChallengeStatus.LIVE,
-      ChallengeStatus.RESULTS_PENDING,
-      ChallengeStatus.COMPLETED,
-      ChallengeStatus.REQUEST,
-      ChallengeStatus.UPCOMING
+    List<PublicChallengeStatus> filterButtonNames = [
+      PublicChallengeStatus.ALL,
+      PublicChallengeStatus.LIVE,
+      PublicChallengeStatus.RESULTS_PENDING,
+      PublicChallengeStatus.COMPLETED,
+      PublicChallengeStatus.UPCOMING
     ];
 
     return Scaffold(
       appBar: AppbarWithBack(
-        screenName: CHALLENGES,
+        screenName: PUBLIC_CHALLENGE_TITLE,
         walletAmount: 100.0,
       ),
       // Rest of your Scaffold content...
@@ -88,7 +86,7 @@ class _PublicChallengesListScreenState
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
-              buttonNames: filterButtonNames.map((ChallengeStatus status) {
+              buttonNames: filterButtonNames.map((PublicChallengeStatus status) {
                 return status.displayName;
               }).toList(),
               onItemSelected: (index) {

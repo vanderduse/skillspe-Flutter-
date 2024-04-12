@@ -7,6 +7,7 @@ import 'package:skills_pe/screens/view_all/repository/campaign_list_repository.d
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/cards/campaigns_card.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class CampaignListScreen extends StatefulWidget {
   const CampaignListScreen({super.key});
@@ -67,7 +68,7 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppbarWithBack(
-          screenName: 'Campaigns',
+          screenName: CAMPAIGNS,
           walletAmount: 100.00,
         ),
         body: BlocBuilder<CampaignListBloc, CampaignListState>(
@@ -78,8 +79,7 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
                 log(_campaignList.toString());
                 _campaignList.addAll(state.campaignList);
                 _isLoading = false;
-                return Container(
-                    child: ListView.builder(
+                return ListView.builder(
                   shrinkWrap: true,
                   controller: _scrollController,
                   itemCount: _campaignList.length + 1,
@@ -105,7 +105,7 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
                       return null;
                     }
                   },
-                ));
+                );
               } else {
                 return const Center(
                   child: Text(

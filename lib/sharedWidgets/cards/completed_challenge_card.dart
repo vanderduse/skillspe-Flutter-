@@ -179,7 +179,7 @@ class CompletedChallengeCard extends ChallengeCard {
                           )),
                       child: Text(
                         '${TextUtility.toSentenceCase(formattedStartDate)} - ${TextUtility.toSentenceCase(formattedEndDate)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.w400),

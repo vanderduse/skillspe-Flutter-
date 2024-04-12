@@ -33,10 +33,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       if (response != null &&
           response.responseCode == API_SUCCESS_CODE &&
           response.data != null) {
-        print("print====================>");
         emit(HomeScreenPrivateChallengeSuccessState(response.data!));
       } else {
-        print("else====================>");
         emit(HomeScreenPrivateChallengeFailureState(
             'Failed to fetch challenges'));
       }

@@ -13,7 +13,7 @@ class PublicChallengesListResponse {
   double? prizeAmount;
   String? status;
   double? participationFee;
-  List<Option>? options;
+  List<PublicOptions>? options;
 
   PublicChallengesListResponse({
     required this.id,
@@ -50,19 +50,19 @@ class PublicChallengesListResponse {
       status: json['status'],
       participationFee: json['participation_fee'],
       options: (json['options'] as List<dynamic>?)
-          ?.map((e) => Option.fromJson(e))
+          ?.map((e) => PublicOptions.fromJson(e))
           .toList(),
     );
   }
 }
 
-class Option {
+class PublicOptions {
   String? label;
   double? value;
 
-  Option({this.label, this.value});
+  PublicOptions({this.label, this.value});
 
-  Option.fromJson(Map<String, dynamic> json) {
+  PublicOptions.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     value = json['value']?.toDouble();
   }

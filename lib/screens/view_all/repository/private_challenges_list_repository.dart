@@ -5,10 +5,10 @@ import 'package:skills_pe/service/api_client.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class ChallengesListRepository {
+class PrivateChallengesListRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?> fetchChallengesList(
+  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?> fetchPrivateChallengesList(
       String status, int page) async {
     try {
       Map<String, dynamic> queryParameters = {

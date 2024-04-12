@@ -13,7 +13,7 @@ class PrivateChallengesListResponse {
   double? prizeAmount;
   String? status;
   double? participationFee;
-  List<Option>? options;
+  List<PrivateOptions>? options;
   ParticipationDetails? participationDetails;
 
   PrivateChallengesListResponse(
@@ -51,7 +51,7 @@ class PrivateChallengesListResponse {
       status: json['status'],
       participationFee: json['participation_fee'],
       options: (json['options'] as List<dynamic>?)
-          ?.map((e) => Option.fromJson(e))
+          ?.map((e) => PrivateOptions.fromJson(e))
           .toList(),
       participationDetails: json['participation_details'] != null
           ? ParticipationDetails.fromJson(json['participation_details'])
@@ -89,15 +89,15 @@ class ParticipationDetails {
   }
 }
 
-class Option {
+class PrivateOptions {
   String? userId;
   String? lastName;
   String? firstName;
   String? profileImgUrl;
 
-  Option({this.userId, this.lastName, this.firstName, this.profileImgUrl});
+  PrivateOptions({this.userId, this.lastName, this.firstName, this.profileImgUrl});
 
-  Option.fromJson(Map<String, dynamic> json) {
+  PrivateOptions.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     lastName = json['last_name'];
     firstName = json['first_name'];

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
-import 'package:skills_pe/screens/view_all/repository/challenges_list_repository.dart';
+import 'package:skills_pe/screens/view_all/bloc/privateChallengesBloc/private_challenges_list_bloc.dart';
+import 'package:skills_pe/screens/view_all/repository/private_challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
-import 'package:skills_pe/screens/view_all/bloc/challengesBloc/challenges_list_bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class ChallengesListScreen extends StatefulWidget {
-  const ChallengesListScreen({super.key});
+class PublicChallengesListScreen extends StatefulWidget {
+  const PublicChallengesListScreen({super.key});
 
   @override
-  _ChallengesListScreenState createState() => _ChallengesListScreenState();
+  // ignore: library_private_types_in_public_api
+  _PrivateChallengesListScreenState createState() =>
+      _PrivateChallengesListScreenState();
 }
 
-class _ChallengesListScreenState extends State<ChallengesListScreen> {
-  late ChallengesListBloc _challengesListBloc;
+class _PrivateChallengesListScreenState
+    extends State<PublicChallengesListScreen> {
+  late PrivateChallengesListBloc _challengesListBloc;
   List<PrivateChallengesListResponse> challengesList = [];
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
@@ -28,7 +31,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   @override
   void initState() {
     super.initState();
-    _challengesListBloc = ChallengesListBloc(ChallengesListRepository());
+    _challengesListBloc = PrivateChallengesListBloc(PrivateChallengesListRepository());
     _scrollController.addListener(() {
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
@@ -40,7 +43,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
         }
       }
     });
-    _challengesListBloc.add(FetchChallengesListEvent(
+    _challengesListBloc.add(FetchPrivateChallengesListEvent(
       status: selectedFilter, // Default status
       page: _pageNumber, // Default page
     ));
@@ -53,7 +56,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   }
 
   void _loadMoreData() {
-    _challengesListBloc.add(FetchChallengesListEvent(
+    _challengesListBloc.add(FetchPrivateChallengesListEvent(
       status: selectedFilter, // Default status
       page: ++_pageNumber, // Default page
     ));
@@ -92,19 +95,19 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                 selectedFilter = filterButtonNames[index].label;
                 challengesList.clear();
                 _pageNumber = 1;
-                _challengesListBloc.add(FetchChallengesListEvent(
+                _challengesListBloc.add(FetchPrivateChallengesListEvent(
                     status: selectedFilter.toUpperCase(), page: _pageNumber));
               },
             ),
           ),
-          BlocBuilder<ChallengesListBloc, ChallengesListState>(
+          BlocBuilder<PrivateChallengesListBloc, PrivateChallengesListState>(
             bloc: _challengesListBloc,
             builder: (context, state) {
-              if (state is ChallengesListSuccessState) {
-                if (state.challengesList.isNotEmpty ||
+              if (state is PrivateChallengesListSuccessState) {
+                if (state.privateChallengesList.isNotEmpty ||
                     challengesList.isNotEmpty) {
                   // log(challengesList.toString());
-                  challengesList.addAll(state.challengesList);
+                  challengesList.addAll(state.privateChallengesList);
                   _isLoading = false;
                   return Expanded(
                       child: ListView.builder(
@@ -139,7 +142,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                     ),
                   );
                 }
-              } else if (state is ChallengesListFailureState) {
+              } else if (state is PrivateChallengesListFailureState) {
                 return Text('Error: ${state.errorMessage}');
               } else {
                 return Column(

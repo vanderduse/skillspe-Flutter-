@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
-import 'package:skills_pe/screens/view_all/bloc/privateChallengesBloc/private_challenges_list_bloc.dart';
-import 'package:skills_pe/screens/view_all/repository/private_challenges_list_repository.dart';
+import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
+import 'package:skills_pe/screens/view_all/bloc/publicChallengesBloc/public_challenges_list_bloc.dart';
+import 'package:skills_pe/screens/view_all/repository/public_challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
-import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
-import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
+import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
@@ -15,14 +16,14 @@ class PublicChallengesListScreen extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _PrivateChallengesListScreenState createState() =>
-      _PrivateChallengesListScreenState();
+  _PublicChallengesListScreenState createState() =>
+      _PublicChallengesListScreenState();
 }
 
-class _PrivateChallengesListScreenState
+class _PublicChallengesListScreenState
     extends State<PublicChallengesListScreen> {
-  late PrivateChallengesListBloc _challengesListBloc;
-  List<PrivateChallengesListResponse> challengesList = [];
+  late PublicChallengesListBloc _publicChallengesListBloc;
+  List<PublicChallengesListResponse> publicChallengesList = [];
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
   int _pageNumber = 1;
@@ -31,7 +32,8 @@ class _PrivateChallengesListScreenState
   @override
   void initState() {
     super.initState();
-    _challengesListBloc = PrivateChallengesListBloc(PrivateChallengesListRepository());
+    _publicChallengesListBloc =
+        PublicChallengesListBloc(PublicChallengesListRepository());
     _scrollController.addListener(() {
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
@@ -43,7 +45,7 @@ class _PrivateChallengesListScreenState
         }
       }
     });
-    _challengesListBloc.add(FetchPrivateChallengesListEvent(
+    _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
       status: selectedFilter, // Default status
       page: _pageNumber, // Default page
     ));
@@ -56,7 +58,7 @@ class _PrivateChallengesListScreenState
   }
 
   void _loadMoreData() {
-    _challengesListBloc.add(FetchPrivateChallengesListEvent(
+    _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
       status: selectedFilter, // Default status
       page: ++_pageNumber, // Default page
     ));
@@ -93,36 +95,36 @@ class _PrivateChallengesListScreenState
               }).toList(),
               onItemSelected: (index) {
                 selectedFilter = filterButtonNames[index].label;
-                challengesList.clear();
+                publicChallengesList.clear();
                 _pageNumber = 1;
-                _challengesListBloc.add(FetchPrivateChallengesListEvent(
+                _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
                     status: selectedFilter.toUpperCase(), page: _pageNumber));
               },
             ),
           ),
-          BlocBuilder<PrivateChallengesListBloc, PrivateChallengesListState>(
-            bloc: _challengesListBloc,
+          BlocBuilder<PublicChallengesListBloc, PublicChallengesListState>(
+            bloc: _publicChallengesListBloc,
             builder: (context, state) {
-              if (state is PrivateChallengesListSuccessState) {
-                if (state.privateChallengesList.isNotEmpty ||
-                    challengesList.isNotEmpty) {
+              if (state is PublicChallengesListSuccessState) {
+                if (state.publicChallengesList.isNotEmpty ||
+                    publicChallengesList.isNotEmpty) {
                   // log(challengesList.toString());
-                  challengesList.addAll(state.privateChallengesList);
+                  publicChallengesList.addAll(state.publicChallengesList);
                   _isLoading = false;
                   return Expanded(
                       child: ListView.builder(
                     shrinkWrap: true,
                     controller: _scrollController,
-                    itemCount: challengesList.length + 1,
+                    itemCount: publicChallengesList.length + 1,
                     itemBuilder: (context, index) {
-                      if (index < challengesList.length) {
-                        final challengeCard =
-                            _getChallengeCard(challengesList[index]);
+                      if (index < publicChallengesList.length) {
                         return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          height: 290,
-                          child: challengeCard,
-                        );
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            height: 260,
+                            child: PublicChallengeCard(
+                              item: publicChallengesList[index],
+                            ));
                       } else if (state.hasNext) {
                         return Column(
                           children: List.generate(
@@ -142,7 +144,7 @@ class _PrivateChallengesListScreenState
                     ),
                   );
                 }
-              } else if (state is PrivateChallengesListFailureState) {
+              } else if (state is PublicChallengesListFailureState) {
                 return Text('Error: ${state.errorMessage}');
               } else {
                 return Column(
@@ -155,11 +157,5 @@ class _PrivateChallengesListScreenState
         ],
       ),
     );
-  }
-
-  Widget _getChallengeCard(PrivateChallengesListResponse item) {
-    final factory =
-        ChallengeCardFactory.getChallengeCardFactory(item.status ?? "");
-    return factory.createChallengeCard(item); // Return Widget directly
   }
 }

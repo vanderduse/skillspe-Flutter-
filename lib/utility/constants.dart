@@ -190,19 +190,34 @@ const REQUEST = 'Request';
 const RESULTS_PENDING = 'RESULTS_PENDING';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';
+const CAMPAIGNS = 'Campaigns';
 
-class ChallengeStatus {
+class PrivateChallengeStatus {
   final String label;
   final String displayName;
 
-  const ChallengeStatus(this.label, this.displayName);
+  const PrivateChallengeStatus(this.label, this.displayName);
 
-  static const ALL = ChallengeStatus('ALL', 'All');
-  static const DRAFT = ChallengeStatus('DRAFT', 'Draft');
-  static const LIVE = ChallengeStatus('LIVE', 'Live');
-  static const REQUEST = ChallengeStatus('REQUESTED', 'Request');
+  static const ALL = PrivateChallengeStatus('ALL', 'All');
+  static const DRAFT = PrivateChallengeStatus('DRAFT', 'Draft');
+  static const LIVE = PrivateChallengeStatus('LIVE', 'Live');
+  static const REQUEST = PrivateChallengeStatus('REQUESTED', 'Request');
   static const RESULTS_PENDING =
-      ChallengeStatus('RESULTS_PENDING', 'Results Pending');
-  static const UPCOMING = ChallengeStatus('UPCOMING', 'Upcoming');
-  static const COMPLETED = ChallengeStatus('COMPLETED', 'Completed');
+      PrivateChallengeStatus('RESULTS_PENDING', 'Results Pending');
+  static const UPCOMING = PrivateChallengeStatus('UPCOMING', 'Upcoming');
+  static const COMPLETED = PrivateChallengeStatus('COMPLETED', 'Completed');
+}
+
+class PublicChallengeStatus {
+  final String label;
+  final String displayName;
+
+  const PublicChallengeStatus(this.label, this.displayName);
+
+  static const ALL = PublicChallengeStatus('ALL', 'All');
+  static const LIVE = PublicChallengeStatus('LIVE', 'Live');
+  static const RESULTS_PENDING =
+      PublicChallengeStatus('RESULTS_PENDING', 'Results Pending');
+  static const UPCOMING = PublicChallengeStatus('UPCOMING', 'Upcoming');
+  static const COMPLETED = PublicChallengeStatus('COMPLETED', 'Completed');
 }

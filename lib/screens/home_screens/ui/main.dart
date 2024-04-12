@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/home_screens/bloc/home_screen_bloc.dart';
 import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/private_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/campaigns_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/public_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
@@ -34,11 +34,11 @@ class _HomeMain extends State<HomeMain> {
 
     _homeScreenPublicChallengesBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenPublicChallengesBloc
-        .add(HomeScreenFetchChallengesEvent(isPublic: true));
+        .add(HomeScreenFetchPublicChallengesEvent());
 
     _homeScreenPrivateChallengesBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenPrivateChallengesBloc
-        .add(HomeScreenFetchChallengesEvent(isPublic: false));
+        .add(HomeScreenFetchPrivateChallengesEvent());
 
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
@@ -66,14 +66,14 @@ class _HomeMain extends State<HomeMain> {
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
                   return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
+                } else if (state is HomeScreenPrivateChallengeSuccessState) {
                   return SingleChildScrollView(
-                      child: ChallengesWidget(
+                      child: PrivateChallengesWidget(
                     title: PRIVATE_CHALLENGE_TITLE,
                     subTitle: PRIVATE_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
-                } else if (state is HomeScreenChallengeFailureState) {
+                } else if (state is HomeScreenPrivateChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
@@ -83,16 +83,16 @@ class _HomeMain extends State<HomeMain> {
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
               bloc: _homeScreenPublicChallengesBloc,
               builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
+                if (state is HomeScreenPublicChallengeLoadingState) {
                   return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
+                } else if (state is HomeScreenPublicChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
                     title: PUBLIC_CHALLENGE_TITLE,
                     subTitle: PUBLIC_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
-                } else if (state is HomeScreenChallengeFailureState) {
+                } else if (state is HomeScreenPublicChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');

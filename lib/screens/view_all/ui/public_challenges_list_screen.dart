@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
-import 'package:skills_pe/screens/view_all/repository/challenges_list_repository.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
+import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
+import 'package:skills_pe/screens/view_all/bloc/publicChallengesBloc/public_challenges_list_bloc.dart';
+import 'package:skills_pe/screens/view_all/repository/public_challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
-import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
-import 'package:skills_pe/screens/view_all/bloc/challengesBloc/challenges_list_bloc.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class ChallengesListScreen extends StatefulWidget {
-  const ChallengesListScreen({super.key});
+class PublicChallengesListScreen extends StatefulWidget {
+  const PublicChallengesListScreen({super.key});
 
   @override
-  _ChallengesListScreenState createState() => _ChallengesListScreenState();
+  // ignore: library_private_types_in_public_api
+  _PublicChallengesListScreenState createState() =>
+      _PublicChallengesListScreenState();
 }
 
-class _ChallengesListScreenState extends State<ChallengesListScreen> {
-  late ChallengesListBloc _challengesListBloc;
-  List<ChallengesListResponse> challengesList = [];
+class _PublicChallengesListScreenState
+    extends State<PublicChallengesListScreen> {
+  late PublicChallengesListBloc _publicChallengesListBloc;
+  List<PublicChallengesListResponse> publicChallengesList = [];
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
   int _pageNumber = 1;
@@ -28,7 +30,8 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   @override
   void initState() {
     super.initState();
-    _challengesListBloc = ChallengesListBloc(ChallengesListRepository());
+    _publicChallengesListBloc =
+        PublicChallengesListBloc(PublicChallengesListRepository());
     _scrollController.addListener(() {
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
@@ -40,7 +43,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
         }
       }
     });
-    _challengesListBloc.add(FetchChallengesListEvent(
+    _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
       status: selectedFilter, // Default status
       page: _pageNumber, // Default page
     ));
@@ -53,7 +56,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   }
 
   void _loadMoreData() {
-    _challengesListBloc.add(FetchChallengesListEvent(
+    _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
       status: selectedFilter, // Default status
       page: ++_pageNumber, // Default page
     ));
@@ -62,19 +65,17 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
   @override
   Widget build(BuildContext context) {
     // Filter button names
-    List<ChallengeStatus> filterButtonNames = [
-      ChallengeStatus.ALL,
-      ChallengeStatus.DRAFT,
-      ChallengeStatus.LIVE,
-      ChallengeStatus.RESULTS_PENDING,
-      ChallengeStatus.COMPLETED,
-      ChallengeStatus.REQUEST,
-      ChallengeStatus.UPCOMING
+    List<PublicChallengeStatus> filterButtonNames = [
+      PublicChallengeStatus.ALL,
+      PublicChallengeStatus.LIVE,
+      PublicChallengeStatus.RESULTS_PENDING,
+      PublicChallengeStatus.COMPLETED,
+      PublicChallengeStatus.UPCOMING
     ];
 
     return Scaffold(
       appBar: AppbarWithBack(
-        screenName: CHALLENGES,
+        screenName: PUBLIC_CHALLENGE_TITLE,
         walletAmount: 100.0,
       ),
       // Rest of your Scaffold content...
@@ -85,41 +86,41 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
-              buttonNames: filterButtonNames.map((ChallengeStatus status) {
+              buttonNames: filterButtonNames.map((PublicChallengeStatus status) {
                 return status.displayName;
               }).toList(),
               onItemSelected: (index) {
                 selectedFilter = filterButtonNames[index].label;
-                challengesList.clear();
+                publicChallengesList.clear();
                 _pageNumber = 1;
-                _challengesListBloc.add(FetchChallengesListEvent(
+                _publicChallengesListBloc.add(FetchPublicChallengesListEvent(
                     status: selectedFilter.toUpperCase(), page: _pageNumber));
               },
             ),
           ),
-          BlocBuilder<ChallengesListBloc, ChallengesListState>(
-            bloc: _challengesListBloc,
+          BlocBuilder<PublicChallengesListBloc, PublicChallengesListState>(
+            bloc: _publicChallengesListBloc,
             builder: (context, state) {
-              if (state is ChallengesListSuccessState) {
-                if (state.challengesList.isNotEmpty ||
-                    challengesList.isNotEmpty) {
+              if (state is PublicChallengesListSuccessState) {
+                if (state.publicChallengesList.isNotEmpty ||
+                    publicChallengesList.isNotEmpty) {
                   // log(challengesList.toString());
-                  challengesList.addAll(state.challengesList);
+                  publicChallengesList.addAll(state.publicChallengesList);
                   _isLoading = false;
                   return Expanded(
                       child: ListView.builder(
                     shrinkWrap: true,
                     controller: _scrollController,
-                    itemCount: challengesList.length + 1,
+                    itemCount: publicChallengesList.length + 1,
                     itemBuilder: (context, index) {
-                      if (index < challengesList.length) {
-                        final challengeCard =
-                            _getChallengeCard(challengesList[index]);
+                      if (index < publicChallengesList.length) {
                         return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          height: 290,
-                          child: challengeCard,
-                        );
+                            margin:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            height: 260,
+                            child: PublicChallengeCard(
+                              item: publicChallengesList[index],
+                            ));
                       } else if (state.hasNext) {
                         return Column(
                           children: List.generate(
@@ -139,7 +140,7 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
                     ),
                   );
                 }
-              } else if (state is ChallengesListFailureState) {
+              } else if (state is PublicChallengesListFailureState) {
                 return Text('Error: ${state.errorMessage}');
               } else {
                 return Column(
@@ -152,11 +153,5 @@ class _ChallengesListScreenState extends State<ChallengesListScreen> {
         ],
       ),
     );
-  }
-
-  Widget _getChallengeCard(ChallengesListResponse item) {
-    final factory =
-        ChallengeCardFactory.getChallengeCardFactory(item?.status ?? "");
-    return factory.createChallengeCard(item); // Return Widget directly
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
-import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
+import 'package:skills_pe/screens/view_all/ui/public_challenges_list_screen.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class PublicChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
-  final List<ChallengesListResponse> data;
+  final List<PublicChallengesListResponse> data;
 
   const PublicChallengesWidget({
     super.key,
@@ -52,7 +52,7 @@ class PublicChallengesWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ChallengesListScreen(),
+                      builder: (context) => const PublicChallengesListScreen(),
                     ),
                   );
                 },

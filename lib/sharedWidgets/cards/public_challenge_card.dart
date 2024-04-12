@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 
 class PublicChallengeCard extends StatelessWidget {
-  final ChallengesListResponse? item;
+  final PublicChallengesListResponse? item;
 
   const PublicChallengeCard({
     Key? key,

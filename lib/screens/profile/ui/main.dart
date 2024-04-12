@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';

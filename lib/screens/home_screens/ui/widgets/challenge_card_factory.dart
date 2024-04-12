@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/cards/draft_challenge_card.dart';

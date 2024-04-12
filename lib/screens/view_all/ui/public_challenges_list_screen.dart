@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
-import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
 import 'package:skills_pe/screens/view_all/bloc/publicChallengesBloc/public_challenges_list_bloc.dart';
 import 'package:skills_pe/screens/view_all/repository/public_challenges_list_repository.dart';
 import 'package:skills_pe/sharedWidgets/appBars/back_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
-import 'package:skills_pe/sharedWidgets/cards/public_challenge_card.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
 

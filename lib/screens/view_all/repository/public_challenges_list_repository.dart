@@ -14,8 +14,8 @@ class PublicChallengesListRepository {
         PAGE: page,
         LIMIT: 10,
       };
-      if (status != "ALL") {
-        queryParameters["status"] = status;
+      if (status != ALL.toUpperCase()) {
+        queryParameters[STATUS.toLowerCase()] = status;
       }
       Response? response = await _dio?.get('/v1/feed/public/challenges',
           queryParameters: queryParameters);

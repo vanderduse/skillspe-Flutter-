@@ -34,8 +34,7 @@ class _HomeMain extends State<HomeMain> {
     HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
     _homeScreenPublicChallengesBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenPublicChallengesBloc
-        .add(HomeScreenFetchPublicChallengesEvent());
+    _homeScreenPublicChallengesBloc.add(HomeScreenFetchPublicChallengesEvent());
 
     _homeScreenPrivateChallengesBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenPrivateChallengesBloc
@@ -65,11 +64,11 @@ class _HomeMain extends State<HomeMain> {
         child: Column(
           children: [
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
+              bloc: _homeScreenBannerBloc,
               builder: (context, state) {
                 if (state is HomeScreenBannerLoadingState) {
                   return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenBannerSuccessState) {
+                } else if (state is HomeScreenBannerSuccessState) {                 
                   return HomeSwipper(bannerList: state.bannersList);
                 } else if (state is HomeScreenBannerFailureState) {
                   return Text('Error: ${state.errorMessage}');

@@ -32,24 +32,12 @@ class QuizCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: 3, // dividing space according to desired ratio (40% : 60%)
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xfffd5ccff),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                ),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Image.network(
-                    item?.banner ?? "",
-                    width: 54,
-                    height: 54,
-                  ),
-                ),
+            flex: 3,
+            child: SizedBox(
+              width: double.infinity,
+              child: Image.network(
+                item?.banner ?? "",
+                fit: BoxFit.cover,
               ),
             ),
           ),

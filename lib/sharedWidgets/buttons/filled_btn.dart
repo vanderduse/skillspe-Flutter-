@@ -30,7 +30,11 @@ class FilledBtn extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           textStyle: Theme.of(context).textTheme.labelMedium,
         ),
-        child: Text(label),
+        child: Text(
+          label,
+          style:
+              const TextStyle(fontFamily: "Inter", fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }

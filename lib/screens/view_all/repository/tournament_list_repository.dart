@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/screens/home_screens/model/list_tournaments_response.dart';
@@ -19,7 +17,6 @@ class TournamentListRepository {
       };
       Response? response = await _dio?.get('/v1/cumulated/tournaments',
           queryParameters: queryParameters);
-      log('${response?.data.toString()}, $status');
       return BaseResponseModel<List<TournamentsListResponse>>.fromJson(
         response?.data,
         (data) {

@@ -62,6 +62,7 @@ class CampaignsCard extends StatelessWidget {
                     right: 0,
                     bottom: 0,
                     child: Container(
+                      height: 120,
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -80,20 +81,28 @@ class CampaignsCard extends StatelessWidget {
                               0.9
                             ]),
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             item?.bannerConfig?.tagline ?? "",
                             textAlign: TextAlign.left,
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                            ),
+                                color: Colors.white,
+                                fontSize: 26.0,
+                                fontWeight: FontWeight.w800,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: "Sora-Bold"),
                           ),
                           const SizedBox(height: 5.0),
                           Text(
@@ -103,7 +112,7 @@ class CampaignsCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                             ),
                           ),
                         ],
@@ -117,6 +126,7 @@ class CampaignsCard extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 color: HexColor(item?.bannerConfig?.css?.themeColor),
                 borderRadius: const BorderRadius.only(
@@ -125,14 +135,14 @@ class CampaignsCard extends StatelessWidget {
                 ),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // First Container
                   Row(
                     children: [
                       Container(
-                        width: 40.0,
-                        height: 40.0,
+                        width: 48.0,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10.0),
@@ -158,18 +168,19 @@ class CampaignsCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item?.bannerConfig?.titleTag ?? 'Lets Play',
+                              item?.bannerConfig?.titleTag ?? '',
                               style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 12.0,
+                                fontSize: 14.0,
                               ),
                             ),
                             Text(
                               item?.bannerConfig?.title ?? "",
                               style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                              ),
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "Inter"),
                             ),
                           ],
                         ),

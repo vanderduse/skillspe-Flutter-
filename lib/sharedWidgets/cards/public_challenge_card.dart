@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 
 class PublicChallengeCard extends StatelessWidget {
-  final ChallengesListResponse? item;
+  final PublicChallengesListResponse? item;
 
   const PublicChallengeCard({
     Key? key,
@@ -110,7 +110,7 @@ class PublicChallengeCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -135,7 +135,7 @@ class PublicChallengeCard extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            height: 3,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Color(0xFFFF34C1),
                               borderRadius: BorderRadius.only(
@@ -147,7 +147,7 @@ class PublicChallengeCard extends StatelessWidget {
                           const Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 21),
+                              SizedBox(height: 32),
                               Text(
                                 '30%',
                                 textAlign: TextAlign.center,
@@ -167,7 +167,7 @@ class PublicChallengeCard extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            height: 3,
+                            height: 6,
                             decoration: const BoxDecoration(
                               color: Color(0xFF8247DF),
                               borderRadius: BorderRadius.only(
@@ -179,7 +179,7 @@ class PublicChallengeCard extends StatelessWidget {
                           const Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 21),
+                              SizedBox(height: 32),
                               Text(
                                 '70%',
                                 textAlign: TextAlign.center,

@@ -1,4 +1,4 @@
-class ChallengesListResponse {
+class PublicChallengesListResponse {
   String? id;
   String? createdBy;
   String? updatedBy;
@@ -8,14 +8,14 @@ class ChallengesListResponse {
   String? description;
   String? challengeEmoji;
   bool? isPublic;
-  String? startTime;
-  String? endTime;
+  String startTime;
+  String endTime;
   double? prizeAmount;
-  String? category;
   String? status;
   double? participationFee;
+  List<PublicOptions>? options;
 
-  ChallengesListResponse({
+  PublicChallengesListResponse({
     required this.id,
     required this.createdBy,
     required this.updatedBy,
@@ -27,14 +27,14 @@ class ChallengesListResponse {
     required this.isPublic,
     required this.startTime,
     required this.endTime,
-    required this.prizeAmount,
-    required this.category,
     required this.status,
     required this.participationFee,
+    this.prizeAmount,
+    this.options,
   });
 
-  factory ChallengesListResponse.fromJson(Map<String, dynamic> json) {
-    return ChallengesListResponse(
+  factory PublicChallengesListResponse.fromJson(Map<String, dynamic> json) {
+    return PublicChallengesListResponse(
       id: json['id'],
       createdBy: json['created_by'],
       updatedBy: json['updated_by'],
@@ -47,9 +47,30 @@ class ChallengesListResponse {
       startTime: json['start_time'],
       endTime: json['end_time'],
       prizeAmount: json['prize_amount']?.toDouble(),
-      category: json['category'],
       status: json['status'],
       participationFee: json['participation_fee'],
+      options: (json['options'] as List<dynamic>?)
+          ?.map((e) => PublicOptions.fromJson(e))
+          .toList(),
     );
+  }
+}
+
+class PublicOptions {
+  String? label;
+  double? value;
+
+  PublicOptions({this.label, this.value});
+
+  PublicOptions.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    value = json['value']?.toDouble();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['label'] = label;
+    data['value'] = value;
+    return data;
   }
 }

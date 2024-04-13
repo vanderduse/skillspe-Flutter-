@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/utility/text_utility.dart';
@@ -16,8 +17,7 @@ class DraftChallengeCard extends ChallengeCard {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime startDate =
-        DateFormat("yyyy-MM-dd").parse(item.startTime);
+    final DateTime startDate = DateFormat("yyyy-MM-dd").parse(item.startTime);
     final String formattedEndDate = DateFormat("MMM dd, yyyy")
         .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
     ;
@@ -220,7 +220,15 @@ class DraftChallengeCard extends ChallengeCard {
                     height: 40.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Button action
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChallengeDetailScreen(
+                              challengeId: item.id,
+                              challengeName: item.title,
+                            ),
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/utility/text_utility.dart';
@@ -16,8 +17,7 @@ class CompletedChallengeCard extends ChallengeCard {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime startDate =
-        DateFormat("yyyy-MM-dd").parse(item.startTime);
+    final DateTime startDate = DateFormat("yyyy-MM-dd").parse(item.startTime);
     final String formattedEndDate = DateFormat("MMM dd, yyyy")
         .format(DateFormat("yyyy-MM-dd").parse(item.endTime));
     ;
@@ -199,7 +199,8 @@ class CompletedChallengeCard extends ChallengeCard {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                       color: HexColor("#F0F0F0"),
                       borderRadius: BorderRadius.all(Radius.circular(300))),
@@ -223,7 +224,15 @@ class CompletedChallengeCard extends ChallengeCard {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Button action
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChallengeDetailScreen(
+                          challengeId: item.id,
+                          challengeName: item.title,
+                        ),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,

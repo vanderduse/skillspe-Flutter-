@@ -10,7 +10,7 @@ class ChallengeDetailResponse {
   bool? public;
   String? startTime;
   String? endTime;
-  int? prizeAmount;
+  double? prizeAmount;
   String? category;
   String? status;
   String? challengeInfo;

@@ -1,9 +1,5 @@
 class PublicChallengesListResponse {
   String? id;
-  String? createdBy;
-  String? updatedBy;
-  String? createdAt;
-  String? updatedAt;
   String? title;
   String? description;
   String? challengeEmoji;
@@ -14,13 +10,11 @@ class PublicChallengesListResponse {
   String? status;
   double? participationFee;
   List<PublicOptions>? options;
+  List<PublicOptions>? bidRatios; // New field
+  dynamic participationDetails; // New field
 
   PublicChallengesListResponse({
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
     required this.title,
     required this.description,
     required this.challengeEmoji,
@@ -31,15 +25,13 @@ class PublicChallengesListResponse {
     required this.participationFee,
     this.prizeAmount,
     this.options,
+    this.bidRatios,
+    this.participationDetails,
   });
 
   factory PublicChallengesListResponse.fromJson(Map<String, dynamic> json) {
     return PublicChallengesListResponse(
       id: json['id'],
-      createdBy: json['created_by'],
-      updatedBy: json['updated_by'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
       title: json['title'],
       description: json['description'],
       challengeEmoji: json['challenge_emoji'],
@@ -52,6 +44,10 @@ class PublicChallengesListResponse {
       options: (json['options'] as List<dynamic>?)
           ?.map((e) => PublicOptions.fromJson(e))
           .toList(),
+      bidRatios: (json['bid_ratios'] as List<dynamic>?)
+          ?.map((e) => PublicOptions.fromJson(e))
+          .toList(),
+      participationDetails: json['participation_details'],
     );
   }
 }
@@ -59,18 +55,22 @@ class PublicChallengesListResponse {
 class PublicOptions {
   String? label;
   double? value;
+  double? bidPercent; // New field
 
-  PublicOptions({this.label, this.value});
+  PublicOptions({this.label, this.value, this.bidPercent});
 
   PublicOptions.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     value = json['value']?.toDouble();
+    bidPercent =
+        json['bid_percent']?.toDouble(); // Parsing bid_percent for bidRatios
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['label'] = label;
     data['value'] = value;
+    data['bid_percent'] = bidPercent; // Adding bid_percent for bidRatios
     return data;
   }
 }

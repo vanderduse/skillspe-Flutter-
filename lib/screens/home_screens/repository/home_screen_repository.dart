@@ -91,7 +91,6 @@ class HomeScreenRepository {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
       Response? response = await _dio?.get('/v1/feed/campaigns',
           queryParameters: queryParameters);
-      print(response);
       return BaseResponseModel<List<CampaignListResponse>>.fromJson(
         response?.data,
         (data) {
@@ -140,7 +139,7 @@ class HomeScreenRepository {
     try {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
       Response? response =
-          await _dio?.get('/v1/campaign', queryParameters: queryParameters);
+          await _dio?.get('/v1/banners?limit=10', queryParameters: queryParameters);
       return BaseResponseModel<List<BannersListResponse>>.fromJson(
         response?.data,
         (data) {

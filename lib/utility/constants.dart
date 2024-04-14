@@ -62,6 +62,8 @@ const INVITE_CODE = "Challenge Invite Code";
 const INVITE_CHALLENGERS = "Invite Challengers";
 const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
+const NO = "No";
+const YES = "Yes";
 
 // Quiz Home screen
 const QUIZ_TITLE = "Quiz Zone";

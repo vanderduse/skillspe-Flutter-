@@ -118,13 +118,15 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                     () => {print('invite 3')}),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 0),
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: FilledBtn(
                           textColor: Colors.white,
                           backgroundColor: Theme.of(context).primaryColor,
-                          onPressed: () {},
+                          onPressed: () {
+                            _showShareBottomSheet(context);
+                          },
                           label: SHARE,
                         )),
                   ),
@@ -232,4 +234,17 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+// function to show the bottom sheet modal
+void _showShareBottomSheet(BuildContext context) {
+  showModalBottomSheet<dynamic>(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext context) {
+      return const SizedBox(
+        child: InviteChallengersBottomSheet(),
+      );
+    },
+  );
 }

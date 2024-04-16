@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
-import 'package:skills_pe/sharedWidgets/cards/challenge_card.dart';
-import 'package:skills_pe/screens/view_all/ui/challenges_list_screen.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
+import 'package:skills_pe/screens/view_all/ui/private_challenges_list_screen.dart';
 import 'package:skills_pe/utility/constants.dart';
 
-class ChallengesWidget extends StatelessWidget {
+class PrivateChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
-  final List<ChallengesListResponse> data;
+  final List<PrivateChallengesListResponse> data;
 
-  const ChallengesWidget({
+  const PrivateChallengesWidget({
     super.key,
     required this.title,
     required this.subTitle,
@@ -23,7 +23,7 @@ class ChallengesWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-              left: 16.0, right: 8.0, top: 10.0, bottom: 10.0),
+              left: 16.0, right: 8.0, top: 20.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -52,7 +52,7 @@ class ChallengesWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ChallengesListScreen(),
+                      builder: (context) => const PrivateChallengesListScreen(),
                     ),
                   );
                 },
@@ -69,28 +69,31 @@ class ChallengesWidget extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
-          child: SizedBox(
-            height: 190,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: index == 0
-                        ? 16.0
-                        : (index == data.length - 1 ? 16.0 : 10.0),
-                  ),
-                  child: ChallengeCard(
-                    item: data[index],
-                  ),
-                );
-              },
-            ),
+          height: 290, // Set a fixed height for the horizontal ListView
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) {
+              final challengeCard = _getChallengeCard(data[index]);
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                margin: EdgeInsets.symmetric(
+                  horizontal: index == 0
+                      ? 16.0
+                      : (index == data.length - 1 ? 16.0 : 10.0),
+                ),
+                child: challengeCard,
+              );
+            },
           ),
         ),
       ],
     );
+  }
+
+  Widget _getChallengeCard(PrivateChallengesListResponse item) {
+    final factory =
+        ChallengeCardFactory.getChallengeCardFactory(item.status ?? "");
+    return factory.createChallengeCard(item); // Return Widget directly
   }
 }

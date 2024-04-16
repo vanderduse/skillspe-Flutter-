@@ -6,21 +6,32 @@ sealed class HomeScreenState {}
 class HomeScreenInitialState extends HomeScreenState {}
 
 // Fetch Challenges States
-
 class HomeScreenChallengeLoadingState extends HomeScreenState {}
 
-class HomeScreenChallengeSuccessState extends HomeScreenState {
-  final List<ChallengesListResponse> challenges;
-  HomeScreenChallengeSuccessState(this.challenges);
+class HomeScreenPrivateChallengeSuccessState extends HomeScreenState {
+  final List<PrivateChallengesListResponse> challenges;
+  HomeScreenPrivateChallengeSuccessState(this.challenges);
 }
 
-class HomeScreenChallengeFailureState extends HomeScreenState {
+class HomeScreenPrivateChallengeFailureState extends HomeScreenState {
   final String errorMessage;
-  HomeScreenChallengeFailureState(this.errorMessage);
+  HomeScreenPrivateChallengeFailureState(this.errorMessage);
+}
+
+// Fetch Public Challenges States
+class HomeScreenPublicChallengeLoadingState extends HomeScreenState {}
+
+class HomeScreenPublicChallengeSuccessState extends HomeScreenState {
+  final List<PublicChallengesListResponse> challenges;
+  HomeScreenPublicChallengeSuccessState(this.challenges);
+}
+
+class HomeScreenPublicChallengeFailureState extends HomeScreenState {
+  final String errorMessage;
+  HomeScreenPublicChallengeFailureState(this.errorMessage);
 }
 
 // Fetch Quiz List State
-
 class HomeScreenQuizLoadingState extends HomeScreenState {}
 
 class HomeScreenQuizSuccessState extends HomeScreenState {
@@ -59,4 +70,18 @@ class HomeScreenChampaignSuccessState extends HomeScreenState {
 class HomeScreenChampaignFailureState extends HomeScreenState {
   final String errorMessage;
   HomeScreenChampaignFailureState(this.errorMessage);
+}
+
+// Fetch Banners
+
+class HomeScreenBannerLoadingState extends HomeScreenState {}
+
+class HomeScreenBannerSuccessState extends HomeScreenState {
+  final List<BannersListResponse> bannersList;
+  HomeScreenBannerSuccessState(this.bannersList);
+}
+
+class HomeScreenBannerFailureState extends HomeScreenState {
+  final String errorMessage;
+  HomeScreenBannerFailureState(this.errorMessage);
 }

@@ -28,8 +28,8 @@ bool dateComparision({required date1, required date2}) {
 
 String convertStringDateFormat(
     {required inputFormat, required outputFormat, required dateToBeFormatted}) {
-  DateTime inputDate = DateFormat("dd/MM/yyyy").parse(dateToBeFormatted);
-  String formattedDate = DateFormat("yyyy-MM-dd").format(inputDate);
+  DateTime inputDate = DateFormat(inputFormat).parse(dateToBeFormatted);
+  String formattedDate = DateFormat(outputFormat).format(inputDate);
   return formattedDate;
 }
 
@@ -41,6 +41,15 @@ String convertServerDate(String serverDate) {
   String formattedDate = DateFormat('MMM dd, yyyy').format(dateTime);
 
   return formattedDate;
+}
+
+String getDateInISOFormat(String inputDate) {
+  try {
+    DateTime dateTime = DateTime.parse(inputDate);
+    return dateTime.toIso8601String();
+  } catch (e) {
+    return "";
+  }
 }
 
 String formatChallengeDate(String? startTime, String? endTime) {

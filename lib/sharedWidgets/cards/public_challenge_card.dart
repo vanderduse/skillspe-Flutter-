@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/home_screens/model/list_challenges_response.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class PublicChallengeCard extends StatelessWidget {
-  final ChallengesListResponse? item;
+  final PublicChallengesListResponse? item;
 
   const PublicChallengeCard({
     Key? key,
@@ -65,15 +66,14 @@ class PublicChallengeCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   flex: 4,
-                  //This will be removed after api integration
                   child: Text(
-                    'Challenge Name',
+                    item?.title ?? '',
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -110,18 +110,18 @@ class PublicChallengeCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do?',
+                  child: Text(
+                    item?.description ?? "",
                     textAlign: TextAlign.left,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -129,69 +129,89 @@ class PublicChallengeCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(
-                      flex: 30,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            height: 3,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFFF34C1),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30.0),
-                                bottomLeft: Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                          const Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    Builder(
+                      builder: (context) {
+                        double percentage =
+                            _getPercentage(NO, item?.bidRatios) / 100;
+                        int flexValue = (percentage * 100).toInt();
+
+                        return Expanded(
+                          flex: flexValue == 0 ? 50 : flexValue,
+                          child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              SizedBox(height: 21),
-                              Text(
-                                '30%',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                              Container(
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  color: flexValue == 0
+                                      ? const Color.fromARGB(255, 223, 223, 223)
+                                      : const Color(0xFFFF34C1),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    bottomLeft: Radius.circular(30.0),
+                                  ),
                                 ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 32),
+                                  Text(
+                                    '${_getPercentage(NO, item?.bidRatios)}%',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                    Expanded(
-                      flex: 70,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            height: 3,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF8247DF),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(30.0),
-                                bottomRight: Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                          const Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    Builder(
+                      builder: (context) {
+                        double percentage =
+                            _getPercentage(YES, item?.bidRatios) / 100;
+                        int flexValue = (percentage * 100).toInt();
+
+                        return Expanded(
+                          flex: flexValue == 0 ? 50 : flexValue,
+                          child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              SizedBox(height: 21),
-                              Text(
-                                '70%',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                              Container(
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  color: flexValue == 0
+                                      ? const Color.fromARGB(255, 223, 223, 223)
+                                      : const Color(0xFF8247DF),
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0),
+                                  ),
                                 ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 32),
+                                  Text(
+                                    '${_getPercentage(YES, item?.bidRatios)}%',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -218,7 +238,7 @@ class PublicChallengeCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                           side: const BorderSide(
                             color: Color(0xFFFF34C1),
-                            width: 1.5, // Adjust border width as needed
+                            width: 1.5,
                           ),
                         ),
                       ),
@@ -227,9 +247,9 @@ class PublicChallengeCard extends StatelessWidget {
                       foregroundColor: MaterialStateProperty.all<Color>(
                           const Color(0xFFFF34C1)),
                     ),
-                    child: const Text(
-                      'No  ₹5',
-                      style: TextStyle(
+                    child: Text(
+                      '$NO  ₹${_getOptionValue(NO, item?.options)}',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -252,9 +272,9 @@ class PublicChallengeCard extends StatelessWidget {
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),
-                    child: const Text(
-                      'Yes  ₹10',
-                      style: TextStyle(
+                    child: Text(
+                      '$YES  ₹${_getOptionValue(YES, item?.options)}',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -262,9 +282,31 @@ class PublicChallengeCard extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
+}
+
+int _getPercentage(String label, List<PublicOptions>? bidRatios) {
+  if (bidRatios != null) {
+    for (var option in bidRatios) {
+      if (option.label?.toLowerCase() == label.toLowerCase()) {
+        return option.bidPercent?.toInt() ?? 0;
+      }
+    }
+  }
+  return 0;
+}
+
+double _getOptionValue(String label, List<PublicOptions>? options) {
+  if (options != null) {
+    for (var option in options) {
+      if (option.label?.toLowerCase() == label.toLowerCase()) {
+        return option.value ?? 0.0;
+      }
+    }
+  }
+  return 0.0;
 }

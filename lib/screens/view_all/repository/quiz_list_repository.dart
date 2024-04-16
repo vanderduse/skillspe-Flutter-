@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/service/api_client.dart';
@@ -17,11 +16,9 @@ class QuizListRepository {
     if (status != ALL.toUpperCase()) {
       queryParameters.addEntries({STATUS: status}.entries);
     }
-    log(queryParameters.toString());
     try {
       Response? response =
           await _dio?.get('/v1/quizzes', queryParameters: queryParameters);
-      //log(response.toString());
       return BaseResponseModel<List<QuizzesListResponse>>.fromJson(
         response?.data,
         (data) {

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skills_pe/screens/home_screens/bloc/home_screen_bloc.dart';
 import 'package:skills_pe/screens/home_screens/repository/home_screen_repository.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/quiz_widget.dart';
-import 'package:skills_pe/screens/home_screens/ui/widgets/challenges_widget.dart';
+import 'package:skills_pe/screens/home_screens/ui/widgets/private_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/campaigns_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/public_challenges_widget.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
@@ -23,9 +23,11 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMain extends State<HomeMain> {
-  late HomeScreenBloc _homeScreenChallengesBloc;
+  late HomeScreenBloc _homeScreenPublicChallengesBloc;
+  late HomeScreenBloc _homeScreenPrivateChallengesBloc;
   late HomeScreenBloc _homeScreenQuizBloc;
   late HomeScreenBloc _homeScreenChampaignBloc;
+  late HomeScreenBloc _homeScreenBannerBloc;
   //late HomeScreenBloc _homeScreenTournamentBloc;
 
   @override
@@ -33,15 +35,21 @@ class _HomeMain extends State<HomeMain> {
     super.initState();
     HomeScreenRepository homeScreenRepository = HomeScreenRepository();
 
-    _homeScreenChallengesBloc = HomeScreenBloc(homeScreenRepository);
-    _homeScreenChallengesBloc
-        .add(HomeScreenFetchChallengesEvent(isPublic: false));
+    _homeScreenPublicChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenPublicChallengesBloc.add(HomeScreenFetchPublicChallengesEvent());
+
+    _homeScreenPrivateChallengesBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenPrivateChallengesBloc
+        .add(HomeScreenFetchPrivateChallengesEvent());
 
     _homeScreenQuizBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenQuizBloc.add(HomeScreenFetchQuizEvent());
 
     _homeScreenChampaignBloc = HomeScreenBloc(homeScreenRepository);
     _homeScreenChampaignBloc.add(HomeScreenFetchChampaignsEvent());
+
+    _homeScreenBannerBloc = HomeScreenBloc(homeScreenRepository);
+    _homeScreenBannerBloc.add(HomeScreenFetchBannerEvent());
   }
 
   final List<String> imageUrls = [
@@ -57,20 +65,52 @@ class _HomeMain extends State<HomeMain> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HomeSwipper(imageUrls: imageUrls),
             BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
+              bloc: _homeScreenBannerBloc,
+              builder: (context, state) {
+                if (state is HomeScreenBannerLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenBannerSuccessState) {                 
+                  return HomeSwipper(bannerList: state.bannersList);
+                } else if (state is HomeScreenBannerFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenPrivateChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenChallengeLoadingState) {
+                  return const ChallengeCardSkeleton();
+                } else if (state is HomeScreenPrivateChallengeSuccessState) {
+                  return SingleChildScrollView(
+                      child: PrivateChallengesWidget(
+                    title: PRIVATE_CHALLENGE_TITLE,
+                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
+                    data: state.challenges,
+                  ));
+                } else if (state is HomeScreenPrivateChallengeFailureState) {
+                  return Text('Error: ${state.errorMessage}');
+                } else {
+                  return const Text('Unexpected state');
+                }
+              },
+            ),
+            BlocBuilder<HomeScreenBloc, HomeScreenState>(
+              bloc: _homeScreenPublicChallengesBloc,
+              builder: (context, state) {
+                if (state is HomeScreenPublicChallengeLoadingState) {
                   return const PublicChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
+                } else if (state is HomeScreenPublicChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(
                     title: PUBLIC_CHALLENGE_TITLE,
                     subTitle: PUBLIC_CHALLENGE_SUBTITLE,
                     data: state.challenges,
                   ));
-                } else if (state is HomeScreenChallengeFailureState) {
+                } else if (state is HomeScreenPublicChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
@@ -88,25 +128,6 @@ class _HomeMain extends State<HomeMain> {
                     data: state.champaigns,
                   ));
                 } else if (state is HomeScreenChampaignFailureState) {
-                  return Text('Error: ${state.errorMessage}');
-                } else {
-                  return const Text('Unexpected state');
-                }
-              },
-            ),
-            BlocBuilder<HomeScreenBloc, HomeScreenState>(
-              bloc: _homeScreenChallengesBloc,
-              builder: (context, state) {
-                if (state is HomeScreenChallengeLoadingState) {
-                  return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenChallengeSuccessState) {
-                  return SingleChildScrollView(
-                      child: ChallengesWidget(
-                    title: PRIVATE_CHALLENGE_TITLE,
-                    subTitle: PRIVATE_CHALLENGE_SUBTITLE,
-                    data: state.challenges,
-                  ));
-                } else if (state is HomeScreenChallengeFailureState) {
                   return Text('Error: ${state.errorMessage}');
                 } else {
                   return const Text('Unexpected state');
@@ -159,7 +180,7 @@ class _HomeMain extends State<HomeMain> {
           ],
         ),
       ),
-      floatingActionButton: const BottomNavigationBarWidget(),
+      floatingActionButton: const BottomNavigationBarWidget(activeTab: 'home'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

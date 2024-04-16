@@ -47,6 +47,8 @@ const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
 const CHALLENGES = 'Challenges';
+const CHALLENGE_ACCEPTING_CONDITION_TEXT =
+    "Start once all participants accepts the challenge";
 
 // Challenge Details
 const GENERAL_DETAILS = 'General Details';
@@ -60,6 +62,8 @@ const INVITE_CODE = "Challenge Invite Code";
 const INVITE_CHALLENGERS = "Invite Challengers";
 const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
+const NO = "No";
+const YES = "Yes";
 
 // Quiz Home screen
 const QUIZ_TITLE = "Quiz Zone";
@@ -146,6 +150,15 @@ const TEAMS = "Teams";
 const NOTIFICATIONS = "Notifications";
 const CLEAR_ALL = "Clear All";
 
+// Profile
+const PROFILE = "Profile";
+const PERSONAL_DETAILS = "Personal Details";
+const WALLET = "Wallet";
+const MY_ACTIVITY = "My Activity";
+const KYC = "KYC";
+const TERMS_AND_CONDITIONS = "Terms & Conditions";
+const SUPPORT = "Support";
+
 // Wallet
 const NEED_HELP = "Need Help?";
 const RECENT_TRANSACTIONS = "Recent Transactions";
@@ -172,8 +185,41 @@ const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";
 const HOME = 'Home';
 const SEE_ALL = 'See All';
 const ALL = 'All';
+const DRAFT = 'Draft';
 const LIVE = 'Live';
 const CAPITAL_LIVE = 'LIVE';
 const REQUEST = 'Request';
+const RESULTS_PENDING = 'RESULTS_PENDING';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';
+const CAMPAIGNS = 'Campaigns';
+
+class PrivateChallengeStatus {
+  final String label;
+  final String displayName;
+
+  const PrivateChallengeStatus(this.label, this.displayName);
+
+  static const ALL = PrivateChallengeStatus('ALL', 'All');
+  static const DRAFT = PrivateChallengeStatus('DRAFT', 'Draft');
+  static const LIVE = PrivateChallengeStatus('LIVE', 'Live');
+  static const REQUEST = PrivateChallengeStatus('REQUESTED', 'Request');
+  static const RESULTS_PENDING =
+      PrivateChallengeStatus('RESULTS_PENDING', 'Results Pending');
+  static const UPCOMING = PrivateChallengeStatus('UPCOMING', 'Upcoming');
+  static const COMPLETED = PrivateChallengeStatus('COMPLETED', 'Completed');
+}
+
+class PublicChallengeStatus {
+  final String label;
+  final String displayName;
+
+  const PublicChallengeStatus(this.label, this.displayName);
+
+  static const ALL = PublicChallengeStatus('ALL', 'All');
+  static const LIVE = PublicChallengeStatus('LIVE', 'Live');
+  static const RESULTS_PENDING =
+      PublicChallengeStatus('RESULTS_PENDING', 'Results Pending');
+  static const UPCOMING = PublicChallengeStatus('UPCOMING', 'Upcoming');
+  static const COMPLETED = PublicChallengeStatus('COMPLETED', 'Completed');
+}

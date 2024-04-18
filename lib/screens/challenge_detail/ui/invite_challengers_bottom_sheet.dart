@@ -40,6 +40,9 @@ class _InviteChallengersBottomSheetState
   // Variable to track if any user is checked
   bool isAnyUserChecked = false;
 
+  // Variable to track whether the QR code section is active
+  bool qrCodeActive = false;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -92,72 +95,80 @@ class _InviteChallengersBottomSheetState
               height: 10,
             ),
 
-            // Search field
-            const Padding(
-              padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: SEARCH_YOUR_FRIEND,
-                  contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                ),
-              ),
-            ),
-
-            // List of users
-            Expanded(
-              child: ListView.builder(
-                itemCount: userList.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(userList[index].imgURL),
-                          fit: BoxFit.cover,
+            // List of users or QR code section
+            qrCodeActive
+                ? _buildQRCodeSection()
+                : Expanded(
+                    child: Column(
+                    children: [
+                      // Search field
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: SEARCH_YOUR_FRIEND,
+                            contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(userList[index].name),
-                    trailing: Checkbox(
-                      value: checkedUsers[userList[index].name] ?? false,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          checkedUsers[userList[index].name] = value ?? false;
-                          isAnyUserChecked = checkedUsers.containsValue(true);
-                        });
-                      },
-                      shape: const CircleBorder(),
-                    ),
-                  );
-                },
-              ),
-            ),
+                      Expanded(
+                          child: ListView.builder(
+                        itemCount: userList.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: NetworkImage(userList[index].imgURL),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            title: Text(userList[index].name),
+                            trailing: Checkbox(
+                              value:
+                                  checkedUsers[userList[index].name] ?? false,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  checkedUsers[userList[index].name] =
+                                      value ?? false;
+                                  isAnyUserChecked =
+                                      checkedUsers.containsValue(true);
+                                });
+                              },
+                              shape: const CircleBorder(),
+                            ),
+                          );
+                        },
+                      )),
+                      // '+ Invite' button
+                      Visibility(
+                        visible: isAnyUserChecked,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 0, 10, 10),
+                          child: FilledBtn(
+                            textColor: Colors.white,
+                            backgroundColor: Theme.of(context).primaryColor,
+                            onPressed: () {},
+                            label: '+ Invite',
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
 
             // Divider
             const Divider(),
-
-            // '+ Invite' button
-            Visibility(
-              visible: isAnyUserChecked,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 10, 10),
-                child: FilledBtn(
-                  textColor: Colors.white,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  onPressed: () {},
-                  label: '+ Invite',
-                ),
-              ),
-            ),
 
             // Bottom row of buttons
             Padding(
@@ -174,7 +185,10 @@ class _InviteChallengersBottomSheetState
                   _buildBottomButton(
                     iconPath: 'assets/icons/qr-code.svg',
                     onPressed: () {
-                      _showQRCodeBottomSheet(context);
+                      setState(() {
+                        qrCodeActive = !qrCodeActive;
+                      });
+                      HapticFeedback.heavyImpact();
                     },
                   ),
                   _buildBottomButton(
@@ -197,6 +211,33 @@ class _InviteChallengersBottomSheetState
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// Method to build the QR code section
+  Widget _buildQRCodeSection() {
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Header
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: const Text(
+                'Scan QR to get the challenge link',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            // QR code widget
+            QrImageView(
+              data: 'Link to the challenge',
+              version: QrVersions.auto,
+              size: 300.0,
             ),
           ],
         ),
@@ -272,9 +313,4 @@ Click on the link below to join:
 ''';
   Share.share(message);
   HapticFeedback.heavyImpact();
-}
-
-// Method to build the bottom sheet
-void _showQRCodeBottomSheet(BuildContext context) {
-  
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/utility/utility.dart';
+import 'package:skills_pe/screens/challenge_detail/ui/invite_challengers_bottom_sheet.dart';
 
 class ExpansionCollapseWidget extends StatefulWidget {
   final String title;
@@ -119,41 +120,61 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
           String finalText = (items[index]['title']!.length <= 7)
               ? items[index]['title']!
               : '${items[index]['title']!.substring(0, 7)}...'; // Boolean to determine if the image is an asset
-          return Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 10, vertical: isListVisible ? 1 : 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  width: 50,
-                  padding: EdgeInsets.all(isAsset ? 14 : 0),
-                  decoration: BoxDecoration(
-                      color: HexColor('#F2F2F2'), shape: BoxShape.circle),
-                  child: ClipOval(
-                      child: isAsset
-                          ? SvgPicture.asset(items[index]['image']!)
-                          : Image.network(
-                              items[index]['image']!,
-                              fit: BoxFit.cover,
-                            )),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(finalText,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: "Inter",
-                        height: 1.8,
-                        fontWeight:
-                            index == 0 ? FontWeight.w400 : FontWeight.w600)),
-              ],
+          return GestureDetector(
+            onTap: () {
+              if (index == 0) {
+                _showShareBottomSheet(context);
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 10, vertical: isListVisible ? 1 : 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    width: 50,
+                    padding: EdgeInsets.all(isAsset ? 14 : 0),
+                    decoration: BoxDecoration(
+                        color: HexColor('#F2F2F2'), shape: BoxShape.circle),
+                    child: ClipOval(
+                        child: isAsset
+                            ? SvgPicture.asset(items[index]['image']!)
+                            : Image.network(
+                                items[index]['image']!,
+                                fit: BoxFit.cover,
+                              )),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(finalText,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: "Inter",
+                          height: 1.8,
+                          fontWeight:
+                              index == 0 ? FontWeight.w400 : FontWeight.w600)),
+                ],
+              ),
             ),
           );
         },
       ),
     );
   }
+}
+
+// function to show the bottom sheet modal
+void _showShareBottomSheet(BuildContext context) {
+  showModalBottomSheet<dynamic>(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext context) {
+      return const SizedBox(
+        child: InviteChallengersBottomSheet(),
+      );
+    },
+  );
 }

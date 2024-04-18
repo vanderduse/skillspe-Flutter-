@@ -5,6 +5,7 @@ import 'package:skills_pe/utility/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 // Define the User class
 class User {
@@ -275,39 +276,5 @@ Click on the link below to join:
 
 // Method to build the bottom sheet
 void _showQRCodeBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Title
-            Text(
-              'QR Code',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            // Horizontal line
-            Container(
-              height: 1,
-              color: Colors.grey[300],
-            ),
-            SizedBox(height: 8),
-            // QR Code
-            // QrImage(
-            //   data: 'Your QR code data here',
-            //   version: QrVersions.auto,
-            //   size: 200,
-            // ),
-          ],
-        ),
-      );
-    },
-  );
+  
 }

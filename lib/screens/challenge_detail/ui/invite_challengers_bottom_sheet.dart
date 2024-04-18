@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 // Define the User class
 class User {
@@ -163,23 +166,33 @@ class _InviteChallengersBottomSheetState
                 children: [
                   _buildBottomButton(
                     iconPath: 'assets/icons/link.svg',
-                    onPressed: () {},
+                    onPressed: () {
+                      _copyToClipboardAndHapticFeedback("Challenge Copied!");
+                    },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/qr-code.svg',
-                    onPressed: () {},
+                    onPressed: () {
+                      _showQRCodeBottomSheet(context);
+                    },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/whatsapp.svg',
-                    onPressed: () {},
+                    onPressed: () {
+                      _launchWhatsApp("Testing whatsapp challenge sharing!");
+                    },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/sms.svg',
-                    onPressed: () {},
+                    onPressed: () {
+                      _sendSMS("Challenge Copied!");
+                    },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/menu.svg',
-                    onPressed: () {},
+                    onPressed: () {
+                      _shareContent("challenge copied");
+                    },
                   ),
                 ],
               ),
@@ -207,4 +220,94 @@ class _InviteChallengersBottomSheetState
       ),
     );
   }
+}
+
+// Method to copy text to clipboard and provide haptic feedback
+void _copyToClipboardAndHapticFeedback(String text) {
+  String challengeMessage = '''
+[Link to the challenge]
+''';
+  Clipboard.setData(ClipboardData(text: challengeMessage));
+  HapticFeedback.heavyImpact();
+}
+
+// Method to launch WhatsApp with predefined message
+void _launchWhatsApp(String text) async {
+  String challengeMessage = '''
+Hey, come join the challenge on SkillsPe now!
+🚀 Convert your skills into wealth 🚀
+
+Click on the link below to join:
+[Link to the challenge]
+''';
+  String url = "https://wa.me/?text=$challengeMessage";
+  launchUrl(
+    Uri.parse(url),
+  );
+  HapticFeedback.heavyImpact();
+}
+
+// Method to send SMS with predefined message
+void _sendSMS(String text) async {
+  String message = '''
+Hey, come join the challenge on SkillsPe now! 
+      
+Click on the link below to join: [Link to the challenge]''';
+
+  String url = 'sms:?body=$message';
+  launchUrl(
+    Uri.parse(url),
+  );
+  HapticFeedback.heavyImpact();
+}
+
+// Method to share content with pre-defined text
+void _shareContent(String text) {
+  String message = '''
+Hey, come join the challenge on SkillsPe now!
+
+Click on the link below to join: 
+[Link to the challenge]
+''';
+  Share.share(message);
+  HapticFeedback.heavyImpact();
+}
+
+// Method to build the bottom sheet
+void _showQRCodeBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Title
+            Text(
+              'QR Code',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            // Horizontal line
+            Container(
+              height: 1,
+              color: Colors.grey[300],
+            ),
+            SizedBox(height: 8),
+            // QR Code
+            // QrImage(
+            //   data: 'Your QR code data here',
+            //   version: QrVersions.auto,
+            //   size: 200,
+            // ),
+          ],
+        ),
+      );
+    },
+  );
 }

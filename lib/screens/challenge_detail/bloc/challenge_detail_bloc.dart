@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
+import 'package:skills_pe/screens/challenge_detail/model/users_list_response.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
+import 'package:skills_pe/utility/constants.dart';
 part 'challenge_detail_event.dart';
 part 'challenge_detail_state.dart';
 
@@ -11,8 +13,9 @@ class ChallengeDetailBloc
     extends Bloc<ChallengeDetailEvent, ChallengeDetailState> {
   final ChallengeDetailRepository _challengeDetailRepository;
   ChallengeDetailBloc(this._challengeDetailRepository)
-      : super(ChallengeDetailLoadingState()) {
+      : super(ChallengeDetailInitialState()) {
     on<ChallengeDetailInitEvent>(challengeDetailInitEvent);
+    on<ChallengeDetailFetchUsersListEvent>(_fetchUsersList);
   }
 
   FutureOr<void> challengeDetailInitEvent(ChallengeDetailInitEvent event,
@@ -25,6 +28,22 @@ class ChallengeDetailBloc
       emit(ChallengeDetailFailureState(errorMessage: res.message!));
     } else {
       emit(ChallengeDetailSuccessState(challengeDetailResponse: res.data!));
+    }
+  }
+
+  FutureOr<void> _fetchUsersList(ChallengeDetailFetchUsersListEvent event,
+      Emitter<ChallengeDetailState> emit) async {
+    emit(UsersListLoadingState());
+    try {
+      var response =
+          await _challengeDetailRepository.getUsersList(event.userType);
+      if (response.responseCode == API_SUCCESS_CODE && response.data != null) {
+        emit(UsersListSuccessState(response.data! as List<UsersListResponse>));
+      } else {
+        emit(UsersListFailureState('Failed to fetch Quizzes'));
+      }
+    } catch (e) {
+      emit(UsersListFailureState('Failed to fetch Quizzes: $e'));
     }
   }
 }

@@ -1,20 +1,30 @@
 part of 'challenge_detail_bloc.dart';
 
-sealed class ChallengeDetailState extends Equatable {
-  const ChallengeDetailState();
+sealed class ChallengeDetailState {}
 
-  @override
-  List<Object> get props => [];
-}
+class ChallengeDetailInitialState extends ChallengeDetailState {}
 
-final class ChallengeDetailLoadingState extends ChallengeDetailState {}
+class ChallengeDetailLoadingState extends ChallengeDetailState {}
 
-final class ChallengeDetailFailureState extends ChallengeDetailState {
+class ChallengeDetailFailureState extends ChallengeDetailState {
   final String errorMessage;
   ChallengeDetailFailureState({required this.errorMessage});
 }
 
-final class ChallengeDetailSuccessState extends ChallengeDetailState {
+class ChallengeDetailSuccessState extends ChallengeDetailState {
   final ChallengeDetailResponse challengeDetailResponse;
-  const ChallengeDetailSuccessState({required this.challengeDetailResponse});
+  ChallengeDetailSuccessState({required this.challengeDetailResponse});
+}
+
+
+class UsersListLoadingState extends ChallengeDetailState {}
+
+class UsersListFailureState extends ChallengeDetailState {
+  final String errorMessage;
+  UsersListFailureState(this.errorMessage);
+}
+
+class UsersListSuccessState extends ChallengeDetailState {
+  final List<UsersListResponse> usersList;
+  UsersListSuccessState(this.usersList);
 }

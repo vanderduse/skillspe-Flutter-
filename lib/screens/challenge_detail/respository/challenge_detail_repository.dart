@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
+import 'package:skills_pe/screens/challenge_detail/model/users_list_response.dart';
 import '../../../service/api_client.dart';
 
 class ChallengeDetailRepository {
@@ -37,6 +38,19 @@ class ChallengeDetailRepository {
               ChallengeDetailResponse.fromJson(data as Map<String, dynamic>));
     } on DioException catch (e) {
       return BaseResponseModel<ChallengeDetailResponse>.fromJson(
+          e.response?.data as Map<String, dynamic>, (data) => null);
+    }
+  }
+
+  Future<BaseResponseModel<UsersListResponse>> getUsersList(
+      String userType) async {
+    try {
+      Response? response =
+          await _dio?.get('v1/participants/$userType/suggestions');
+      return BaseResponseModel<UsersListResponse>.fromJson(response?.data,
+          (data) => UsersListResponse.fromJson(data as Map<String, dynamic>));
+    } on DioException catch (e) {
+      return BaseResponseModel<UsersListResponse>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }

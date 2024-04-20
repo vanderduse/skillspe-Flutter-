@@ -7,27 +7,6 @@ import '../../../service/api_client.dart';
 class ChallengeDetailRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  // Future<BaseResponseModel<List<ChallengeDetailList>>>
-  //     getChallengeDetails() async {
-  //   try {
-  //     Response? response = await _dio?.get('/v1/challenges');
-  //     return BaseResponseModel<List<ChallengeDetailList>>.fromJson(
-  //         response?.data, (data) {
-  //       if (data is List) {
-  //         return data
-  //             .map((item) =>
-  //                 ChallengeDetailList.fromJson(item as Map<String, dynamic>))
-  //             .toList();
-  //       } else {
-  //         return [];
-  //       }
-  //     });
-  //   } on DioException catch (e) {
-  //     return BaseResponseModel<List<ChallengeDetailList>>.fromJson(
-  //         e.response?.data as Map<String, dynamic>, (data) => null);
-  //   }
-  // }
-
   Future<BaseResponseModel<ChallengeDetailResponse>> getChallengeDetails(
       String challengeId) async {
     try {
@@ -42,15 +21,26 @@ class ChallengeDetailRepository {
     }
   }
 
-  Future<BaseResponseModel<UsersListResponse>> getUsersList(
+  Future<BaseResponseModel<List<UsersListResponse>>> getUsersList(
       String userType) async {
     try {
       Response? response =
-          await _dio?.get('v1/participants/$userType/suggestions');
-      return BaseResponseModel<UsersListResponse>.fromJson(response?.data,
-          (data) => UsersListResponse.fromJson(data as Map<String, dynamic>));
+          await _dio?.get('/v1/participants/$userType/suggestions');
+      return BaseResponseModel<List<UsersListResponse>>.fromJson(
+        response?.data,
+        (data) {
+          if (data is List<dynamic>) {
+            return data
+                .map((item) =>
+                    UsersListResponse.fromJson(item as Map<String, dynamic>))
+                .toList();
+          } else {
+            return []; // Handle the case where the response data is not a list
+          }
+        },
+      );
     } on DioException catch (e) {
-      return BaseResponseModel<UsersListResponse>.fromJson(
+      return BaseResponseModel<List<UsersListResponse>>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }

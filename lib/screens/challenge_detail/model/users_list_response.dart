@@ -18,6 +18,8 @@ class UsersListResponse {
     profileImgUrl = json['profile_img_url'];
   }
 
+  get length => null;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_id'] = userId;

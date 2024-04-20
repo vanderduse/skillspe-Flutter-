@@ -37,13 +37,16 @@ class ChallengeDetailBloc
     try {
       var response =
           await _challengeDetailRepository.getUsersList(event.userType);
-      if (response.responseCode == API_SUCCESS_CODE && response.data != null) {
+      if (response.data != null) {
+        print("under if");
         emit(UsersListSuccessState(response.data! as List<UsersListResponse>));
       } else {
-        emit(UsersListFailureState('Failed to fetch Quizzes'));
+        print("else");
+        emit(UsersListFailureState('Failed to fetch users list'));
       }
     } catch (e) {
-      emit(UsersListFailureState('Failed to fetch Quizzes: $e'));
+      print("catch===> $e");
+      emit(UsersListFailureState('Failed to fetch users list: $e'));
     }
   }
 }

@@ -67,6 +67,8 @@ const INVITE = "Invite";
 const NO = "No";
 const YES = "Yes";
 const QR_CODE_DESCRIPTION = "Scan QR to get the challenge link";
+const INVITE_BUTTON_LABEL = "+ Invite";
+const INVITE_BUTTON_LOADING_TEXT = "Inviting...";
 
 // Quiz Home screen
 const QUIZ_TITLE = "Quiz Zone";

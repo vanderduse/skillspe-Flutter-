@@ -124,20 +124,21 @@ class _InviteChallengersBottomSheetState
                 : Expanded(
                     child: Column(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: SEARCH_YOUR_FRIEND,
-                              contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                            ),
-                          ),
-                        ),
+                        //Temp: removing search bar
+                        // const Padding(
+                        //   padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                        //   child: TextField(
+                        //     decoration: InputDecoration(
+                        //       hintText: SEARCH_YOUR_FRIEND,
+                        //       contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
+                        //       prefixIcon: Icon(Icons.search),
+                        //       border: OutlineInputBorder(
+                        //         borderRadius:
+                        //             BorderRadius.all(Radius.circular(10)),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                           child: BlocConsumer<ChallengeDetailBloc,
                               ChallengeDetailState>(
@@ -161,46 +162,71 @@ class _InviteChallengersBottomSheetState
                                   shrinkWrap: true,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return ListTile(
-                                      leading: Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            image: NetworkImage(state
-                                                    .usersList[index]
-                                                    .profileImgUrl ??
-                                                'https://via.placeholder.com/40x40'),
-                                            fit: BoxFit.cover,
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          // Toggle checkbox status
+                                          checkedUsers[state.usersList[index]
+                                              .userId!] = !(checkedUsers[state
+                                                  .usersList[index].userId] ??
+                                              false);
+                                          // Update selectedUserList
+                                          if (checkedUsers[state
+                                                  .usersList[index].userId] ??
+                                              false) {
+                                            selectedUserList.add(
+                                                state.usersList[index].userId!);
+                                          } else {
+                                            selectedUserList.remove(
+                                                state.usersList[index].userId);
+                                          }
+                                          // Check if any user is selected
+                                          isAnyUserChecked =
+                                              selectedUserList.isNotEmpty;
+                                        });
+                                      },
+                                      child: ListTile(
+                                        leading: Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: NetworkImage(state
+                                                      .usersList[index]
+                                                      .profileImgUrl ??
+                                                  'https://via.placeholder.com/40x40'),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      title: Text(
-                                          '${state.usersList[index].firstName ?? ''} ${state.usersList[index].lastName ?? ''}'),
-                                      trailing: Checkbox(
-                                        value: checkedUsers[state
-                                                .usersList[index].userId] ??
-                                            false,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            // Update checkbox status
-                                            checkedUsers[state.usersList[index]
-                                                .userId!] = value!;
-                                            // Update selectedUserList
-                                            if (value!) {
-                                              selectedUserList.add(state
-                                                  .usersList[index].userId!);
-                                            } else {
-                                              selectedUserList.remove(state
-                                                  .usersList[index].userId);
-                                            }
-                                            // Check if any user is selected
-                                            isAnyUserChecked =
-                                                selectedUserList.isNotEmpty;
-                                          });
-                                        },
-                                        shape: const CircleBorder(),
+                                        title: Text(
+                                            '${state.usersList[index].firstName ?? ''} ${state.usersList[index].lastName ?? ''}'),
+                                        trailing: Checkbox(
+                                          value: checkedUsers[state
+                                                  .usersList[index].userId] ??
+                                              false,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              // Update checkbox status
+                                              checkedUsers[state
+                                                  .usersList[index]
+                                                  .userId!] = value!;
+                                              // Update selectedUserList
+                                              if (value!) {
+                                                selectedUserList.add(state
+                                                    .usersList[index].userId!);
+                                              } else {
+                                                selectedUserList.remove(state
+                                                    .usersList[index].userId);
+                                              }
+                                              // Check if any user is selected
+                                              isAnyUserChecked =
+                                                  selectedUserList.isNotEmpty;
+                                            });
+                                          },
+                                          shape: const CircleBorder(),
+                                        ),
                                       ),
                                     );
                                   },
@@ -225,14 +251,7 @@ class _InviteChallengersBottomSheetState
                                 ChallengeDetailState>(
                               bloc: _inviteUsersBloc,
                               builder: (context, state) {
-                                if (state is InviteUsersLoadingState) {
-                                  return FilledBtn(
-                                      textColor: Colors.white,
-                                      backgroundColor:
-                                          Theme.of(context).primaryColor,
-                                      onPressed: _handleInviteClick,
-                                      label: 'Inviting...');
-                                } else if (state is InviteUsersFailureState) {
+                                if (state is InviteUsersFailureState) {
                                   // Show error snackbar
 
                                   return const SizedBox();
@@ -245,8 +264,12 @@ class _InviteChallengersBottomSheetState
                                     textColor: Colors.white,
                                     backgroundColor:
                                         Theme.of(context).primaryColor,
-                                    onPressed: _handleInviteClick,
-                                    label: '+ Invite',
+                                    onPressed: state is InviteUsersLoadingState
+                                        ? () {}
+                                        : _handleInviteClick,
+                                    label: state is InviteUsersLoadingState
+                                        ? INVITE_BUTTON_LOADING_TEXT
+                                        : INVITE_BUTTON_LABEL,
                                   );
                                 }
                               },

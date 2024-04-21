@@ -101,10 +101,10 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                     CHALLENGERS,
                     "assets/icons/cup.svg",
                     () => {
-                          BottomSheetManager.showGenericBottomSheet(
-                              context,
-                              const InviteChallengersBottomSheet(),
-                              INVITE_CHALLENGERS)
+                          // BottomSheetManager.showGenericBottomSheet(
+                          //     context,
+                          //     const InviteChallengersBottomSheet(),
+                          //     INVITE_CHALLENGERS)
 
                           // // showModalBottomSheet<dynamic>(
                           // //     isScrollControlled: true,

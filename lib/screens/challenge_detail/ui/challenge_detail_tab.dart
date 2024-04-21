@@ -55,6 +55,7 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                         fontSize: 14,
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w500)),
+                  
                 Card(
                   margin: const EdgeInsets.only(top: 10),
                   color: Colors.white,
@@ -100,12 +101,17 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                     CHALLENGERS,
                     "assets/icons/cup.svg",
                     () => {
-                          // showModalBottomSheet<dynamic>(
-                          //     isScrollControlled: true,
-                          //     context: context,
-                          //     builder: (BuildContext context) {
-                          //       return const ModelBottomSheet();
-                          //     })
+                          BottomSheetManager.showGenericBottomSheet(
+                              context,
+                              const InviteChallengersBottomSheet(),
+                              INVITE_CHALLENGERS)
+
+                          // // showModalBottomSheet<dynamic>(
+                          // //     isScrollControlled: true,
+                          // //     context: context,
+                          // //     builder: (BuildContext context) {
+                          // //       return const ModelBottomSheet();
+                          // //     })
                         }),
                 invitationCards(MODERATORS, "assets/icons/ranking.svg",
                     () => {print('invite 2')}),
@@ -119,8 +125,7 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                         child: FilledBtn(
                           textColor: Colors.white,
                           backgroundColor: Theme.of(context).primaryColor,
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                           label: SHARE,
                         )),
                   ),

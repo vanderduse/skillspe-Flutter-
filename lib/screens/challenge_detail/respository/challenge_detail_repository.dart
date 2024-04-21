@@ -46,7 +46,7 @@ class ChallengeDetailRepository {
     }
   }
 
-  Future<Object?> inviteUsers({
+  Future<bool> inviteUsers({
     required String challengeId,
     required String participantType,
     required List<String> userIds,
@@ -56,12 +56,14 @@ class ChallengeDetailRepository {
         "participant_type": participantType,
         "user_id": userIds,
       };
-      BaseResponseModel? response = (await _dio?.post(
+      Response<dynamic> response = await _dio!.post(
         '/v1/challenges/$challengeId/invite',
         data: data,
-      )) as BaseResponseModel?;
-      return response?.responseCode == API_SUCCESS_CODE;
+      );
+      // Check the response status code and return true if successful
+      return response.statusCode == 200;
     } on DioException catch (e) {
+      // Handle DioError if needed
       return false;
     }
   }

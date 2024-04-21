@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/screens/challenge_detail/model/users_list_response.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
-import 'package:skills_pe/utility/constants.dart';
 part 'challenge_detail_event.dart';
 part 'challenge_detail_state.dart';
 
@@ -52,22 +50,17 @@ class ChallengeDetailBloc
       Emitter<ChallengeDetailState> emit) async {
     emit(InviteUsersLoadingState());
     try {
-      var response = await _challengeDetailRepository.inviteUsers(
+      bool response = await _challengeDetailRepository.inviteUsers(
           challengeId: event.challengeId,
           participantType: event.particapantsType,
           userIds: event.userIds);
-      print("response from bloc====> $response");
-      if (response != null) {
+      if (response == true) {
         emit(InviteUsersSuccessState());
+      } else {
+        emit(InviteUsersFailureState('Failed to invite users'));
       }
-      emit(InviteUsersFailureState('Failed to fetch users list'));
-      // if (response.) {
-      //   emit(UsersListSuccessState(response.data!));
-      // } else {
-      //   emit(UsersListFailureState('Failed to fetch users list'));
-      // }
     } catch (e) {
-      emit(InviteUsersFailureState('Failed to fetch users list: $e'));
+      emit(InviteUsersFailureState('Failed to invite users: $e'));
     }
   }
 }

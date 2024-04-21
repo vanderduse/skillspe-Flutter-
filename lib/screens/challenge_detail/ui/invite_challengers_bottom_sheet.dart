@@ -12,7 +12,14 @@ import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_
 import 'package:skills_pe/utility/constants.dart';
 
 class InviteChallengersBottomSheet extends StatefulWidget {
-  const InviteChallengersBottomSheet({Key? key}) : super(key: key);
+  final String userType;
+  final String challengeId;
+
+  const InviteChallengersBottomSheet({
+    Key? key,
+    required this.userType,
+    required this.challengeId,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _InviteChallengersBottomSheetState();
@@ -41,15 +48,22 @@ class _InviteChallengersBottomSheetState
     _inviteUsersBloc = ChallengeDetailBloc(inviteUsersRepository);
 
     _challengeDetailUsersListBloc
-        .add(ChallengeDetailFetchUsersListEvent(userType: 'MOTIVATOR'));
+        //removing the last letter 's'
+        .add(ChallengeDetailFetchUsersListEvent(
+            userType: widget.userType
+                .substring(0, widget.userType.length - 1)
+                .toUpperCase()));
   }
 
   void _handleInviteClick() {
     // Dispatch the InviteUsersEvent with the selected user IDs
     _inviteUsersBloc.add(ChallengeDetailInviteUsersEvent(
       userIds: selectedUserList,
-      challengeId: 'challengeId',
-      particapantsType: 'MOTIVATOR',
+      challengeId: widget.challengeId,
+      //removing the last letter 's'
+      particapantsType: widget.userType
+          .substring(0, widget.userType.length - 1)
+          .toUpperCase(),
     ));
   }
 
@@ -157,7 +171,7 @@ class _InviteChallengersBottomSheetState
                                             image: NetworkImage(state
                                                     .usersList[index]
                                                     .profileImgUrl ??
-                                                ''),
+                                                'https://via.placeholder.com/40x40'),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -224,7 +238,7 @@ class _InviteChallengersBottomSheetState
                                   return const SizedBox();
                                 } else if (state is InviteUsersSuccessState) {
                                   // Show success snackbar
-
+                                  Navigator.of(context).pop();
                                   return const SizedBox();
                                 } else {
                                   return FilledBtn(

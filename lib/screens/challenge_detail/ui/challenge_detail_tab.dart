@@ -100,11 +100,6 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                     CHALLENGERS,
                     "assets/icons/cup.svg",
                     () => {
-                          BottomSheetManager.showGenericBottomSheet(
-                              context,
-                              const InviteChallengersBottomSheet(),
-                              INVITE_CHALLENGERS)
-
                           // showModalBottomSheet<dynamic>(
                           //     isScrollControlled: true,
                           //     context: context,
@@ -125,7 +120,6 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                           textColor: Colors.white,
                           backgroundColor: Theme.of(context).primaryColor,
                           onPressed: () {
-                            _showShareBottomSheet(context);
                           },
                           label: SHARE,
                         )),
@@ -234,17 +228,4 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-// function to show the bottom sheet modal
-void _showShareBottomSheet(BuildContext context) {
-  showModalBottomSheet<dynamic>(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return const SizedBox(
-        child: InviteChallengersBottomSheet(),
-      );
-    },
-  );
 }

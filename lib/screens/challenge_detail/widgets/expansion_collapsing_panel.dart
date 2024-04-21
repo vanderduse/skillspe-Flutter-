@@ -4,9 +4,12 @@ import 'package:skills_pe/utility/utility.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/invite_challengers_bottom_sheet.dart';
 
 class ExpansionCollapseWidget extends StatefulWidget {
-  final String title;
+  final String userType;
+  final String challengeId;
 
-  const ExpansionCollapseWidget({super.key, required this.title});
+  const ExpansionCollapseWidget(
+      {Key? key, required this.userType, required this.challengeId})
+      : super(key: key);
 
   @override
   _ExpansionCollapseWidgetState createState() =>
@@ -37,7 +40,7 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      widget.title,
+                      widget.userType,
                       style: TextStyle(
                           color: HexColor("#6F6F6F"),
                           fontFamily: "Sora-Medium",
@@ -123,7 +126,7 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
           return GestureDetector(
             onTap: () {
               if (index == 0) {
-                _showShareBottomSheet(context);
+                _showShareBottomSheet(context, widget.userType, widget.challengeId);
               }
             },
             child: Padding(
@@ -167,13 +170,14 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
 }
 
 // function to show the bottom sheet modal
-void _showShareBottomSheet(BuildContext context) {
+void _showShareBottomSheet(BuildContext context, String userType, String challengeId) {
   showModalBottomSheet<dynamic>(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
-      return const SizedBox(
-        child: InviteChallengersBottomSheet(),
+      return InviteChallengersBottomSheet(
+        userType: userType,
+        challengeId: challengeId, 
       );
     },
   );

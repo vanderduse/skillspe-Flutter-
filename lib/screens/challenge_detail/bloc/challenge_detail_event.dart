@@ -11,3 +11,13 @@ class ChallengeDetailFetchUsersListEvent extends ChallengeDetailEvent {
   final String userType;
   ChallengeDetailFetchUsersListEvent({required this.userType});
 }
+
+class ChallengeDetailInviteUsersEvent extends ChallengeDetailEvent {
+  final List<String> userIds;
+  final String challengeId;
+  final String particapantsType;
+  ChallengeDetailInviteUsersEvent(
+      {required this.userIds,
+      required this.challengeId,
+      required this.particapantsType});
+}

@@ -28,3 +28,13 @@ class UsersListSuccessState extends ChallengeDetailState {
   final List<UsersListResponse> usersList;
   UsersListSuccessState(this.usersList);
 }
+
+class InviteUsersLoadingState extends ChallengeDetailState {}
+
+class InviteUsersFailureState extends ChallengeDetailState {
+  final String errorMessage;
+  InviteUsersFailureState(this.errorMessage);
+}
+
+class InviteUsersSuccessState extends ChallengeDetailState {}
+

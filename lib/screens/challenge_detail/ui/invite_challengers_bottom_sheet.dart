@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class InviteChallengersBottomSheet extends StatefulWidget {
   const InviteChallengersBottomSheet({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class InviteChallengersBottomSheet extends StatefulWidget {
 class _InviteChallengersBottomSheetState
     extends State<InviteChallengersBottomSheet> {
   late ChallengeDetailBloc _challengeDetailUsersListBloc;
+  late ChallengeDetailBloc _inviteUsersBloc;
+
   Map<String, bool> checkedUsers = {};
   bool isAnyUserChecked = false;
   bool qrCodeActive = false;
@@ -31,9 +34,23 @@ class _InviteChallengersBottomSheetState
   void initState() {
     super.initState();
     ChallengeDetailRepository usersListRepository = ChallengeDetailRepository();
+    ChallengeDetailRepository inviteUsersRepository =
+        ChallengeDetailRepository();
+
     _challengeDetailUsersListBloc = ChallengeDetailBloc(usersListRepository);
+    _inviteUsersBloc = ChallengeDetailBloc(inviteUsersRepository);
+
     _challengeDetailUsersListBloc
         .add(ChallengeDetailFetchUsersListEvent(userType: 'MOTIVATOR'));
+  }
+
+  void _handleInviteClick() {
+    // Dispatch the InviteUsersEvent with the selected user IDs
+    _inviteUsersBloc.add(ChallengeDetailInviteUsersEvent(
+      userIds: selectedUserList,
+      challengeId: 'challengeId',
+      particapantsType: 'MOTIVATOR',
+    ));
   }
 
   @override
@@ -64,7 +81,7 @@ class _InviteChallengersBottomSheetState
                       ),
                       const SizedBox(width: 16),
                       const Text(
-                        'Invite Challengers',
+                        INVITE_CHALLENGERS,
                         style: TextStyle(
                           fontFamily: "Inter",
                           fontSize: 16,
@@ -92,113 +109,151 @@ class _InviteChallengersBottomSheetState
                 ? _buildQRCodeSection()
                 : Expanded(
                     child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: SEARCH_YOUR_FRIEND,
-                            contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: SEARCH_YOUR_FRIEND,
+                              contentPadding: EdgeInsets.fromLTRB(5, 10, 10, 0),
+                              prefixIcon: Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: BlocBuilder<ChallengeDetailBloc,
-                            ChallengeDetailState>(
-                          bloc: _challengeDetailUsersListBloc,
-                          builder: (context, state) {
-                            if (state is UsersListLoadingState) {
-                              return CircularProgressIndicator();
-                            } else if (state is UsersListSuccessState) {
-                              return ListView.builder(
-                                itemCount: state.usersList.length,
-                                shrinkWrap: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ListTile(
-                                    leading: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: NetworkImage(state
-                                                  .usersList[index]
-                                                  .profileImgUrl ??
-                                              ''),
-                                          fit: BoxFit.cover,
+                        Expanded(
+                          child: BlocConsumer<ChallengeDetailBloc,
+                              ChallengeDetailState>(
+                            bloc: _challengeDetailUsersListBloc,
+                            listener: (context, state) {
+                              if (state is UsersListFailureState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.errorMessage),
+                                  ),
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              if (state is UsersListLoadingState) {
+                                //TODO: replace with skeleton loader
+                                return const CircularProgressIndicator();
+                              } else if (state is UsersListSuccessState) {
+                                return ListView.builder(
+                                  itemCount: state.usersList.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ListTile(
+                                      leading: Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: NetworkImage(state
+                                                    .usersList[index]
+                                                    .profileImgUrl ??
+                                                ''),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    title: Text(
-                                        '${state.usersList[index].firstName ?? ''} ${state.usersList[index].lastName ?? ''}'),
-                                    trailing: Checkbox(
-                                      value: checkedUsers[
-                                              state.usersList[index].userId] ??
-                                          false,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          // Update checkbox status
-                                          checkedUsers[state.usersList[index]
-                                              .userId!] = value!;
-                                          // Update selectedUserList
-                                          if (value!) {
-                                            selectedUserList.add(
-                                                state.usersList[index].userId!);
-                                          } else {
-                                            selectedUserList.remove(
-                                                state.usersList[index].userId);
-                                          }
-                                          // Check if any user is selected
-                                          isAnyUserChecked =
-                                              selectedUserList.isNotEmpty;
-                                        });
-                                      },
-                                      shape: const CircleBorder(),
-                                    ),
-                                  );
-                                },
-                              );
-                            } else if (state is UsersListFailureState) {
-                              return Text(state.errorMessage);
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
-                      ),
-                      Visibility(
-                        visible: isAnyUserChecked,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 10, 10),
-                          child: FilledBtn(
-                            textColor: Colors.white,
-                            backgroundColor: Theme.of(context).primaryColor,
-                            onPressed: () {},
-                            label: '+ Invite',
+                                      title: Text(
+                                          '${state.usersList[index].firstName ?? ''} ${state.usersList[index].lastName ?? ''}'),
+                                      trailing: Checkbox(
+                                        value: checkedUsers[state
+                                                .usersList[index].userId] ??
+                                            false,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            // Update checkbox status
+                                            checkedUsers[state.usersList[index]
+                                                .userId!] = value!;
+                                            // Update selectedUserList
+                                            if (value!) {
+                                              selectedUserList.add(state
+                                                  .usersList[index].userId!);
+                                            } else {
+                                              selectedUserList.remove(state
+                                                  .usersList[index].userId);
+                                            }
+                                            // Check if any user is selected
+                                            isAnyUserChecked =
+                                                selectedUserList.isNotEmpty;
+                                          });
+                                        },
+                                        shape: const CircleBorder(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
                           ),
                         ),
-                      ),
-                    ],
-                  )),
 
-            // Divider
-            const Divider(),
+                        // Divider
+                        const Divider(
+                          height: 0,
+                        ),
+
+                        Visibility(
+                          visible: isAnyUserChecked,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                            child: BlocBuilder<ChallengeDetailBloc,
+                                ChallengeDetailState>(
+                              bloc: _inviteUsersBloc,
+                              builder: (context, state) {
+                                if (state is InviteUsersLoadingState) {
+                                  return FilledBtn(
+                                      textColor: Colors.white,
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      onPressed: _handleInviteClick,
+                                      label: 'Inviting...');
+                                } else if (state is InviteUsersFailureState) {
+                                  // Show error snackbar
+
+                                  return const SizedBox();
+                                } else if (state is InviteUsersSuccessState) {
+                                  // Show success snackbar
+
+                                  return const SizedBox();
+                                } else {
+                                  return FilledBtn(
+                                    textColor: Colors.white,
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    onPressed: _handleInviteClick,
+                                    label: '+ Invite',
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
             // Bottom row of buttons
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding:
+                  EdgeInsets.fromLTRB(20, isAnyUserChecked ? 10 : 20, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildBottomButton(
                     iconPath: 'assets/icons/link.svg',
                     onPressed: () {
-                      _copyToClipboardAndHapticFeedback("Challenge Copied!");
+                      _copyToClipboardAndHapticFeedback("CHALLENGE LINK");
                     },
                   ),
                   _buildBottomButton(
@@ -219,19 +274,19 @@ class _InviteChallengersBottomSheetState
                   _buildBottomButton(
                     iconPath: 'assets/icons/whatsapp.svg',
                     onPressed: () {
-                      _launchWhatsApp("Testing whatsapp challenge sharing!");
+                      _launchWhatsApp("CHALLENGE LINK");
                     },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/sms.svg',
                     onPressed: () {
-                      _sendSMS("Challenge Copied!");
+                      _sendSMS("CHALLENGE LINK");
                     },
                   ),
                   _buildBottomButton(
                     iconPath: 'assets/icons/menu.svg',
                     onPressed: () {
-                      _shareContent("challenge copied");
+                      _shareContent("CHALLENGE LINK");
                     },
                   ),
                 ],
@@ -252,12 +307,12 @@ class _InviteChallengersBottomSheetState
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: const Text(
-                'Scan QR to get the challenge link',
+                QR_CODE_DESCRIPTION,
                 style: TextStyle(color: Colors.grey),
               ),
             ),
             QrImageView(
-              data: 'Link to the challenge',
+              data: 'CHALLENGE LINK',
               version: QrVersions.auto,
               size: 300.0,
             ),
@@ -284,21 +339,21 @@ class _InviteChallengersBottomSheetState
     );
   }
 
-  void _copyToClipboardAndHapticFeedback(String text) {
+  void _copyToClipboardAndHapticFeedback(String link) {
     String challengeMessage = '''
-[Link to the challenge]
+$link
 ''';
     Clipboard.setData(ClipboardData(text: challengeMessage));
     HapticFeedback.heavyImpact();
   }
 
-  void _launchWhatsApp(String text) async {
+  void _launchWhatsApp(String link) async {
     String challengeMessage = '''
 Hey, come join the challenge on SkillsPe now!
 🚀 Convert your skills into wealth 🚀
 
 Click on the link below to join:
-[Link to the challenge]
+$link
 ''';
     String url = "https://wa.me/?text=$challengeMessage";
     launchUrl(
@@ -307,11 +362,11 @@ Click on the link below to join:
     HapticFeedback.heavyImpact();
   }
 
-  void _sendSMS(String text) async {
+  void _sendSMS(String link) async {
     String message = '''
 Hey, come join the challenge on SkillsPe now! 
       
-Click on the link below to join: [Link to the challenge]''';
+Click on the link below to join: $link''';
 
     String url = 'sms:?body=$message';
     launchUrl(
@@ -320,12 +375,12 @@ Click on the link below to join: [Link to the challenge]''';
     HapticFeedback.heavyImpact();
   }
 
-  void _shareContent(String text) {
+  void _shareContent(String link) {
     String message = '''
 Hey, come join the challenge on SkillsPe now!
 
 Click on the link below to join: 
-[Link to the challenge]
+$link
 ''';
     Share.share(message);
     HapticFeedback.heavyImpact();

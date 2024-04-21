@@ -16,6 +16,7 @@ class ChallengeDetailBloc
       : super(ChallengeDetailInitialState()) {
     on<ChallengeDetailInitEvent>(challengeDetailInitEvent);
     on<ChallengeDetailFetchUsersListEvent>(_fetchUsersList);
+    on<ChallengeDetailInviteUsersEvent>(_inviteUsers);
   }
 
   FutureOr<void> challengeDetailInitEvent(ChallengeDetailInitEvent event,
@@ -38,15 +39,35 @@ class ChallengeDetailBloc
       var response =
           await _challengeDetailRepository.getUsersList(event.userType);
       if (response.data != null) {
-        print("under if");
-        emit(UsersListSuccessState(response.data! as List<UsersListResponse>));
+        emit(UsersListSuccessState(response.data!));
       } else {
-        print("else");
         emit(UsersListFailureState('Failed to fetch users list'));
       }
     } catch (e) {
-      print("catch===> $e");
       emit(UsersListFailureState('Failed to fetch users list: $e'));
+    }
+  }
+
+  FutureOr<void> _inviteUsers(ChallengeDetailInviteUsersEvent event,
+      Emitter<ChallengeDetailState> emit) async {
+    emit(InviteUsersLoadingState());
+    try {
+      var response = await _challengeDetailRepository.inviteUsers(
+          challengeId: event.challengeId,
+          participantType: event.particapantsType,
+          userIds: event.userIds);
+      print("response from bloc====> $response");
+      if (response != null) {
+        emit(InviteUsersSuccessState());
+      }
+      emit(InviteUsersFailureState('Failed to fetch users list'));
+      // if (response.) {
+      //   emit(UsersListSuccessState(response.data!));
+      // } else {
+      //   emit(UsersListFailureState('Failed to fetch users list'));
+      // }
+    } catch (e) {
+      emit(InviteUsersFailureState('Failed to fetch users list: $e'));
     }
   }
 }

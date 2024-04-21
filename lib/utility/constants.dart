@@ -60,10 +60,13 @@ const MOTIVATORS = 'Motivators';
 const SHARE = "Share";
 const INVITE_CODE = "Challenge Invite Code";
 const INVITE_CHALLENGERS = "Invite Challengers";
+const INVITE_MODERATORS = "Invite Moderators";
+const INVITE_MOTIVATORS = "Invite Motivators";
 const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
 const NO = "No";
 const YES = "Yes";
+const QR_CODE_DESCRIPTION = "Scan QR to get the challenge link";
 
 // Quiz Home screen
 const QUIZ_TITLE = "Quiz Zone";

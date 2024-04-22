@@ -102,7 +102,7 @@ class _HomeMain extends State<HomeMain> {
               bloc: _homeScreenPublicChallengesBloc,
               builder: (context, state) {
                 if (state is HomeScreenPublicChallengeLoadingState) {
-                  return const PublicChallengeCardSkeleton();
+                  return const ChallengeCardSkeleton();
                 } else if (state is HomeScreenPublicChallengeSuccessState) {
                   return SingleChildScrollView(
                       child: PublicChallengesWidget(

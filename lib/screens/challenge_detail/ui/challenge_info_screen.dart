@@ -10,7 +10,7 @@ import 'package:skills_pe/utility/utility.dart';
 
 class ChallengeInfoScreen extends StatefulWidget {
   final String? challengeId;
-  const ChallengeInfoScreen({super.key, required this.challengeId});
+  const ChallengeInfoScreen({Key? key, required this.challengeId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ChallengeInfoScreenState();
@@ -193,9 +193,18 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen>
                       const SizedBox(
                         height: 24,
                       ),
-                      const ExpansionCollapseWidget(title: CHALLENGERS),
-                      const ExpansionCollapseWidget(title: MODERATORS),
-                      const ExpansionCollapseWidget(title: MOTIVATORS)
+                      ExpansionCollapseWidget(
+                        userType: CHALLENGERS,
+                        challengeId: widget.challengeId!,
+                      ),
+                      ExpansionCollapseWidget(
+                        userType: MODERATORS,
+                        challengeId: widget.challengeId!,
+                      ),
+                      ExpansionCollapseWidget(
+                        userType: MOTIVATORS,
+                        challengeId: widget.challengeId!,
+                      )
                     ]),
               ),
             ));

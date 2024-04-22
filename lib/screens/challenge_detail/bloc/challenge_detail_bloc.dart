@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:skills_pe/models/base_reponse_model.dart';
+import 'package:skills_pe/screens/challenge_detail/model/users_list_response.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
 part 'challenge_detail_event.dart';
@@ -11,8 +11,10 @@ class ChallengeDetailBloc
     extends Bloc<ChallengeDetailEvent, ChallengeDetailState> {
   final ChallengeDetailRepository _challengeDetailRepository;
   ChallengeDetailBloc(this._challengeDetailRepository)
-      : super(ChallengeDetailLoadingState()) {
+      : super(ChallengeDetailInitialState()) {
     on<ChallengeDetailInitEvent>(challengeDetailInitEvent);
+    on<ChallengeDetailFetchUsersListEvent>(_fetchUsersList);
+    on<ChallengeDetailInviteUsersEvent>(_inviteUsers);
   }
 
   FutureOr<void> challengeDetailInitEvent(ChallengeDetailInitEvent event,
@@ -25,6 +27,40 @@ class ChallengeDetailBloc
       emit(ChallengeDetailFailureState(errorMessage: res.message!));
     } else {
       emit(ChallengeDetailSuccessState(challengeDetailResponse: res.data!));
+    }
+  }
+
+  FutureOr<void> _fetchUsersList(ChallengeDetailFetchUsersListEvent event,
+      Emitter<ChallengeDetailState> emit) async {
+    emit(UsersListLoadingState());
+    try {
+      var response =
+          await _challengeDetailRepository.getUsersList(event.userType);
+      if (response.data != null) {
+        emit(UsersListSuccessState(response.data!));
+      } else {
+        emit(UsersListFailureState('Failed to fetch users list'));
+      }
+    } catch (e) {
+      emit(UsersListFailureState('Failed to fetch users list: $e'));
+    }
+  }
+
+  FutureOr<void> _inviteUsers(ChallengeDetailInviteUsersEvent event,
+      Emitter<ChallengeDetailState> emit) async {
+    emit(InviteUsersLoadingState());
+    try {
+      bool response = await _challengeDetailRepository.inviteUsers(
+          challengeId: event.challengeId,
+          participantType: event.particapantsType,
+          userIds: event.userIds);
+      if (response == true) {
+        emit(InviteUsersSuccessState());
+      } else {
+        emit(InviteUsersFailureState('Failed to invite users'));
+      }
+    } catch (e) {
+      emit(InviteUsersFailureState('Failed to invite users: $e'));
     }
   }
 }

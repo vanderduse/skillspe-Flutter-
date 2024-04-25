@@ -4,6 +4,7 @@ import 'package:skills_pe/screens/create_challenge/bloc/create_challenge_bloc.da
 import 'package:skills_pe/screens/create_challenge/models/create_challenge_request.dart';
 import 'package:skills_pe/screens/create_challenge/repository/create_challenge_repository.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
+import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/sharedWidgets/appBars/app_bar_widget.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filter_buttons.dart';
@@ -14,14 +15,18 @@ import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
 
 class CreateChallengeScreen extends StatefulWidget {
-  const CreateChallengeScreen({super.key});
+  final bool isEdit;
+  final PrivateChallengesListResponse? challengeDetail;
+  const CreateChallengeScreen(
+      {super.key, this.isEdit = false, this.challengeDetail});
 
   @override
   State<StatefulWidget> createState() => _CreateChallengeState();
 }
 
 class _CreateChallengeState extends State<CreateChallengeScreen> {
-  int _challengeFees = 10;
+  bool isConditionAccepted = false;
+  final TextEditingController feeFieldController = TextEditingController();
   List<String> filterButtonNames = [
     "₹10",
     "₹100",
@@ -30,13 +35,22 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
     "₹700",
     "₹1000"
   ];
-  bool isConditionAccepted = false;
+
+  @override
+  void initState() {
+    feeFieldController.text = widget.isEdit
+        ? widget.challengeDetail?.participationFee?.toInt().toString() ?? '10'
+        : '10';
+    super.initState();
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ButtonGroupState> _buttonFilterKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppBarWidget(title: CREATECHALLENGE),
+        appBar: AppBarWidget(
+            title: widget.isEdit ? UPDATECHALLENGE : CREATECHALLENGE),
         body: challengeForm());
   }
 
@@ -57,7 +71,7 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
           Navigator.of(context).pop();
           showSnackBar(context, (state).successMessage);
           // Navigate to ChallengeDetailScreen here
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => ChallengeDetailScreen(
@@ -89,6 +103,9 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: TextFormFieldWidget(
+                                    existingValue: widget.isEdit
+                                        ? widget.challengeDetail?.title!
+                                        : "",
                                     formLabel: ENTERCHALLENGENAME,
                                     placeholder: CHALLENGE_NAME,
                                     isRequiredField: true,
@@ -108,6 +125,9 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                           Expanded(
                             flex: 2,
                             child: TextFormFieldWidget(
+                              existingValue: widget.isEdit
+                                  ? widget.challengeDetail?.challengeEmoji!
+                                  : "",
                               formLabel: CHALLENGEEMOJI,
                               isRequiredField: true,
                               isEmojiField: true,
@@ -138,6 +158,9 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                         ),
                       ),
                       TextFormFieldWidget(
+                        existingValue: widget.isEdit
+                            ? widget.challengeDetail?.description ?? ""
+                            : "",
                         formLabel: CHALLENGEGOAL,
                         isRequiredField: true,
                         maxLines: 3,
@@ -182,6 +205,11 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: TextFormFieldWidget(
+                                    existingValue: widget.isEdit
+                                        ? convertServerDate(
+                                            widget.challengeDetail?.startTime,
+                                            DDMMYYYY_SLASH_FORMAT)
+                                        : "",
                                     formLabel: '',
                                     showFormLabel: false,
                                     isRequiredField: true,
@@ -227,6 +255,11 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                           Expanded(
                             flex: 5,
                             child: TextFormFieldWidget(
+                              existingValue: widget.isEdit
+                                  ? convertServerDate(
+                                      widget.challengeDetail?.endTime,
+                                      DDMMYYYY_SLASH_FORMAT)
+                                  : "",
                               formLabel: '',
                               showFormLabel: false,
                               isRequiredField: true,
@@ -253,14 +286,18 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                         ],
                       ),
                       TextFormFieldWidget(
+                        feeFieldController: feeFieldController,
                         formLabel: CHALLENGEFEES,
                         isRequiredField: true,
                         placeholder: FIVRUPEEMIN,
                         isAmountTypeField: true,
-                        challengeFees: _challengeFees,
                         onChange: (value) {
+                          _buttonFilterKey.currentState?.updateSelectedIndex(
+                              filterButtonNames
+                                  .indexOf('₹${int.parse(value)}'));
                           setState(() {
-                            _challengeFees = int.parse(value);
+                            feeFieldController.text =
+                                int.parse(value).toString();
                           });
                         },
                         validator: (value) {
@@ -283,11 +320,16 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                 ),
               ),
               ButtonGroup(
+                key: _buttonFilterKey,
+                selectedIndex: widget.isEdit
+                    ? filterButtonNames.indexOf(
+                        '₹${widget.challengeDetail?.participationFee?.toInt()}')
+                    : 0,
                 buttonNames: filterButtonNames,
                 onItemSelected: (index) {
                   setState(() {
-                    _challengeFees =
-                        int.parse(filterButtonNames[index].substring(1));
+                    feeFieldController.text =
+                        filterButtonNames[index].substring(1);
                   });
                 },
               ),
@@ -320,7 +362,8 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                           createChallengeRequest));
                     }
                   },
-                  label: '$CREATECHALLENGE  ->',
+                  label:
+                      '${widget.isEdit ? UPDATECHALLENGE : CREATECHALLENGE}  ->',
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   textColor: Colors.white,
                   isButtonEnabled: isConditionAccepted,

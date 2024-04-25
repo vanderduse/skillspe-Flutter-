@@ -91,7 +91,7 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                           challengeDetailContainer(
                               CHALLENGEGOAL, _challengeDetail.description!),
                           challengeDetailContainer(DURATION,
-                              '${convertServerDate(_challengeDetail.startTime!)} - ${convertServerDate(_challengeDetail.endTime!)}'),
+                              '${convertServerDate(_challengeDetail.startTime!, MMM_DD_YYYY_FORMAT)} - ${convertServerDate(_challengeDetail.endTime!, MMM_DD_YYYY_FORMAT)}'),
                           challengeDetailContainer(FEES,
                               '₹${_challengeDetail.participationFee!.round().toString()}'),
                         ]),

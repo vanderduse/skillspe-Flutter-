@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
+import 'package:skills_pe/screens/create_challenge/ui/create_challenge_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
 import 'package:skills_pe/utility/text_utility.dart';
@@ -52,7 +53,7 @@ class DraftChallengeCard extends ChallengeCard {
             padding:
                 const EdgeInsets.all(16), // Occupy complete available width
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               color: HexColor("#F4F4F4"),
             ),
             child: Column(
@@ -74,7 +75,7 @@ class DraftChallengeCard extends ChallengeCard {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
-                              item?.challengeEmoji ?? "",
+                              item.challengeEmoji ?? "",
                               style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
@@ -108,7 +109,7 @@ class DraftChallengeCard extends ChallengeCard {
                   height: 16,
                 ),
                 Text(
-                  item?.title ?? "",
+                  item.title ?? "",
                   style: TextStyle(
                       color: HexColor("#0A121A"),
                       fontFamily: "Inter",
@@ -145,7 +146,7 @@ class DraftChallengeCard extends ChallengeCard {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            TextUtility.toSentenceCase(item?.status ?? ""),
+                            TextUtility.toSentenceCase(item.status ?? ""),
                             style: TextStyle(
                                 color: HexColor("#646464"),
                                 fontSize: 12,
@@ -202,13 +203,26 @@ class DraftChallengeCard extends ChallengeCard {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding: EdgeInsets.all(0)),
+                        padding: const EdgeInsets.all(0)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                        "assets/icons/edit.svg",
-                        color: const Color(0xFFFF34C1), // Change icon color
-                        height: 24,
+                      child: GestureDetector(
+                        onTap: () {
+                          item.participationFee = 100.00;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateChallengeScreen(
+                                isEdit: true,
+                                challengeDetail: item,
+                              ),
+                            ),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          "assets/icons/edit.svg",
+                          height: 24,
+                        ),
                       ),
                     ),
                   ),

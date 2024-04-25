@@ -5,6 +5,7 @@ import 'package:skills_pe/utility/constants.dart';
 
 const DDMMYYYY_SLASH_FORMAT = "dd/MM/yyyy";
 const YYYYMMDD_DASH_FORMAT = "yyyy-MM-dd";
+const MMM_DD_YYYY_FORMAT = 'MMM dd, yyyy';
 List<String> months = [
   'Jan',
   'Feb',
@@ -33,14 +34,18 @@ String convertStringDateFormat(
   return formattedDate;
 }
 
-String convertServerDate(String serverDate) {
-  // Parse the server date string
-  DateTime dateTime = DateTime.parse(serverDate);
+String convertServerDate(String? serverDate, String outputFormat) {
+  try {
+    // Parse the server date string
+    DateTime dateTime = DateTime.parse(serverDate!);
 
-  // Format the date in "MMM dd, yyyy" format
-  String formattedDate = DateFormat('MMM dd, yyyy').format(dateTime);
+    // Format the date in "MMM dd, yyyy" format
+    String formattedDate = DateFormat(outputFormat).format(dateTime);
 
-  return formattedDate;
+    return formattedDate;
+  } catch (error) {
+    return "";
+  }
 }
 
 String getDateInISOFormat(String inputDate) {

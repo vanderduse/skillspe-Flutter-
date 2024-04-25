@@ -3,6 +3,7 @@ import 'package:skills_pe/models/base_reponse_model.dart';
 import 'package:skills_pe/screens/challenge_detail/model/challenge_detail_response.dart';
 import 'package:skills_pe/screens/challenge_detail/model/users_list_response.dart';
 import 'package:skills_pe/utility/constants.dart';
+import 'package:skills_pe/screens/challenge_detail/model/participant_detail_response.dart';
 import '../../../service/api_client.dart';
 
 class ChallengeDetailRepository {
@@ -65,6 +66,30 @@ class ChallengeDetailRepository {
     } on DioException catch (e) {
       // Handle DioError if needed
       return false;
+    }
+  }
+
+  Future<BaseResponseModel<List<ParticipantDetailResponse>>>
+      getParticipantsList(String challengeId, String query) async {
+    try {
+      Map<String, dynamic> queryParameters = {TYPE: query};
+      Response? response = await _dio?.get(
+          '/v1/challenges/$challengeId/participants',
+          queryParameters: queryParameters);
+      return BaseResponseModel<List<ParticipantDetailResponse>>.fromJson(
+          response?.data, (data) {
+        if (data is List) {
+          return data
+              .map((item) => ParticipantDetailResponse.fromJson(
+                  item as Map<String, dynamic>))
+              .toList();
+        } else {
+          return [];
+        }
+      });
+    } on DioException catch (e) {
+      return BaseResponseModel<List<ParticipantDetailResponse>>.fromJson(
+          e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }
 }

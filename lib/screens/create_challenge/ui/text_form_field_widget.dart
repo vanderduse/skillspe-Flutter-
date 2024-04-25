@@ -4,17 +4,18 @@ import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 
 class TextFormFieldWidget extends StatefulWidget {
-  final String formLabel;
-  final bool isRequiredField;
   final int maxLines;
+  final bool isRequiredField;
   final bool isDateField;
   final bool isAmountTypeField;
   final bool isEmojiField;
-  final int challengeFees;
-  final String? Function(String?)? validator;
-  final Function(String)? onChange;
-  final String? placeholder;
   final bool showFormLabel;
+  final String formLabel;
+  final String? existingValue;
+  final String? Function(String?)? validator;
+  final String? placeholder;
+  final Function(String)? onChange;
+  final TextEditingController? feeFieldController;
 
   const TextFormFieldWidget(
       {super.key,
@@ -26,26 +27,30 @@ class TextFormFieldWidget extends StatefulWidget {
       this.isDateField = false,
       this.isAmountTypeField = false,
       this.isEmojiField = false,
-      this.challengeFees = 5,
       this.placeholder,
-      this.showFormLabel = true});
+      this.showFormLabel = true,
+      this.existingValue = "",
+      this.feeFieldController});
 
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
 }
 
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
-  final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _dateFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
 
   @override
   void initState() {
-    _textEditingController.text = ""; // set the initial value of the text field
+    _dateFieldController.text =
+        widget.existingValue!; // set the initial value of the text field
+    _textFieldController.text = widget.existingValue!;
     super.initState();
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _dateFieldController.dispose();
     super.dispose();
   }
 
@@ -72,10 +77,10 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         TextFormField(
           readOnly: widget.isDateField,
           controller: widget.isDateField
-              ? _textEditingController
+              ? _dateFieldController
               : widget.isAmountTypeField
-                  ? TextEditingController(text: widget.challengeFees.toString())
-                  : null,
+                  ? widget.feeFieldController
+                  : _textFieldController,
           maxLines: widget.maxLines,
           validator: widget.validator,
           onChanged: widget.onChange,
@@ -105,7 +110,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                         String formattedDate = DateFormat(DDMMYYYY_SLASH_FORMAT)
                             .format(pickedDate);
                         setState(() {
-                          _textEditingController.text = formattedDate;
+                          _dateFieldController.text = formattedDate;
                         });
                       }
                     },

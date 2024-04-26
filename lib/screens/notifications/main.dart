@@ -58,7 +58,7 @@ class _NotificationsState extends State<Notifications>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF4F4F4),
-      appBar: navigationWithTextButton(context, NOTIFICATIONS, CLEAR_ALL, () {
+      appBar: navigationWithTextButton(context, NOTIFICATIONS, buttonText: CLEAR_ALL, onPressedText: () {
         for (var i = _notificationItems.length - 1; i >= 0; i--) {
           _onDeleteNotification(i, _notificationItems[i]);
         }

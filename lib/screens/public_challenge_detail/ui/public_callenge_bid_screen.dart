@@ -13,6 +13,7 @@ class PublicChallengeBidScreen extends StatefulWidget {
 class _PrivateChallengeInfoScreenState extends State<PublicChallengeBidScreen> {
   String challengeStatus = 'Live';
   bool isYesSelected = true;
+  String? _activeCard = 'Yes';
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +46,7 @@ class _PrivateChallengeInfoScreenState extends State<PublicChallengeBidScreen> {
               totalTraders: '1180',
             ),
             SizedBox(height: 20),
-            BidOptions(
-              challengeStatus: 'Live',
-              challengeDate: 'Jun 30 - July 30',
-              source: 'Binance Stats API',
-              totalTraders: '1180',
-            ),
+            BidOptions(),
           ],
         ),
       ),

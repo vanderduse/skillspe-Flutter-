@@ -9,7 +9,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
-import 'package:skills_pe/utility/constants.dart';
 
 class InviteChallengersBottomSheet extends StatefulWidget {
   final String userType;
@@ -155,7 +154,8 @@ class _InviteChallengersBottomSheetState
                             builder: (context, state) {
                               if (state is UsersListLoadingState) {
                                 //TODO: replace with skeleton loader
-                                return const CircularProgressIndicator();
+                                return const Center(
+                                    child: CircularProgressIndicator());
                               } else if (state is UsersListSuccessState) {
                                 return ListView.builder(
                                   itemCount: state.usersList.length,
@@ -213,7 +213,7 @@ class _InviteChallengersBottomSheetState
                                                   .usersList[index]
                                                   .userId!] = value!;
                                               // Update selectedUserList
-                                              if (value!) {
+                                              if (value) {
                                                 selectedUserList.add(state
                                                     .usersList[index].userId!);
                                               } else {

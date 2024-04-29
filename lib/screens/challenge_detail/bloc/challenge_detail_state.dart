@@ -8,7 +8,7 @@ class ChallengeDetailLoadingState extends ChallengeDetailState {}
 
 class ChallengeDetailFailureState extends ChallengeDetailState {
   final String errorMessage;
-  const ChallengeDetailFailureState({required this.errorMessage});
+  ChallengeDetailFailureState({required this.errorMessage});
 }
 
 class ChallengeDetailSuccessState extends ChallengeDetailState {
@@ -16,7 +16,7 @@ class ChallengeDetailSuccessState extends ChallengeDetailState {
   final List<ParticipantDetailResponse> challengersList;
   final List<ParticipantDetailResponse> moderatorList;
   final List<ParticipantDetailResponse> motivatorList;
-  const ChallengeDetailSuccessState(
+  ChallengeDetailSuccessState(
       {required this.challengeDetailResponse,
       required this.challengersList,
       required this.moderatorList,
@@ -43,4 +43,3 @@ class InviteUsersFailureState extends ChallengeDetailState {
 }
 
 class InviteUsersSuccessState extends ChallengeDetailState {}
-

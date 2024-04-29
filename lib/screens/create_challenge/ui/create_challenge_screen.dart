@@ -27,6 +27,7 @@ class CreateChallengeScreen extends StatefulWidget {
 class _CreateChallengeState extends State<CreateChallengeScreen> {
   bool isConditionAccepted = false;
   final TextEditingController feeFieldController = TextEditingController();
+  String selectedEndDate = "";
   List<String> filterButtonNames = [
     "₹10",
     "₹100",
@@ -41,6 +42,10 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
     feeFieldController.text = widget.isEdit
         ? widget.challengeDetail?.participationFee?.toInt().toString() ?? '10'
         : '10';
+    selectedEndDate = widget.isEdit
+        ? convertServerDate(
+            widget.challengeDetail?.endTime, DDMMYYYY_SLASH_FORMAT)
+        : "";
     super.initState();
   }
 
@@ -55,7 +60,6 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
   }
 
   Widget challengeForm() {
-    String selectedEndDate = "";
     final CreateChallengeBloc createChallengeBloc =
         CreateChallengeBloc(CreateChallengeRepository());
     CreateChallengeRequest createChallengeRequest = CreateChallengeRequest();
@@ -71,15 +75,19 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
           Navigator.of(context).pop();
           showSnackBar(context, (state).successMessage);
           // Navigate to ChallengeDetailScreen here
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChallengeDetailScreen(
-                challengeId: (state).challengeId,
-                challengeName: (state).challengeName,
+          if (widget.isEdit) {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChallengeDetailScreen(
+                  challengeId: (state).challengeId,
+                  challengeName: (state).challengeName,
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
       },
       builder: (context, state) {
@@ -216,35 +224,21 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                                     placeholder: PLACEHOLDER_START_DATE,
                                     isDateField: true,
                                     validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return ENTER_START_DATE;
-                                      } else if (value.isNotEmpty &&
-                                          selectedEndDate.isNotEmpty == true) {
-                                        if (dateComparision(
-                                            date1: value,
-                                            date2: selectedEndDate)) {
-                                          return START_DATE_END_DATE_VALIDATION;
-                                        } else {
-                                          createChallengeRequest.startTime =
-                                              getDateInISOFormat(
-                                                  convertStringDateFormat(
-                                                      inputFormat:
-                                                          DDMMYYYY_SLASH_FORMAT,
-                                                      outputFormat:
-                                                          YYYYMMDD_DASH_FORMAT,
-                                                      dateToBeFormatted:
-                                                          value));
-                                        }
+                                      String result =
+                                          createChallengeBloc.validateStartDate(
+                                              value, selectedEndDate);
+
+                                      if (result == ENTER_START_DATE ||
+                                          result ==
+                                              START_DATE_END_DATE_VALIDATION ||
+                                          result ==
+                                              START_DATE_BEFORE_CURRENT_DATE_VALIDATION) {
+                                        return result;
                                       } else {
                                         createChallengeRequest.startTime =
-                                            getDateInISOFormat(
-                                                convertStringDateFormat(
-                                                    inputFormat:
-                                                        DDMMYYYY_SLASH_FORMAT,
-                                                    outputFormat:
-                                                        YYYYMMDD_DASH_FORMAT,
-                                                    dateToBeFormatted: value));
+                                            result;
                                       }
+
                                       return null;
                                     },
                                   ),
@@ -265,6 +259,9 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                               isRequiredField: true,
                               placeholder: PLACEHOLDER_END_DATE,
                               isDateField: true,
+                              onChange: (value) {
+                                selectedEndDate = value;
+                              },
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return ENTER_END_DATE;
@@ -359,7 +356,9 @@ class _CreateChallengeState extends State<CreateChallengeScreen> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       createChallengeBloc.add(CreateChallengeButtonClickedEvent(
-                          createChallengeRequest));
+                          createChallengeRequest,
+                          widget.isEdit,
+                          widget.challengeDetail?.id!));
                     }
                   },
                   label:

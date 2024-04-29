@@ -10,7 +10,10 @@ class ExpansionCollapseWidget extends StatefulWidget {
   final String challengeId;
   final List<ParticipantDetailResponse> participantList;
   const ExpansionCollapseWidget(
-      {Key? key, required this.userType, required this.challengeId, required this.participantList})
+      {Key? key,
+      required this.userType,
+      required this.challengeId,
+      required this.participantList})
       : super(key: key);
 
   @override
@@ -28,7 +31,7 @@ class ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
   void initState() {
     super.initState();
     _isListVisible =
-        widget.title == CHALLENGERS; // Adjust this condition as needed
+        widget.userType == CHALLENGERS; // Adjust this condition as needed
     if (_isListVisible) {
       _padding = 0.0;
       _horitonzalPadding = 7.0;
@@ -126,43 +129,45 @@ class ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
               : '${widget.participantList[index].getFullName().substring(0, 7)}...'; // Boolean to determine if the image is an asset
           return GestureDetector(
               onTap: () {
-            if (index == 0) {
-              _showShareBottomSheet(context, widget.userType, widget.challengeId);
-            }
-          },
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 10, vertical: isListVisible ? 1 : 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  width: 50,
-                  padding: EdgeInsets.all(isAsset ? 14 : 0),
-                  decoration: BoxDecoration(
-                      color: HexColor('#F2F2F2'), shape: BoxShape.circle),
-                  child: ClipOval(
-                      child: isAsset
-                          ? SvgPicture.asset("assets/icons/add.svg")
-                          : Image.network(
-                              widget.participantList[index].profileImgUrl!,
-                              fit: BoxFit.cover,
-                            )),
+                if (index == 0) {
+                  _showShareBottomSheet(
+                      context, widget.userType, widget.challengeId);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 10, vertical: isListVisible ? 1 : 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 50,
+                      padding: EdgeInsets.all(isAsset ? 14 : 0),
+                      decoration: BoxDecoration(
+                          color: HexColor('#F2F2F2'), shape: BoxShape.circle),
+                      child: ClipOval(
+                          child: isAsset
+                              ? SvgPicture.asset("assets/icons/add.svg")
+                              : Image.network(
+                                  widget.participantList[index].profileImgUrl!,
+                                  fit: BoxFit.cover,
+                                )),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(isAsset ? INVITE : finalText,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: "Inter",
+                            height: 1.8,
+                            fontWeight: index == 0
+                                ? FontWeight.w400
+                                : FontWeight.w600)),
+                  ],
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(isAsset ? INVITE : finalText,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: "Inter",
-                        height: 1.8,
-                        fontWeight:
-                            index == 0 ? FontWeight.w400 : FontWeight.w600)),
-              ],
-            ),
-          );
+              ));
         },
       ),
     );
@@ -170,7 +175,8 @@ class ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
 }
 
 // function to show the bottom sheet modal
-void _showShareBottomSheet(BuildContext context, String userType, String challengeId) {
+void _showShareBottomSheet(
+    BuildContext context, String userType, String challengeId) {
   showModalBottomSheet<dynamic>(
     context: context,
     isScrollControlled: true,

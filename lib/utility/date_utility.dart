@@ -21,10 +21,24 @@ List<String> months = [
   'Dec'
 ];
 
-bool dateComparision({required date1, required date2}) {
-  DateTime startDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(date1);
-  DateTime endDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(date2);
-  return startDate.isAfter(endDate);
+bool isStartDateAfterEndDate(
+    {required String startDate, required String endDate}) {
+  DateTime parsedStartDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(startDate);
+  DateTime parsedEndDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(endDate);
+  return parsedStartDate.isAfter(parsedEndDate);
+}
+
+bool isStartDateBeforeCurrentDate(String inputDate) {
+  try {
+    DateTime startDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(inputDate);
+    DateTime currentDate = DateTime.now();
+    print(currentDate);
+    print(startDate);
+    return startDate.isBefore(currentDate);
+  } catch (e) {
+    // Handle parsing error or return false if the date format is incorrect
+    return false;
+  }
 }
 
 String convertStringDateFormat(

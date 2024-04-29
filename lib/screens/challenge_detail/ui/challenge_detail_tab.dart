@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
-import 'package:skills_pe/screens/challenge_detail/ui/invite_challengers_bottom_sheet.dart';
-import 'package:skills_pe/screens/tournaments/widgets/create_team_bottom_sheet.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
@@ -55,7 +53,6 @@ class _ChallengeDetailTabState extends State<ChallengeDetailTab>
                         fontSize: 14,
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w500)),
-                  
                 Card(
                   margin: const EdgeInsets.only(top: 10),
                   color: Colors.white,

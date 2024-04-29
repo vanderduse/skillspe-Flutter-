@@ -9,12 +9,15 @@ import 'package:skills_pe/screens/create_challenge/models/create_challenge_respo
 class CreateChallengeRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<CreateChallengeResponse>?> createChallenge(
-      {required CreateChallengeRequest createChallengeRequest}) async {
+  Future<BaseResponseModel<CreateChallengeResponse>?> createUpdateChallenge(
+      {required CreateChallengeRequest createChallengeRequest,
+      required bool isEdit,
+      required String? challengeId}) async {
     try {
       print(createChallengeRequest.toJson());
-      Response? response =
-          await _dio?.post('/v1/challenges', data: createChallengeRequest);
+      Response? response = await _dio?.post(
+          isEdit ? '/v1/challenges/$challengeId/update' : '/v1/challenges',
+          data: createChallengeRequest);
       return BaseResponseModel<CreateChallengeResponse>.fromJson(
           response?.data,
           (data) =>

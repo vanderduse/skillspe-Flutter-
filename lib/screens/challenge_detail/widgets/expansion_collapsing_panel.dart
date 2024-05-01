@@ -115,7 +115,7 @@ class ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
   }
 
   Widget getParticipantsListWidget(bool isListVisible) {
-    return Container(
+    return SizedBox(
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.participantList.length,

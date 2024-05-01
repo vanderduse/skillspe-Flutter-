@@ -6,7 +6,7 @@ import 'package:skills_pe/utility/constants.dart';
 const DDMMYYYY_SLASH_FORMAT = "dd/MM/yyyy";
 const YYYYMMDD_DASH_FORMAT = "yyyy-MM-dd";
 const MMM_DD_YYYY_FORMAT = 'MMM dd, yyyy';
-List<String> months = [
+const List<String> months = [
   'Jan',
   'Feb',
   'Mar',
@@ -32,8 +32,6 @@ bool isStartDateBeforeCurrentDate(String inputDate) {
   try {
     DateTime startDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(inputDate);
     DateTime currentDate = DateTime.now();
-    print(currentDate);
-    print(startDate);
     return startDate.isBefore(currentDate);
   } catch (e) {
     // Handle parsing error or return false if the date format is incorrect
@@ -124,4 +122,10 @@ double? convertMintuesToSeconds(double? timeInMins) {
   } catch (e) {
     return null;
   }
+}
+
+String convertServerDateToMMMdd(String serverDate) {
+  DateTime parsedDate = DateFormat(YYYYMMDD_DASH_FORMAT)
+      .parse(serverDate); // Assuming server date is in "yyyy-MM-dd" format
+  return DateFormat("MMM dd").format(parsedDate);
 }

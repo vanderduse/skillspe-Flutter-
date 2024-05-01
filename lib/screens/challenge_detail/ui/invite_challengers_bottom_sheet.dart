@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -186,18 +187,14 @@ class _InviteChallengersBottomSheetState
                                         });
                                       },
                                       child: ListTile(
-                                        leading: Container(
+                                        leading: SizedBox(
                                           width: 40,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage(state
-                                                      .usersList[index]
-                                                      .profileImgUrl ??
-                                                  'https://via.placeholder.com/40x40'),
-                                              fit: BoxFit.cover,
-                                            ),
+                                          child: CircularImage(
+                                            height: 40,
+                                            imageUrl: state.usersList[index]
+                                                    .profileImgUrl ??
+                                                'https://via.placeholder.com/40x40',
                                           ),
                                         ),
                                         title: Text(

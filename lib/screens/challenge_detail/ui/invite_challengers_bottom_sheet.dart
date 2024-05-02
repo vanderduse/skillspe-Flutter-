@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
+import 'package:skills_pe/sharedWidgets/cards/live_challenge_card.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,7 +10,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
-import 'package:skills_pe/utility/constants.dart';
 
 class InviteChallengersBottomSheet extends StatefulWidget {
   final String userType;
@@ -155,7 +155,8 @@ class _InviteChallengersBottomSheetState
                             builder: (context, state) {
                               if (state is UsersListLoadingState) {
                                 //TODO: replace with skeleton loader
-                                return const CircularProgressIndicator();
+                                return const Center(
+                                    child: CircularProgressIndicator());
                               } else if (state is UsersListSuccessState) {
                                 return ListView.builder(
                                   itemCount: state.usersList.length,
@@ -186,18 +187,14 @@ class _InviteChallengersBottomSheetState
                                         });
                                       },
                                       child: ListTile(
-                                        leading: Container(
+                                        leading: SizedBox(
                                           width: 40,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage(state
-                                                      .usersList[index]
-                                                      .profileImgUrl ??
-                                                  'https://via.placeholder.com/40x40'),
-                                              fit: BoxFit.cover,
-                                            ),
+                                          child: CircularImage(
+                                            height: 40,
+                                            imageUrl: state.usersList[index]
+                                                    .profileImgUrl ??
+                                                'https://via.placeholder.com/40x40',
                                           ),
                                         ),
                                         title: Text(
@@ -213,7 +210,7 @@ class _InviteChallengersBottomSheetState
                                                   .usersList[index]
                                                   .userId!] = value!;
                                               // Update selectedUserList
-                                              if (value!) {
+                                              if (value) {
                                                 selectedUserList.add(state
                                                     .usersList[index].userId!);
                                               } else {

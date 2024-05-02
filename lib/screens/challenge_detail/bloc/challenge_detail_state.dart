@@ -13,9 +13,15 @@ class ChallengeDetailFailureState extends ChallengeDetailState {
 
 class ChallengeDetailSuccessState extends ChallengeDetailState {
   final ChallengeDetailResponse challengeDetailResponse;
-  ChallengeDetailSuccessState({required this.challengeDetailResponse});
+  final List<ParticipantDetailResponse> challengersList;
+  final List<ParticipantDetailResponse> moderatorList;
+  final List<ParticipantDetailResponse> motivatorList;
+  ChallengeDetailSuccessState(
+      {required this.challengeDetailResponse,
+      required this.challengersList,
+      required this.moderatorList,
+      required this.motivatorList});
 }
-
 
 class UsersListLoadingState extends ChallengeDetailState {}
 
@@ -37,4 +43,3 @@ class InviteUsersFailureState extends ChallengeDetailState {
 }
 
 class InviteUsersSuccessState extends ChallengeDetailState {}
-

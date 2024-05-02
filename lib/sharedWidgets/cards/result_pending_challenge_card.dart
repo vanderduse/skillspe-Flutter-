@@ -15,12 +15,8 @@ class ResultPendingChallengeCard extends ChallengeCard {
 
   @override
   Widget build(BuildContext context) {
-    List RandomImages = [
-      'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg',
-      'https://images.unsplash.com/photo-1622124549569-734d5a66859d?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1667183957467-59ca2f3756e7?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg?w=1155&h=1528'
-    ];
+    final participantsLength =
+        item.options!.length <= 4 ? item.options!.length : 4;
     double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
       width: 0.92 * deviceWidth,
@@ -76,7 +72,7 @@ class ResultPendingChallengeCard extends ChallengeCard {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
-                              item?.challengeEmoji ?? "",
+                              item.challengeEmoji ?? "",
                               style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
@@ -148,7 +144,7 @@ class ResultPendingChallengeCard extends ChallengeCard {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            TextUtility.toSentenceCase(item?.status ?? ""),
+                            TextUtility.toSentenceCase(item.status ?? ""),
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -171,27 +167,35 @@ class ResultPendingChallengeCard extends ChallengeCard {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                       color: HexColor("#F0F0F0"),
-                      borderRadius: const BorderRadius.all(Radius.circular(300))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      for (int i = 0; i < RandomImages.length; i++)
-                        Align(
-                          widthFactor: 0.8,
-                          child: CircularImage(
-                            height: 24,
-                            imageUrl: RandomImages[i],
-                          ),
-                        ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      const Text("+4")
-                    ],
-                  ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(300))),
+                  child: item.options?.isNotEmpty == true
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < participantsLength; i++)
+                              Align(
+                                widthFactor: 0.8,
+                                child: CircularImage(
+                                  height: 24,
+                                  imageUrl:
+                                      item.options![i].profileImgUrl ?? "",
+                                ),
+                              ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            participantsLength > 4
+                                ? Text(
+                                    "+${item.options!.length - participantsLength}")
+                                : const Text("")
+                          ],
+                        )
+                      : null,
                 ),
                 ElevatedButton(
                   onPressed: () {

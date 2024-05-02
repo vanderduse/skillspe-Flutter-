@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/challenge_detail/bloc/challenge_detail_bloc.dart';
 import 'package:skills_pe/screens/challenge_detail/respository/challenge_detail_repository.dart';
 import 'package:skills_pe/screens/challenge_detail/widgets/expansion_collapsing_panel.dart';
+import 'package:skills_pe/sharedWidgets/show_progressDialog_with_message.dart';
 import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
@@ -35,15 +36,17 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen>
     return BlocConsumer(
         bloc: challengeDetailBloc,
         listener: (context, state) {
-          if (state is ChallengeDetailLoadingState) {
-            buildShowDialog(context);
-          } else {
-            Navigator.of(context).pop();
+          if (state is ChallengeDetailFailureState) {
+            showSnackBar(context, state.errorMessage);
           }
         },
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
-          if (state is ChallengeDetailSuccessState) {
+          if (state is ChallengeDetailLoadingState) {
+            return const ShowProgressDialogWithMessage(
+              message: LOADING,
+            );
+          } else if (state is ChallengeDetailSuccessState) {
             var challengeDetail = state.challengeDetailResponse;
             return SingleChildScrollView(
                 child: ConstrainedBox(
@@ -103,7 +106,7 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen>
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
-                          '${convertServerDate(challengeDetail.startTime!)} - ${convertServerDate(challengeDetail.endTime!)}',
+                          '${convertServerDate(challengeDetail.startTime!, MMM_DD_YYYY_FORMAT)} - ${convertServerDate(challengeDetail.endTime!, MMM_DD_YYYY_FORMAT)}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontFamily: "Sora-SemiBold",
@@ -196,14 +199,16 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen>
                       ExpansionCollapseWidget(
                         userType: CHALLENGERS,
                         challengeId: widget.challengeId!,
+                        participantList: state.challengersList,
                       ),
                       ExpansionCollapseWidget(
-                        userType: MODERATORS,
-                        challengeId: widget.challengeId!,
-                      ),
+                          userType: MODERATORS,
+                          challengeId: widget.challengeId!,
+                          participantList: state.moderatorList),
                       ExpansionCollapseWidget(
                         userType: MOTIVATORS,
                         challengeId: widget.challengeId!,
+                        participantList: state.motivatorList,
                       )
                     ]),
               ),

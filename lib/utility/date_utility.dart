@@ -5,7 +5,8 @@ import 'package:skills_pe/utility/constants.dart';
 
 const DDMMYYYY_SLASH_FORMAT = "dd/MM/yyyy";
 const YYYYMMDD_DASH_FORMAT = "yyyy-MM-dd";
-List<String> months = [
+const MMM_DD_YYYY_FORMAT = 'MMM dd, yyyy';
+const List<String> months = [
   'Jan',
   'Feb',
   'Mar',
@@ -20,10 +21,22 @@ List<String> months = [
   'Dec'
 ];
 
-bool dateComparision({required date1, required date2}) {
-  DateTime startDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(date1);
-  DateTime endDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(date2);
-  return startDate.isAfter(endDate);
+bool isStartDateAfterEndDate(
+    {required String startDate, required String endDate}) {
+  DateTime parsedStartDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(startDate);
+  DateTime parsedEndDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(endDate);
+  return parsedStartDate.isAfter(parsedEndDate);
+}
+
+bool isStartDateBeforeCurrentDate(String inputDate) {
+  try {
+    DateTime startDate = DateFormat(DDMMYYYY_SLASH_FORMAT).parse(inputDate);
+    DateTime currentDate = DateTime.now();
+    return startDate.isBefore(currentDate);
+  } catch (e) {
+    // Handle parsing error or return false if the date format is incorrect
+    return false;
+  }
 }
 
 String convertStringDateFormat(
@@ -33,14 +46,18 @@ String convertStringDateFormat(
   return formattedDate;
 }
 
-String convertServerDate(String serverDate) {
-  // Parse the server date string
-  DateTime dateTime = DateTime.parse(serverDate);
+String convertServerDate(String? serverDate, String outputFormat) {
+  try {
+    // Parse the server date string
+    DateTime dateTime = DateTime.parse(serverDate!);
 
-  // Format the date in "MMM dd, yyyy" format
-  String formattedDate = DateFormat('MMM dd, yyyy').format(dateTime);
+    // Format the date in "MMM dd, yyyy" format
+    String formattedDate = DateFormat(outputFormat).format(dateTime);
 
-  return formattedDate;
+    return formattedDate;
+  } catch (error) {
+    return "";
+  }
 }
 
 String getDateInISOFormat(String inputDate) {
@@ -105,4 +122,10 @@ double? convertMintuesToSeconds(double? timeInMins) {
   } catch (e) {
     return null;
   }
+}
+
+String convertServerDateToMMMdd(String serverDate) {
+  DateTime parsedDate = DateFormat(YYYYMMDD_DASH_FORMAT)
+      .parse(serverDate); // Assuming server date is in "yyyy-MM-dd" format
+  return DateFormat("MMM dd").format(parsedDate);
 }

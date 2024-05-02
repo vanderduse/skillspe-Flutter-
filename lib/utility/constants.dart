@@ -11,6 +11,9 @@ const FCM_TOKEN = 'firebase_token';
 const PAGE = 'Page';
 const LIMIT = 'limit';
 const STATUS = "status";
+const TYPE = "type";
+
+const LOADING = "Loading...";
 
 //API Response code
 const API_SUCCESS_CODE = "SS0200";
@@ -31,7 +34,7 @@ const ENDDATE = "End Date";
 const CHALLENGEFEES = "Challenge Fees";
 const STAR = "*";
 const RUPEE = "₹";
-const FIVRUPEEMIN = "₹5(Min)";
+const FIVRUPEEMIN = "5(Min)";
 const THOUSANDRUPEEMAX = "₹1000(Max)";
 const CHOOSE_EMOJI_TEXT =
     "Choose an emoji as the symbol for your challenge name!";
@@ -46,9 +49,12 @@ const CHALLENGE_FEES_MAX_VALIDATION =
 const CHALLENGE_FEES_MIN_VALIDATION = "Challenge fees cannot be less than 5";
 const START_DATE_END_DATE_VALIDATION =
     "Start date cannot be greater than end date";
+const START_DATE_BEFORE_CURRENT_DATE_VALIDATION =
+    "Start date cannot be less than current date";
 const CHALLENGES = 'Challenges';
 const CHALLENGE_ACCEPTING_CONDITION_TEXT =
     "Start once all participants accepts the challenge";
+const UPDATECHALLENGE = "Update Challenge";
 
 // Challenge Details
 const GENERAL_DETAILS = 'General Details';
@@ -66,6 +72,10 @@ const SEARCH_YOUR_FRIEND = "Search your friend";
 const INVITE = "Invite";
 const NO = "No";
 const YES = "Yes";
+const CHALLENGER = 'Challenger';
+const MODERATOR = 'Moderator';
+const MOTIVATOR = 'Motivator';
+const CHALLENGE_INFO = "Challenge Info";
 const QR_CODE_DESCRIPTION = "Scan QR to get the challenge link";
 const INVITE_BUTTON_LABEL = "+ Invite";
 const INVITE_BUTTON_LOADING_TEXT = "Inviting...";
@@ -198,6 +208,7 @@ const RESULTS_PENDING = 'RESULTS_PENDING';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';
 const CAMPAIGNS = 'Campaigns';
+const COMMON_ERROR_MESSAGE = "Something went wrong";
 
 class PrivateChallengeStatus {
   final String label;

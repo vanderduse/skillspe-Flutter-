@@ -7,7 +7,6 @@ class CreateChallengeRequest {
   String? description = "";
   @JsonKey(name: "challenge_emoji")
   String? challengeEmoji = "";
-  bool? public = true;
   @JsonKey(name: "start_time")
   String? startTime = "";
   @JsonKey(name: "end_time")
@@ -20,7 +19,6 @@ class CreateChallengeRequest {
       {this.title,
       this.description,
       this.challengeEmoji,
-      this.public = true,
       this.startTime,
       this.endTime,
       this.participationFee});

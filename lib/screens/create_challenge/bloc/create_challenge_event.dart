@@ -5,5 +5,8 @@ sealed class CreateChallengeEvent {}
 
 class CreateChallengeButtonClickedEvent extends CreateChallengeEvent {
   final CreateChallengeRequest createChallengeRequest;
-  CreateChallengeButtonClickedEvent(this.createChallengeRequest);
+  final bool isEdit;
+  final String? challengeID;
+  CreateChallengeButtonClickedEvent(
+      this.createChallengeRequest, this.isEdit, this.challengeID);
 }

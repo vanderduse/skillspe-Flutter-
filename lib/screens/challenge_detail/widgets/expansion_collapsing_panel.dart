@@ -1,27 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skills_pe/screens/challenge_detail/model/participant_detail_response.dart';
+import 'package:skills_pe/utility/constants.dart';
 import 'package:skills_pe/utility/utility.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/invite_challengers_bottom_sheet.dart';
 
 class ExpansionCollapseWidget extends StatefulWidget {
   final String userType;
   final String challengeId;
-
+  final List<ParticipantDetailResponse> participantList;
   const ExpansionCollapseWidget(
-      {Key? key, required this.userType, required this.challengeId})
+      {Key? key,
+      required this.userType,
+      required this.challengeId,
+      required this.participantList})
       : super(key: key);
 
   @override
-  _ExpansionCollapseWidgetState createState() =>
-      _ExpansionCollapseWidgetState();
+  ExpansionCollapseWidgetState createState() => ExpansionCollapseWidgetState();
 }
 
-class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
+class ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
   double _padding = 16.0;
   double _horitonzalPadding = 15.0;
   Color _bg_color = HexColor("#F5F0FF");
   bool _isListVisible = false;
   double _heightOfList = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _isListVisible =
+        widget.userType == CHALLENGERS; // Adjust this condition as needed
+    if (_isListVisible) {
+      _padding = 0.0;
+      _horitonzalPadding = 7.0;
+      _bg_color = Colors.white;
+      _heightOfList = 90.0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +47,27 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
         Center(
           child: Container(
             child: GestureDetector(
+              onTap: () {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  if (_isListVisible) {
+                    setState(() {
+                      _padding = 16.0;
+                      _horitonzalPadding = 15.0;
+                      _bg_color = HexColor("#F5F0FF");
+                      _isListVisible = false;
+                      _heightOfList = 0;
+                    });
+                  } else {
+                    setState(() {
+                      _padding = 0.0;
+                      _horitonzalPadding = 7.0;
+                      _bg_color = Colors.white;
+                      _isListVisible = true;
+                      _heightOfList = 90.0;
+                    });
+                  }
+                });
+              },
               child: AnimatedContainer(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10), color: _bg_color),
@@ -54,27 +92,6 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
                         child: SvgPicture.asset(
                             'assets/icons/arrow_drop_down.svg'),
                       ),
-                      onTap: () {
-                        Future.delayed(const Duration(milliseconds: 300), () {
-                          if (_isListVisible) {
-                            setState(() {
-                              _padding = 16.0;
-                              _horitonzalPadding = 15.0;
-                              _bg_color = HexColor("#F5F0FF");
-                              _isListVisible = false;
-                              _heightOfList = 0;
-                            });
-                          } else {
-                            setState(() {
-                              _padding = 0.0;
-                              _horitonzalPadding = 7.0;
-                              _bg_color = Colors.white;
-                              _isListVisible = true;
-                              _heightOfList = 90.0;
-                            });
-                          }
-                        });
-                      },
                     ),
                   ],
                 ),
@@ -98,71 +115,59 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
   }
 
   Widget getParticipantsListWidget(bool isListVisible) {
-    final List<Map<String, String>> items = [
-      {
-        'image': 'assets/icons/add.svg',
-        'title': 'Invite'
-      }, // Local asset for the first item
-      {'image': 'https://picsum.photos/id/237/200/300', 'title': 'Shubham'},
-      {
-        'image': 'https://picsum.photos/id/236/200/00',
-        'title': 'Durgeshgdgdgdgdgdgggd'
-      },
-      {'image': 'https://picsum.photos/id/235/200/300', 'title': 'Ram'},
-      {'image': 'https://picsum.photos/id/234/200/300', 'title': 'Kanha'},
-      {'image': 'https://picsum.photos/id/234/200/300', 'title': 'Akshay'},
-      {'image': 'https://picsum.photos/id/233/200/300', 'title': 'Vedang'},
-      // Add more items as needed
-    ];
-    return Container(
+    return SizedBox(
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: items.length,
+        itemCount: widget.participantList.length,
         itemBuilder: (context, index) {
           var isAsset = index == 0;
-          String finalText = (items[index]['title']!.length <= 7)
-              ? items[index]['title']!
-              : '${items[index]['title']!.substring(0, 7)}...'; // Boolean to determine if the image is an asset
+          String finalText = (widget.participantList[index]
+                      .getFullName()
+                      .length <=
+                  7)
+              ? widget.participantList[index].getFullName()
+              : '${widget.participantList[index].getFullName().substring(0, 7)}...'; // Boolean to determine if the image is an asset
           return GestureDetector(
-            onTap: () {
-              if (index == 0) {
-                _showShareBottomSheet(context, widget.userType, widget.challengeId);
-              }
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 10, vertical: isListVisible ? 1 : 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    width: 50,
-                    padding: EdgeInsets.all(isAsset ? 14 : 0),
-                    decoration: BoxDecoration(
-                        color: HexColor('#F2F2F2'), shape: BoxShape.circle),
-                    child: ClipOval(
-                        child: isAsset
-                            ? SvgPicture.asset(items[index]['image']!)
-                            : Image.network(
-                                items[index]['image']!,
-                                fit: BoxFit.cover,
-                              )),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(finalText,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: "Inter",
-                          height: 1.8,
-                          fontWeight:
-                              index == 0 ? FontWeight.w400 : FontWeight.w600)),
-                ],
-              ),
-            ),
-          );
+              onTap: () {
+                if (index == 0) {
+                  _showShareBottomSheet(
+                      context, widget.userType, widget.challengeId);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 10, vertical: isListVisible ? 1 : 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      height: 50,
+                      width: 50,
+                      padding: EdgeInsets.all(isAsset ? 14 : 0),
+                      decoration: BoxDecoration(
+                          color: HexColor('#F2F2F2'), shape: BoxShape.circle),
+                      child: ClipOval(
+                          child: isAsset
+                              ? SvgPicture.asset("assets/icons/add.svg")
+                              : Image.network(
+                                  widget.participantList[index].profileImgUrl!,
+                                  fit: BoxFit.cover,
+                                )),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(isAsset ? INVITE : finalText,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: "Inter",
+                            height: 1.8,
+                            fontWeight: index == 0
+                                ? FontWeight.w400
+                                : FontWeight.w600)),
+                  ],
+                ),
+              ));
         },
       ),
     );
@@ -170,14 +175,15 @@ class _ExpansionCollapseWidgetState extends State<ExpansionCollapseWidget> {
 }
 
 // function to show the bottom sheet modal
-void _showShareBottomSheet(BuildContext context, String userType, String challengeId) {
+void _showShareBottomSheet(
+    BuildContext context, String userType, String challengeId) {
   showModalBottomSheet<dynamic>(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
       return InviteChallengersBottomSheet(
         userType: userType,
-        challengeId: challengeId, 
+        challengeId: challengeId,
       );
     },
   );

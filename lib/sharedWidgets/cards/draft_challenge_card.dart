@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
+import 'package:skills_pe/screens/create_challenge/ui/create_challenge_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/utility/text_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
 
@@ -17,18 +18,6 @@ class DraftChallengeCard extends ChallengeCard {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime startDate = DateFormat("yyyy-MM-dd").parse(item.startTime);
-    final String formattedEndDate = DateFormat("MMM dd, yyyy")
-        .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
-    ;
-    final String formattedStartDate =
-        '${DateFormat.MMM().format(startDate)} ${DateFormat("d").format(startDate)}';
-    List RandomImages = [
-      'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg',
-      'https://images.unsplash.com/photo-1622124549569-734d5a66859d?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1667183957467-59ca2f3756e7?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg?w=1155&h=1528'
-    ];
     double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
       width: 0.92 * deviceWidth,
@@ -52,7 +41,7 @@ class DraftChallengeCard extends ChallengeCard {
             padding:
                 const EdgeInsets.all(16), // Occupy complete available width
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               color: HexColor("#F4F4F4"),
             ),
             child: Column(
@@ -74,7 +63,7 @@ class DraftChallengeCard extends ChallengeCard {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
-                              item?.challengeEmoji ?? "",
+                              item.challengeEmoji ?? "",
                               style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
@@ -108,7 +97,7 @@ class DraftChallengeCard extends ChallengeCard {
                   height: 16,
                 ),
                 Text(
-                  item?.title ?? "",
+                  item.title ?? "",
                   style: TextStyle(
                       color: HexColor("#0A121A"),
                       fontFamily: "Inter",
@@ -145,7 +134,7 @@ class DraftChallengeCard extends ChallengeCard {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            TextUtility.toSentenceCase(item?.status ?? ""),
+                            TextUtility.toSentenceCase(item.status ?? ""),
                             style: TextStyle(
                                 color: HexColor("#646464"),
                                 fontSize: 12,
@@ -166,7 +155,7 @@ class DraftChallengeCard extends ChallengeCard {
                             width: 0.5,
                           )),
                       child: Text(
-                        '${TextUtility.toSentenceCase(formattedStartDate)} - ${TextUtility.toSentenceCase(formattedEndDate)}',
+                        '${convertServerDateToMMMdd(item.startTime)} - ${convertServerDate(item.endTime, MMM_DD_YYYY_FORMAT)}',
                         style: TextStyle(
                             color: HexColor("#646464"),
                             fontSize: 12,
@@ -202,13 +191,26 @@ class DraftChallengeCard extends ChallengeCard {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding: EdgeInsets.all(0)),
+                        padding: const EdgeInsets.all(0)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(
-                        "assets/icons/edit.svg",
-                        color: const Color(0xFFFF34C1), // Change icon color
-                        height: 24,
+                      child: GestureDetector(
+                        onTap: () {
+                          item.participationFee = 100.00;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateChallengeScreen(
+                                isEdit: true,
+                                challengeDetail: item,
+                              ),
+                            ),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          "assets/icons/edit.svg",
+                          height: 24,
+                        ),
                       ),
                     ),
                   ),
@@ -267,7 +269,7 @@ class CircularImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ClipOval(
-        child: Container(
+        child: SizedBox(
           width:
               height, // Circular image size (height acts as width for a perfect circle)
           height: height, // Circular image size

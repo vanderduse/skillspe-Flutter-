@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_screen.dart';
 import 'package:skills_pe/screens/home_screens/model/list_private_challenges_response.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/challenge_card_factory.dart';
+import 'package:skills_pe/utility/date_utility.dart';
 import 'package:skills_pe/utility/text_utility.dart';
 import 'package:skills_pe/utility/utility.dart';
 
@@ -17,19 +17,8 @@ class LiveChallengeCard extends ChallengeCard {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime startDate =
-        DateFormat("yyyy-MM-dd").parse(item?.startTime ?? "");
-    final String formattedEndDate = DateFormat("MMM dd, yyyy")
-        .format(DateFormat("yyyy-MM-dd").parse(item?.endTime ?? ""));
-    ;
-    final String formattedStartDate =
-        '${DateFormat.MMM().format(startDate)} ${DateFormat("d").format(startDate)}';
-    List RandomImages = [
-      'https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg',
-      'https://images.unsplash.com/photo-1622124549569-734d5a66859d?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://images.unsplash.com/photo-1667183957467-59ca2f3756e7?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      'https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg?w=1155&h=1528'
-    ];
+    final participantsLength =
+        item.options!.length <= 4 ? item.options!.length : 4;
     double deviceWidth = MediaQuery.of(context).size.width;
     return Container(
       width: 0.92 * deviceWidth,
@@ -85,7 +74,7 @@ class LiveChallengeCard extends ChallengeCard {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             child: Text(
-                              item?.challengeEmoji ?? "",
+                              item.challengeEmoji ?? "",
                               style: const TextStyle(fontSize: 24),
                               textAlign: TextAlign.center,
                             ))
@@ -104,7 +93,7 @@ class LiveChallengeCard extends ChallengeCard {
                         ),
                         Text(
                           TextUtility.toSentenceCase(
-                              item?.participationDetails?.type ?? ""),
+                              item.participationDetails?.type ?? ""),
                           style: TextStyle(
                               color: HexColor("#a99acf"),
                               fontFamily: "Inter",
@@ -157,7 +146,7 @@ class LiveChallengeCard extends ChallengeCard {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            TextUtility.toSentenceCase(item?.status ?? ""),
+                            TextUtility.toSentenceCase(item.status ?? ""),
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -174,12 +163,12 @@ class LiveChallengeCard extends ChallengeCard {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4)),
                           border: Border.all(
-                            color: Color(0xFFFFFFFF)
+                            color: const Color(0xFFFFFFFF)
                                 .withOpacity(0.5), // Color #FFFFFF80
                             width: 0.5,
                           )),
                       child: Text(
-                        '${TextUtility.toSentenceCase(formattedStartDate)} - ${TextUtility.toSentenceCase(formattedEndDate)}',
+                        '${convertServerDateToMMMdd(item.startTime)} - ${convertServerDate(item.endTime, MMM_DD_YYYY_FORMAT)}',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -206,23 +195,29 @@ class LiveChallengeCard extends ChallengeCard {
                       color: HexColor("#F0F0F0"),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(300))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      for (int i = 0; i < RandomImages.length; i++)
-                        Align(
-                          widthFactor: 0.8,
-                          child: CircularImage(
-                            height: 24,
-                            imageUrl: RandomImages[i],
-                          ),
-                        ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      const Text("+4")
-                    ],
-                  ),
+                  child: item.options?.isNotEmpty == true
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < participantsLength; i++)
+                              Align(
+                                widthFactor: 0.8,
+                                child: CircularImage(
+                                  height: 24,
+                                  imageUrl:
+                                      item.options![i].profileImgUrl ?? "",
+                                ),
+                              ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            participantsLength > 4
+                                ? Text(
+                                    "+${item.options!.length - participantsLength}")
+                                : const Text(""),
+                          ],
+                        )
+                      : null,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -279,7 +274,11 @@ class CircularImage extends StatelessWidget {
           height: height, // Circular image size
           child: Image.network(
             imageUrl,
-            fit: BoxFit.cover, // Cover the circular space
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                Image.network('https://via.placeholder.com/40x40'),
+            loadingBuilder: (context, child, loadingProgress) => Image.network(
+                'https://via.placeholder.com/40x40'), // Cover the circular space
           ),
         ),
       ),

@@ -10,7 +10,6 @@ import 'package:skills_pe/screens/home_screens/ui/widgets/bottom_navbar.dart';
 import 'package:skills_pe/screens/home_screens/ui/widgets/home_swipper.dart';
 import 'package:skills_pe/sharedWidgets/appBars/noti_wallet_appbar.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/challenge_card_skeleton.dart';
-import 'package:skills_pe/sharedWidgets/skeletonLoaders/public_challenge_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/campaign_card_skeleton.dart';
 import 'package:skills_pe/sharedWidgets/skeletonLoaders/quiz_card_skeleton.dart';
 import 'package:skills_pe/utility/constants.dart';
@@ -70,7 +69,7 @@ class _HomeMain extends State<HomeMain> {
               builder: (context, state) {
                 if (state is HomeScreenBannerLoadingState) {
                   return const ChallengeCardSkeleton();
-                } else if (state is HomeScreenBannerSuccessState) {                 
+                } else if (state is HomeScreenBannerSuccessState) {
                   return HomeSwipper(bannerList: state.bannersList);
                 } else if (state is HomeScreenBannerFailureState) {
                   return Text('Error: ${state.errorMessage}');

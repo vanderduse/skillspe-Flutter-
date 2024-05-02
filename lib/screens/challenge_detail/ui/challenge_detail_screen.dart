@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_info_screen.dart';
 import 'package:skills_pe/screens/challenge_detail/ui/challenge_detail_tab.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class ChallengeDetailScreen extends StatefulWidget {
   final String? challengeId;
@@ -52,7 +53,7 @@ class _ChallengeDetailState extends State<ChallengeDetailScreen>
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.challengeName!),
+          title: const Text(CHALLENGE_INFO),
           automaticallyImplyLeading: true,
           shadowColor: Colors.black,
           bottom: TabBar(

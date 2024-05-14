@@ -192,6 +192,9 @@ const BID = "Bid";
 const PUBLIC_CHALLENGE_TITLE = "New Discoveries";
 const PUBLIC_CHALLENGE_SUBTITLE = "Unique experiences curated for you!";
 
+// Public Challenge Detail
+const QUANTITY = "Quantity";
+
 //Private Challenge
 const PRIVATE_CHALLENGE_TITLE = "Challenge Hub";
 const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";

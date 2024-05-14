@@ -32,9 +32,6 @@ AppBar navigationWithTextButton(
   return AppBar(
     centerTitle: false,
     automaticallyImplyLeading: false,
-    shape: const Border(
-      bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.10), width: 1),
-    ),
     title: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

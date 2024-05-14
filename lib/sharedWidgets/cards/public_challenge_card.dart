@@ -157,13 +157,14 @@ class PublicChallengeCard extends StatelessWidget {
                                 children: [
                                   const SizedBox(height: 32),
                                   Text(
+                                    maxLines: 1,
                                     '${_getPercentage(NO, item?.bidRatios)}%',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ],

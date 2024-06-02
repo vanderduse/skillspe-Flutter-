@@ -6,7 +6,7 @@ sealed class PublicChallengesListState {}
 class PublicChallengesListInitialState extends PublicChallengesListState {}
 
 class PublicChallengesListSuccessState extends PublicChallengesListState {
-  final List<PublicChallengesListResponse> publicChallengesList;
+  final List<PublicChallengesItemResponse> publicChallengesList;
   final bool hasNext;
 
   PublicChallengesListSuccessState({

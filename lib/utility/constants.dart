@@ -192,6 +192,20 @@ const BID = "Bid";
 const PUBLIC_CHALLENGE_TITLE = "New Discoveries";
 const PUBLIC_CHALLENGE_SUBTITLE = "Unique experiences curated for you!";
 
+// Public Challenge Detail
+const QUANTITY = "Quantity";
+const CONFIRMING_BIDDING = "Confirming Bidding...";
+const BIDDING_FAILED_MESSAGE = 'Failed to bid, please try again';
+const MATCHED = 'Matched';
+const UNMATCHED = 'unmatched';
+const YOUR_ARE_CONTRIBUTING = 'You\'re contributing';
+const WIN_UPTO = 'Win up to';
+const YOU_CONTRIBUTED = 'You contributed';
+const TOTAL_QUANTITY = 'Total quantity';
+const YOUR_RETURNS = 'Your returns';
+const CONFIRM_YOUR_BID = 'Confim your bid';
+const NOTIFY_ME = 'Notify Me';
+
 //Private Challenge
 const PRIVATE_CHALLENGE_TITLE = "Challenge Hub";
 const PRIVATE_CHALLENGE_SUBTITLE = "Your Invites & Creations";
@@ -204,7 +218,7 @@ const DRAFT = 'Draft';
 const LIVE = 'Live';
 const CAPITAL_LIVE = 'LIVE';
 const REQUEST = 'Request';
-const RESULTS_PENDING = 'RESULTS_PENDING';
+const RESULTS_PENDING = 'Result Pending';
 const UPCOMING = 'Upcoming';
 const COMPLETED = 'Completed';
 const CAMPAIGNS = 'Campaigns';

@@ -12,7 +12,8 @@ import '../model/list_campaign_response.dart';
 class HomeScreenRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?> fetchPrivateChallenges() async {
+  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?>
+      fetchPrivateChallenges() async {
     try {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
       Response? response = await _dio?.get('/v1/feed/private/challenges',
@@ -36,18 +37,18 @@ class HomeScreenRepository {
     }
   }
 
-  Future<BaseResponseModel<List<PublicChallengesListResponse>>?>
+  Future<BaseResponseModel<List<PublicChallengesItemResponse>>?>
       fetchPublicChallenges() async {
     try {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
       Response? response = await _dio?.get('/v1/feed/public/challenges',
           queryParameters: queryParameters);
-      return BaseResponseModel<List<PublicChallengesListResponse>>.fromJson(
+      return BaseResponseModel<List<PublicChallengesItemResponse>>.fromJson(
         response?.data,
         (data) {
           if (data is List<dynamic>) {
             return data
-                .map((item) => PublicChallengesListResponse.fromJson(
+                .map((item) => PublicChallengesItemResponse.fromJson(
                     item as Map<String, dynamic>))
                 .toList();
           } else {
@@ -56,7 +57,7 @@ class HomeScreenRepository {
         },
       );
     } on DioException catch (e) {
-      return BaseResponseModel<List<PublicChallengesListResponse>>.fromJson(
+      return BaseResponseModel<List<PublicChallengesItemResponse>>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }
@@ -138,8 +139,8 @@ class HomeScreenRepository {
   Future<BaseResponseModel<List<BannersListResponse>>?> fetchBanners() async {
     try {
       Map<String, dynamic> queryParameters = {PAGE: 1, LIMIT: 5};
-      Response? response =
-          await _dio?.get('/v1/banners?limit=10', queryParameters: queryParameters);
+      Response? response = await _dio?.get('/v1/banners?limit=10',
+          queryParameters: queryParameters);
       return BaseResponseModel<List<BannersListResponse>>.fromJson(
         response?.data,
         (data) {

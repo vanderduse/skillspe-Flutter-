@@ -22,7 +22,7 @@ class HomeScreenPrivateChallengeFailureState extends HomeScreenState {
 class HomeScreenPublicChallengeLoadingState extends HomeScreenState {}
 
 class HomeScreenPublicChallengeSuccessState extends HomeScreenState {
-  final List<PublicChallengesListResponse> challenges;
+  final List<PublicChallengesItemResponse> challenges;
   HomeScreenPublicChallengeSuccessState(this.challenges);
 }
 

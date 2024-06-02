@@ -75,10 +75,9 @@ String formatChallengeDate(String? startTime, String? endTime) {
     DateTime endDateTime = DateTime.parse(endTime!);
     String startMonth = months[startDateTime.month - 1];
     String endMonth = months[endDateTime.month - 1];
-    String formattedStartDate = '${startMonth} ${startDateTime.day}';
+    String formattedStartDate = '$startMonth ${startDateTime.day}';
     String formattedEndDate =
-        '${endMonth} ${endDateTime.day} ${endDateTime.year}';
-
+        '$endMonth ${endDateTime.day} ${endDateTime.year}';
     return '$formattedStartDate - $formattedEndDate';
   } catch (e) {
     return '';
@@ -124,8 +123,12 @@ double? convertMintuesToSeconds(double? timeInMins) {
   }
 }
 
-String convertServerDateToMMMdd(String serverDate) {
-  DateTime parsedDate = DateFormat(YYYYMMDD_DASH_FORMAT)
-      .parse(serverDate); // Assuming server date is in "yyyy-MM-dd" format
-  return DateFormat("MMM dd").format(parsedDate);
+String convertServerDateToMMMdd(String? serverDate) {
+  try {
+    DateTime parsedDate = DateFormat(YYYYMMDD_DASH_FORMAT)
+        .parse(serverDate!); // Assuming server date is in "yyyy-MM-dd" format
+    return DateFormat("MMM dd").format(parsedDate);
+  } catch (e) {
+    return '';
+  }
 }

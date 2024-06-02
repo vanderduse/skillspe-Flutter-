@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:skills_pe/screens/home_screens/model/list_banners_response.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class HomeSwipper extends StatefulWidget {
   final List<BannersListResponse> bannerList;
@@ -36,7 +36,7 @@ class _HomeSwipperState extends State<HomeSwipper> {
                 builder: (BuildContext context) {
                   return GestureDetector(
                     onTap: () {
-                      _handleBannerTap(banner.target);
+                      redirectURL(banner.target);
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -77,22 +77,5 @@ class _HomeSwipperState extends State<HomeSwipper> {
         ],
       ),
     );
-  }
-
-  void _handleBannerTap(String? target) async {
-    if (target != null) {
-      if (Uri.parse(target).isAbsolute) {
-        // If it's a URL, launch the browser
-        launchUrl(
-          Uri.parse(target),
-        );
-      } else {
-        // If it's a screen name, navigate to that screen
-        // Example: Replace the Navigator code with your navigation logic
-        launchUrl(
-          Uri.parse('skills_pe://PrivateChallengeList'),
-        );
-      }
-    }
   }
 }

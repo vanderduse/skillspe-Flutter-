@@ -7,7 +7,7 @@ import 'package:skills_pe/utility/constants.dart';
 class PublicChallengesWidget extends StatelessWidget {
   final String title;
   final String subTitle;
-  final List<PublicChallengesListResponse> data;
+  final List<PublicChallengesItemResponse> data;
 
   const PublicChallengesWidget({
     super.key,
@@ -69,7 +69,7 @@ class PublicChallengesWidget extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 15.0),
-          height: 260, // Set a fixed height for the horizontal ListView
+          height: 230, // Set a fixed height for the horizontal ListView
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: data.length,

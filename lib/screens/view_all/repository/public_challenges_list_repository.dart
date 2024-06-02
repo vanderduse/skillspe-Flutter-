@@ -7,8 +7,8 @@ import 'package:skills_pe/utility/constants.dart';
 class PublicChallengesListRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<PublicChallengesListResponse>>?> fetchPublicChallengesList(
-      String status, int page) async {
+  Future<BaseResponseModel<List<PublicChallengesItemResponse>>?>
+      fetchPublicChallengesList(String status, int page) async {
     try {
       Map<String, dynamic> queryParameters = {
         PAGE: page,
@@ -19,12 +19,12 @@ class PublicChallengesListRepository {
       }
       Response? response = await _dio?.get('/v1/feed/public/challenges',
           queryParameters: queryParameters);
-      return BaseResponseModel<List<PublicChallengesListResponse>>.fromJson(
+      return BaseResponseModel<List<PublicChallengesItemResponse>>.fromJson(
         response?.data,
         (data) {
           if (data is List<dynamic>) {
             return data
-                .map((item) => PublicChallengesListResponse.fromJson(
+                .map((item) => PublicChallengesItemResponse.fromJson(
                     item as Map<String, dynamic>))
                 .toList();
           } else {
@@ -33,7 +33,7 @@ class PublicChallengesListRepository {
         },
       );
     } on DioException catch (e) {
-      return BaseResponseModel<List<PublicChallengesListResponse>>.fromJson(
+      return BaseResponseModel<List<PublicChallengesItemResponse>>.fromJson(
           e.response?.data as Map<String, dynamic>, (data) => null);
     }
   }

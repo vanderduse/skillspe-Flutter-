@@ -1,6 +1,6 @@
 class TextUtility {
   static String toSentenceCase(String input) {
-    if (input == null || input.isEmpty) {
+    if (input.isEmpty) {
       return '';
     }
 

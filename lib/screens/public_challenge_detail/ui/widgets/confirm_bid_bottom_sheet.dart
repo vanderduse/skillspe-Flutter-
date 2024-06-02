@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:skills_pe/screens/public_challenge_detail/ui/bidding_confirmed_screen.dart';
 import 'package:skills_pe/sharedWidgets/buttons/filled_btn.dart';
 import 'package:skills_pe/sharedWidgets/custom_checkbox.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class ConfirmBidBottomSheet extends StatefulWidget {
   final BuildContext parentContext;
+  final String activeCard, firstLabel;
+  final int calculatedValue, biddingValue;
+  final Function() confirmBid;
 
-  const ConfirmBidBottomSheet({super.key, required this.parentContext});
+  const ConfirmBidBottomSheet(
+      {super.key,
+      required this.parentContext,
+      required this.activeCard,
+      required this.calculatedValue,
+      required this.biddingValue,
+      required this.firstLabel,
+      required this.confirmBid});
+
   @override
   State<StatefulWidget> createState() => _ConfirmBidBottomSheet();
 }
@@ -29,24 +39,29 @@ class _ConfirmBidBottomSheet extends State<ConfirmBidBottomSheet> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                      color: Theme.of(context).primaryColor, width: 1.5)),
+                      color: widget.activeCard == widget.firstLabel
+                          ? Theme.of(context).primaryColor
+                          : const Color.fromRGBO(255, 52, 193, 0.85),
+                      width: 1.5)),
               child: Row(
                 children: [
                   Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: widget.activeCard == widget.firstLabel
+                          ? Theme.of(context).primaryColor
+                          : const Color.fromRGBO(255, 52, 193, 0.85),
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8)),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
-                            "Yes | ${RUPEE}5",
-                            style: TextStyle(color: Colors.white),
+                            "${widget.activeCard} | $RUPEE${widget.biddingValue}",
+                            style: const TextStyle(color: Colors.white),
                           ),
                         )
                       ],
@@ -65,11 +80,11 @@ class _ConfirmBidBottomSheet extends State<ConfirmBidBottomSheet> {
                           color: Color.fromRGBO(63, 63, 63, 1)),
                     ),
                   )),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
                     child: Text(
-                      "${RUPEE}100",
-                      style: TextStyle(
+                      '$RUPEE${widget.calculatedValue}',
+                      style: const TextStyle(
                           fontFamily: "Inter",
                           fontWeight: FontWeight.w600,
                           fontSize: 22,
@@ -93,35 +108,29 @@ class _ConfirmBidBottomSheet extends State<ConfirmBidBottomSheet> {
             ),
             SizedBox(
               height: 50,
-              child: Stack(
+              child: Row(
                 children: [
-                  Positioned(
-                      left: 0,
-                      right: 320,
-                      child: CustomCheckbox(
-                        checkboxSize: 1.5,
-                        checked: isConditionAccepted,
-                        onChange: (value) {
-                          setState(() {
-                            isConditionAccepted = value!;
-                          });
-                        },
-                      )),
-                  const Positioned(
-                      left: 50,
-                      top: 10,
-                      right: 0,
+                  CustomCheckbox(
+                    checkboxSize: 1.5,
+                    checked: isConditionAccepted,
+                    onChange: (value) {
+                      setState(() {
+                        isConditionAccepted = value!;
+                      });
+                    },
+                  ),
+                  const Expanded(
                       child: Text(
-                        'Lorem ipsum dolor sit amet consectetur. Lorem gravida volutpat dui sollicitudin sociis feugiat diam..',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          height: 1.2,
-                        ),
-                      ))
+                    'Lorem ipsum dolor sit amet consectetur. Lorem gravida volutpat dui sollicitudin sociis feugiat diam..',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      height: 1.2,
+                    ),
+                  ))
                 ],
               ),
             ),
@@ -129,14 +138,11 @@ class _ConfirmBidBottomSheet extends State<ConfirmBidBottomSheet> {
               height: 20,
             ),
             FilledBtn(
-                label: "Confim your bid ->",
+                isButtonEnabled: isConditionAccepted,
+                label: "Confirm your bid ->",
                 onPressed: () {
                   Navigator.of(widget.parentContext).pop();
-                  Navigator.push(
-                      widget.parentContext,
-                      MaterialPageRoute(
-                        builder: (context) => const BiddingConfirmedScreen(),
-                      ));
+                  widget.confirmBid();
                 },
                 backgroundColor: Theme.of(context).primaryColor,
                 textColor: Colors.white)

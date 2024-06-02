@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/utility/constants.dart';
 
 class ChallengeStatus extends StatelessWidget {
-  final String challengeStatus = 'Live';
+  final String? challengeStatus;
+
+  const ChallengeStatus(this.challengeStatus, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class ChallengeStatus extends StatelessWidget {
             margin: const EdgeInsets.only(right: 10),
           ),
           Text(
-            challengeStatus,
+            _getChallengeStatus(),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -35,13 +38,26 @@ class ChallengeStatus extends StatelessWidget {
   }
 
   Color _getStatusColor() {
-    switch (challengeStatus) {
-      case 'Live':
+    switch (challengeStatus?.toLowerCase()) {
+      case 'live':
         return const Color(0xFFFD1010);
-      case 'Completed':
+      case 'completed':
         return Colors.green;
       default:
         return const Color(0xFFF87B20);
+    }
+  }
+
+  String _getChallengeStatus() {
+    switch (challengeStatus?.toLowerCase()) {
+      case 'live':
+        return LIVE;
+      case 'completed':
+        return COMPLETED;
+      case 'results_pending':
+        return RESULTS_PENDING;
+      default:
+        return "";
     }
   }
 }

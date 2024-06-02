@@ -7,8 +7,8 @@ import 'package:skills_pe/utility/constants.dart';
 class PrivateChallengesListRepository {
   final Dio? _dio = ApiClient.createDio();
 
-  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?> fetchPrivateChallengesList(
-      String status, int page) async {
+  Future<BaseResponseModel<List<PrivateChallengesListResponse>>?>
+      fetchPrivateChallengesList(String status, int page) async {
     try {
       Map<String, dynamic> queryParameters = {
         PAGE: page,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skills_pe/screens/public_challenge_detail/models/challenge_portfolio_detail_response.dart';
 import 'package:skills_pe/utility/constants.dart';
 
 class ChallengePortfolioCard extends StatelessWidget {
+  final ChallengePortfolioDetailResponse _portfolioDetail;
+
+  const ChallengePortfolioCard(this._portfolioDetail, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -39,7 +44,7 @@ class ChallengePortfolioCard extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "${RUPEE}2000.34",
+              "$RUPEE${_portfolioDetail.investedAmount}",
               style: TextStyle(
                   fontFamily: "Inter",
                   color: Theme.of(context).primaryColor,

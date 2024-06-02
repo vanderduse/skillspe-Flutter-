@@ -51,7 +51,7 @@ class _SelectableCheckboxGroupState extends State<SelectableCheckboxGroup> {
               if (widget.validator != null)
                 Text(
                   widget.validator!(_selectedOptions) ?? '',
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
             ],
           ),
@@ -114,7 +114,7 @@ class _SelectableCheckboxGroupState extends State<SelectableCheckboxGroup> {
                 ),
               ),
               child: isSelected
-                  ? Center(
+                  ? const Center(
                       child: Icon(
                         Icons.check,
                         size: 16,

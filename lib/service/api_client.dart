@@ -9,22 +9,22 @@ class ApiClient {
   static Dio? _dio;
 
   static Dio? createDio() {
-    _dio ??= Dio(BaseOptions(
-      baseUrl: BASE_URL,
-      receiveDataWhenStatusError: true,
-      receiveTimeout: const Duration(seconds: 60 * 1000),
-      connectTimeout: const Duration(seconds: 60 * 1000),
-      sendTimeout: const Duration(seconds: 60 * 1000),
-    ));
+    if (_dio == null) {
+      _dio = Dio(BaseOptions(
+        baseUrl: BASE_URL,
+        receiveDataWhenStatusError: true,
+        receiveTimeout: const Duration(seconds: 60 * 1000),
+        connectTimeout: const Duration(seconds: 60 * 1000),
+        sendTimeout: const Duration(seconds: 60 * 1000),
+      ));
 
-    _dio?.interceptors.add(
-      AppInterceptors(_dio!),
-    );
-
-    if (kDebugMode) {
-      _dio?.interceptors.add(ChuckerDioInterceptor());
+      _dio?.interceptors.add(
+        AppInterceptors(_dio!),
+      );
+      if (kDebugMode) {
+        _dio?.interceptors.add(ChuckerDioInterceptor());
+      }
     }
-
     return _dio;
   }
 }
@@ -42,8 +42,9 @@ class AppInterceptors extends Interceptor {
       'authorization':
           'Bearer ${StorageService().readSecureData(ACCESS_TOKEN)}',
       'X-AUTHORIZED-FOR-ID': 'Uakshay'
+      //'X-AUTHORIZED-FOR-ID': '663d05ff2ae3552768090768'
     };
-    log(options.uri.toString());
+    // log(options.uri.toString());
     return handler.next(options);
   }
 

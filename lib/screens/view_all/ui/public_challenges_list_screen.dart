@@ -21,7 +21,7 @@ class PublicChallengesListScreen extends StatefulWidget {
 class _PublicChallengesListScreenState
     extends State<PublicChallengesListScreen> {
   late PublicChallengesListBloc _publicChallengesListBloc;
-  List<PublicChallengesListResponse> publicChallengesList = [];
+  List<PublicChallengesItemResponse> publicChallengesList = [];
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
   int _pageNumber = 1;
@@ -86,7 +86,8 @@ class _PublicChallengesListScreenState
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: ButtonGroup(
-              buttonNames: filterButtonNames.map((PublicChallengeStatus status) {
+              buttonNames:
+                  filterButtonNames.map((PublicChallengeStatus status) {
                 return status.displayName;
               }).toList(),
               onItemSelected: (index) {
@@ -104,7 +105,6 @@ class _PublicChallengesListScreenState
               if (state is PublicChallengesListSuccessState) {
                 if (state.publicChallengesList.isNotEmpty ||
                     publicChallengesList.isNotEmpty) {
-                  // log(challengesList.toString());
                   publicChallengesList.addAll(state.publicChallengesList);
                   _isLoading = false;
                   return Expanded(
@@ -117,7 +117,7 @@ class _PublicChallengesListScreenState
                         return Container(
                             margin:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
-                            height: 260,
+                            height: 230,
                             child: PublicChallengeCard(
                               item: publicChallengesList[index],
                             ));

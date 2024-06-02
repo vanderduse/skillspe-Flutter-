@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:skills_pe/firebase_options.dart';
 import 'package:skills_pe/screens/home_screens/ui/main.dart';
-import 'package:skills_pe/screens/splash_screen/splash_screen_manager.dart';
 import 'package:skills_pe/service/storage_service.dart';
 import 'package:skills_pe/utility/constants.dart';
-import 'package:skills_pe/screens/public_challenge_detail/ui/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +66,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: true,
         ),
-        home: const PublicChallengeInfoScreen());
+        home: const HomeMain());
   }
 }

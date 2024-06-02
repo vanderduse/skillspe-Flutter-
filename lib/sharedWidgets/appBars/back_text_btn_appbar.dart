@@ -32,6 +32,7 @@ AppBar navigationWithTextButton(
   return AppBar(
     centerTitle: false,
     automaticallyImplyLeading: false,
+    backgroundColor: Colors.white,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

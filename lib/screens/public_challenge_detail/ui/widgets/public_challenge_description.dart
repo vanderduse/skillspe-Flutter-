@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:skills_pe/screens/home_screens/model/list_public_challenges_response.dart';
 import 'package:skills_pe/screens/public_challenge_detail/ui/widgets/challenge_status.dart';
+import 'package:skills_pe/utility/utility.dart';
 
 class PublicChallengeDescription extends StatelessWidget {
-  final String challengeStatus;
+  final String? challengeStatus;
   final String challengeDate;
-  final String source;
-  final String totalTraders;
+  final Source? source;
+  final String? challengeDescription;
+  final int totalTraders;
 
   const PublicChallengeDescription({
     Key? key,
+    required this.challengeDescription,
     required this.challengeStatus,
     required this.challengeDate,
     required this.source,
@@ -22,7 +26,7 @@ class PublicChallengeDescription extends StatelessWidget {
       children: [
         Row(
           children: [
-            ChallengeStatus(),
+            ChallengeStatus(challengeStatus),
             const SizedBox(
               width: 10,
             ),
@@ -47,14 +51,34 @@ class PublicChallengeDescription extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              source?.info ?? "",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontFamily: "Inter",
+                  fontWeight: FontWeight.w300,
+                  fontSize: 12,
+                  color: HexColor("#3F3F3F"),
+                  height: 1.5),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               children: [
                 const Text(
                   'Source: ',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
-                Text(
-                  source,
+                InkWell(
+                  onTap: () {
+                    redirectURL(source?.url);
+                  },
+                  child: Image.network(
+                    source?.logo! ?? "",
+                    width: 80,
+                  ),
                 ),
               ],
             ),

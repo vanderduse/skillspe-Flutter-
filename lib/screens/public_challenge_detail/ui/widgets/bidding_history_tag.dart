@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BidingHistoryTag extends StatelessWidget {
-  const BidingHistoryTag({super.key});
+  final String tag;
+  final Color color;
+  const BidingHistoryTag({super.key, required this.tag, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -11,16 +13,16 @@ class BidingHistoryTag extends StatelessWidget {
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: Colors.green, // Border color
+          color: color, // Border color
           width: 1, // Border width
         ),
       ),
-      child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           child: Text(
-            'Matched',
+            tag,
             style: TextStyle(
-                color: Colors.green,
+                color: color,
                 fontSize: 10,
                 height: 1.3,
                 fontFamily: "Inter",

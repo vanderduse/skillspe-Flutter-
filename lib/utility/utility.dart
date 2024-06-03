@@ -23,7 +23,7 @@ showSnackBar(BuildContext context, String message) {
 void showProgressDialog(BuildContext context, String message) {
   showDialog(
     context: context,
-    barrierDismissible: true, // Dialog will not close when tapping outside
+    barrierDismissible: false, // Dialog will not close when tapping outside
     builder: (BuildContext context) {
       return Dialog(
         child: Padding(
